@@ -12,14 +12,13 @@ interface BookshelfViewProps {
 }
 
 const CURRICULUM_FILTERS = [
-  { id: 'ALL', label: 'Semua Level' },
-  { id: 'KANA', label: 'KANA' },
-  { id: 'N5', label: 'N5' },
-  { id: 'N4', label: 'N4' },
-  { id: 'N3', label: 'N3' },
-  { id: 'N2', label: 'N2' },
-  { id: 'N1', label: 'N1' },
-  { id: 'Kaigo', label: 'Kaigo · SSW' },
+  { id: 'ALL', label: 'All levels' },
+  { id: 'ALPHABET', label: 'Alphabet' },
+  { id: 'A1', label: 'A1' },
+  { id: 'A2', label: 'A2' },
+  { id: 'B1', label: 'B1' },
+  { id: 'B2', label: 'B2' },
+  
 ];
 
 const THEMATIC_FILTERS = [
@@ -39,11 +38,11 @@ export const BookshelfView: React.FC<BookshelfViewProps> = ({
   const [selectedThematicFilter, setSelectedThematicFilter] = useState('ALL');
 
   const thematicCount = useMemo(
-    () => OFFICIAL_BOOKS.filter(b => b.category === 'thematic' || b.level === 'TEMATIK').length,
+    () => OFFICIAL_BOOKS.filter(b => b.category === 'thematic').length,
     []
   );
   const curriculumCount = useMemo(
-    () => OFFICIAL_BOOKS.filter(b => b.category !== 'thematic' && b.level !== 'TEMATIK').length,
+    () => OFFICIAL_BOOKS.filter(b => b.category !== 'thematic').length,
     []
   );
 
@@ -51,12 +50,12 @@ export const BookshelfView: React.FC<BookshelfViewProps> = ({
     let list = OFFICIAL_BOOKS;
 
     if (activeCategory === 'THEMATIC') {
-      list = list.filter(b => b.category === 'thematic' || b.level === 'TEMATIK');
+      list = list.filter(b => b.category === 'thematic');
       if (selectedThematicFilter !== 'ALL') {
         list = list.filter(b => b.id === selectedThematicFilter);
       }
     } else if (activeCategory === 'CURRICULUM') {
-      list = list.filter(b => b.category !== 'thematic' && b.level !== 'TEMATIK');
+      list = list.filter(b => b.category !== 'thematic');
       if (selectedLevelFilter !== 'ALL') {
         list = list.filter(b => b.level === selectedLevelFilter);
       }
@@ -96,13 +95,13 @@ export const BookshelfView: React.FC<BookshelfViewProps> = ({
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div className="space-y-1">
             <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-gold flex items-center gap-1.5">
-              <span>Rak Buku Kurikulum & Tematik · 本棚</span>
+              <span>Curriculum shelf</span>
             </span>
             <h1 className="text-xl sm:text-2xl font-bold text-text-primary font-heading tracking-wide flex items-center gap-2.5">
-              <span>Buku Pelajaran & Modul Belajar</span>
+              <span>Textbooks & study modules</span>
             </h1>
             <p className="text-xs sm:text-sm text-text-secondary max-w-2xl leading-relaxed">
-              Koleksi buku terstruktur (Minna no Nihongo, Soumatome, Kanzen Master) dan <strong>Rak Tematik Situasional</strong> (Tubuh, Rumah, Kantor Pos, dll) yang dipecah menjadi deck-deck terfokus (15–25 materi).
+              Structured level books (A1 to B2), split into focused decks of 15–25 items each.
             </p>
           </div>
 
@@ -111,7 +110,7 @@ export const BookshelfView: React.FC<BookshelfViewProps> = ({
               {OFFICIAL_BOOKS.length}
             </div>
             <div>
-              <span className="text-[10px] font-mono uppercase text-text-muted block">Koleksi Rak</span>
+              <span className="text-[10px] font-mono uppercase text-text-muted block">Shelf</span>
               <span className="text-xs font-bold text-text-primary font-heading">Siap Dipelajari</span>
             </div>
           </div>
@@ -133,7 +132,7 @@ export const BookshelfView: React.FC<BookshelfViewProps> = ({
                   : 'text-text-muted hover:text-text-primary'
               }`}
             >
-              Semua Rak ({OFFICIAL_BOOKS.length})
+              All books ({OFFICIAL_BOOKS.length})
             </button>
 
             <button
@@ -150,7 +149,7 @@ export const BookshelfView: React.FC<BookshelfViewProps> = ({
               }`}
             >
               <Compass className="w-3.5 h-3.5" />
-              <span>🏷️ Rak Tematik</span>
+              <span>🏷️ Themes</span>
               <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-surface-card border border-border-subtle font-mono">
                 {thematicCount}
               </span>
@@ -178,7 +177,7 @@ export const BookshelfView: React.FC<BookshelfViewProps> = ({
           </div>
 
           <span className="text-[11px] font-mono text-text-muted self-end sm:self-center">
-            Menampilkan {filteredBooks.length} Buku
+            Showing {filteredBooks.length} books
           </span>
         </div>
 
@@ -228,7 +227,7 @@ export const BookshelfView: React.FC<BookshelfViewProps> = ({
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
         {filteredBooks.map((book) => {
           const { totalItems, pct } = getBookStats(book);
-          const isThematic = book.category === 'thematic' || book.level === 'TEMATIK';
+          const isThematic = book.category === 'thematic' || false;
 
           return (
             <div
@@ -260,7 +259,7 @@ export const BookshelfView: React.FC<BookshelfViewProps> = ({
                           {isThematic ? 'TEMATIK' : book.level}
                         </span>
                         <span className="text-[11px] font-mono text-text-muted">
-                          {book.chapters.length} Deck Bab
+                          {book.chapters.length} chapter decks
                         </span>
                       </div>
                       <h2 className="text-base sm:text-lg font-bold text-text-primary font-heading group-hover:text-gold transition-colors mt-1">
@@ -290,7 +289,7 @@ export const BookshelfView: React.FC<BookshelfViewProps> = ({
                 <div className="flex items-center justify-between text-[11px] font-mono">
                   <span className="text-text-muted flex items-center gap-1.5">
                     <Layers className="w-3.5 h-3.5 text-text-secondary" />
-                    <span>{totalItems} Materi Pembelajaran</span>
+                    <span>{totalItems} study items</span>
                   </span>
                   <span className="text-text-primary font-bold flex items-center gap-1">
                     <Award className="w-3.5 h-3.5 text-gold" />

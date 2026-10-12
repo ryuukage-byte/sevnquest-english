@@ -83,7 +83,7 @@ class EntityRegistryService {
         title: kotoba.word,
         reading: kotoba.reading,
         meaning: kotoba.meaningId || kotoba.meaningEn || '',
-        level: kotoba.jlpt || 'N5',
+        level: kotoba.jlpt || 'A1',
         traits: getTraits(kotoba),
         rawItem: kotoba,
         kotoba,
@@ -101,7 +101,7 @@ class EntityRegistryService {
         title: kanji.character,
         reading: [kunStr, onStr].filter(Boolean).join(' | '),
         meaning: kanji.meaningId || kanji.meaningEn || '',
-        level: kanji.jlpt || 'N5',
+        level: kanji.jlpt || 'A1',
         traits: getTraits(kanji),
         rawItem: kanji,
         kanji,
@@ -117,7 +117,7 @@ class EntityRegistryService {
         title: bunpou.title,
         reading: bunpou.formula,
         meaning: bunpou.meaningId || '',
-        level: bunpou.level || 'N3',
+        level: bunpou.level || 'B1',
         traits: getTraits(bunpou),
         rawItem: bunpou,
         bunpou,
@@ -165,7 +165,7 @@ class EntityRegistryService {
         displayTitle: item.word,
         displayReading: item.reading,
         displayMeaning: item.meaningId || item.meaningEn || '',
-        level: item.jlpt || 'N5',
+        level: item.jlpt || 'A1',
       };
     }
 
@@ -181,7 +181,7 @@ class EntityRegistryService {
         displayTitle: item.character,
         displayReading: [kunStr, onStr].filter(Boolean).join(' | '),
         displayMeaning: item.meaningId || item.meaningEn || '',
-        level: item.jlpt || 'N5',
+        level: item.jlpt || 'A1',
       };
     }
 
@@ -195,7 +195,7 @@ class EntityRegistryService {
         displayTitle: item.title,
         displayReading: item.formula,
         displayMeaning: item.meaningId || '',
-        level: item.level || 'N3',
+        level: item.level || 'B1',
       };
     }
 

@@ -84,18 +84,18 @@ export const HomeView: React.FC<HomeViewProps> = ({
     const goBooks = () => onNavigateTab('deck');
 
     if (isNewcomer && !guideSeen) {
-      return { eyebrow: 'MULAI DI SINI', title: 'Kenali SevnQuest', hint: 'Panduan singkat: apa, bagaimana, dan mulai dari mana', icon: Compass, run: openGuide };
+      return { eyebrow: 'START HERE', title: 'Get to know SevnQuest', hint: 'A short guide: what it is, how it works, and where to begin', icon: Compass, run: openGuide };
     }
     if (isNewcomer) {
-      return { eyebrow: 'FOUNDATION', title: 'Mulai Belajar Hiragana', hint: 'Buka Buku Saku: Kuil Aksara Kana Dojo', icon: Play, run: goBooks };
+      return { eyebrow: 'FOUNDATION', title: 'Start with the Alphabet', hint: 'Open the Notebook: Alphabet Academy', icon: Play, run: goBooks };
     }
     if (recallCount > 0 && onStartRecall) {
-      return { eyebrow: 'LANGKAH BERIKUTNYA', title: `Ulang ${recallCount} item di Recall`, hint: 'Kunci ingatan sebelum materi baru', icon: Flame, run: onStartRecall };
+      return { eyebrow: 'NEXT STEP', title: `Review ${recallCount} items in Recall`, hint: 'Lock in memory before new material', icon: Flame, run: onStartRecall };
     }
     if (TOWER_ENABLED && onOpenTower) {
-      return { eyebrow: 'MENARA NIHONGO', title: 'Lanjutkan Menara', hint: 'Naiki lantai berikutnya', icon: Castle, run: onOpenTower };
+      return { eyebrow: 'CASTLE TOWER', title: 'Continue the Tower', hint: 'Climb to the next floor', icon: Castle, run: onOpenTower };
     }
-    return { eyebrow: 'LANGKAH BERIKUTNYA', title: 'Lanjut Belajar dari Buku', hint: 'Buka rak Buku Saku', icon: Play, run: goBooks };
+    return { eyebrow: 'NEXT STEP', title: 'Continue from your books', hint: 'Open your Notebook shelf', icon: Play, run: goBooks };
   })();
   const NextIcon = nextStep.icon;
 
@@ -161,7 +161,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
         {/* Player Profile Title */}
         <div className="space-y-0.5 relative z-10">
           <h2 className="text-xl sm:text-2xl font-bold text-text-primary font-heading tracking-wide">
-            {stats.playerName || 'Pelajar Bahasa'}
+            {stats.playerName || 'English Learner'}
           </h2>
         </div>
 
@@ -176,7 +176,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
         {/* Sub-label */}
         <div className="text-[11px] text-text-secondary group-hover:text-gold font-medium inline-flex items-center gap-1.5 transition-colors font-body pt-1">
           <ScrollIcon className="w-3.5 h-3.5 inline text-gold" />
-          <span>Ketuk Karakter untuk Lembar Status & Profil</span>
+          <span>Tap your character for the status sheet & profile</span>
           <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
         </div>
       </motion.div>
@@ -250,7 +250,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
                 </span>
               ) : (
                 <span className="text-xs font-bold text-state-success font-mono">
-                  ✓ Tidak ada yang due
+                  ✓ Nothing due
                 </span>
               )}
               {recallCount > 0 && (
@@ -260,7 +260,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
           </div>
         )}
 
-        {/* Row: Panduan SevnQuest (selalu bisa dibuka ulang) */}
+        {/* Row: SevnQuest guide (selalu bisa dibuka ulang) */}
         <div
           onClick={openGuide}
           className="p-4 flex items-center justify-between gap-3 hover:bg-surface-elevated/40 cursor-pointer transition-all group"
@@ -271,9 +271,9 @@ export const HomeView: React.FC<HomeViewProps> = ({
             </div>
             <div>
               <span className="text-sm font-bold text-text-primary font-heading group-hover:text-gold transition-colors">
-                Panduan SevnQuest
+                SevnQuest guide
               </span>
-              <p className="text-[10px] text-text-secondary font-mono">Cara belajar & jalur untuk pemula</p>
+              <p className="text-[10px] text-text-secondary font-mono">How to study & a path for beginners</p>
             </div>
           </div>
           <ChevronRight className="w-4 h-4 text-text-secondary group-hover:text-gold group-hover:translate-x-0.5 transition-all" />
@@ -293,9 +293,9 @@ export const HomeView: React.FC<HomeViewProps> = ({
             </div>
             <div>
               <span className="text-sm font-bold text-text-primary font-heading group-hover:text-gold transition-colors">
-                Misi Harian
+                Daily Quests
               </span>
-              <p className="text-[10px] text-text-secondary font-mono">Hadiah EXP & Koin</p>
+              <p className="text-[10px] text-text-secondary font-mono">EXP & Coin rewards</p>
             </div>
           </div>
 
@@ -303,7 +303,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
             <span className={`text-xs font-bold font-mono ${
               hasClaimableReward ? 'text-gold font-black animate-pulse' : 'text-text-secondary'
             }`}>
-              {completedMissionsCount}/{totalMissionsCount} {hasClaimableReward ? '· Klaim Hadiah!' : 'selesai'}
+              {completedMissionsCount}/{totalMissionsCount} {hasClaimableReward ? '· Claim your reward!' : 'done'}
             </span>
             <ChevronRight className="w-4 h-4 text-text-secondary group-hover:text-gold group-hover:translate-x-0.5 transition-all" />
           </div>

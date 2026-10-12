@@ -151,7 +151,7 @@ export const BukuSakuView: React.FC<BukuSakuViewProps> = ({
 
   // Quick preset generator modal for active deck
   const [isQuickPresetModalOpen, setIsQuickPresetModalOpen] = useState(false);
-  const [quickPresetLevel, setQuickPresetLevel] = useState<'all' | 'N5' | 'N4' | 'N3' | 'N2' | 'N1' | 'Kaigo'>('N5');
+  const [quickPresetLevel, setQuickPresetLevel] = useState<'all' | 'A1' | 'A2' | 'B1' | 'B2' | 'C1' | 'Kaigo'>('A1');
   const [quickPresetCount, setQuickPresetCount] = useState<number>(10);
 
   // Item detail inspection modals (Universal Pluggable Inspector)
@@ -262,7 +262,7 @@ export const BukuSakuView: React.FC<BukuSakuViewProps> = ({
   };
 
   const handleDeleteDeck = (deckId: string) => {
-    if (window.confirm('Hapus deck ini beserta daftar latihannya?')) {
+    if (window.confirm('Delete this deck and its practice list?')) {
       playSound('click', soundEnabled);
       const updated = deleteCustomDeck(decks, deckId);
       onUpdateDecks(updated);
@@ -303,15 +303,15 @@ export const BukuSakuView: React.FC<BukuSakuViewProps> = ({
     if (importedCount > 0) {
       playSound('correct', soundEnabled);
       onUpdateDecks(updated);
-      alert(`Berhasil mengimpor ${importedCount} materi baru dari Buku Saku Bookmark!`);
+      alert(`Imported ${importedCount} new items from your bookmarks!`);
     } else {
-      alert('Semua materi dari Bookmark sudah ada di dalam deck ini.');
+      alert('All bookmarked items are already in this deck.');
     }
   };
 
   const handleClearDeck = () => {
     if (!activeDeck) return;
-    if (window.confirm('Kosongkan semua materi dari deck ini? (Deck tidak akan terhapus)')) {
+    if (window.confirm('Remove all items from this deck? (The deck itself will be kept)')) {
       playSound('click', soundEnabled);
       const updated = clearDeckItems(decks, activeDeck.id);
       onUpdateDecks(updated);
@@ -384,7 +384,7 @@ export const BukuSakuView: React.FC<BukuSakuViewProps> = ({
               }`}
             >
               <Bookmark className={`w-4 h-4 shrink-0 ${activeSubTab === 'my_pocket' ? 'text-gold fill-gold' : ''}`} />
-              <span>Buku Saku Saya ({decks.length})</span>
+              <span>My Notebook ({decks.length})</span>
             </button>
 
             <button
@@ -401,7 +401,7 @@ export const BukuSakuView: React.FC<BukuSakuViewProps> = ({
               }`}
             >
               <BookOpen className={`w-4 h-4 shrink-0 ${activeSubTab === 'official_books' ? 'text-gold' : ''}`} />
-              <span>Buku Kurikulum Resmi ({OFFICIAL_BOOKS.length})</span>
+              <span>Curriculum books ({OFFICIAL_BOOKS.length})</span>
             </button>
           </div>
 
@@ -462,14 +462,14 @@ export const BukuSakuView: React.FC<BukuSakuViewProps> = ({
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
               <div className="space-y-1">
                 <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-text-muted">
-                  Buku Catatan Mandiri & Sistem Koleksi
+                  Your notes & collections
                 </span>
                 <h1 className="text-xl sm:text-2xl font-bold text-text-primary font-heading tracking-wide flex items-center gap-2.5">
-                  <span className="text-gold">手帳</span>
-                  <span>Buku Saku Petualang</span>
+                  <span className="text-gold">📓</span>
+                  <span>Adventurer&apos;s Notebook</span>
                 </h1>
                 <p className="text-xs sm:text-sm text-text-secondary">
-                  Kelola koleksi bookmark, buat deck kustom dengan preset otomatis, dan latih hafalanmu secara intensif.
+                  Manage your bookmarks, create custom decks with automatic presets, and practise intensively.
                 </p>
               </div>
 
@@ -507,15 +507,15 @@ export const BukuSakuView: React.FC<BukuSakuViewProps> = ({
                 <p className="text-base font-bold font-mono text-text-primary">{statsSummary.totalDecks}</p>
               </div>
               <div className="p-2.5 rounded-xl bg-surface-inset border border-border-subtle">
-                <span className="text-[10px] font-mono text-text-muted uppercase">Total Materi Tersimpan</span>
+                <span className="text-[10px] font-mono text-text-muted uppercase">Total items saved</span>
                 <p className="text-base font-bold font-mono text-gold">{statsSummary.totalItems}</p>
               </div>
               <div className="p-2.5 rounded-xl bg-surface-inset border border-border-subtle">
-                <span className="text-[10px] font-mono text-text-muted uppercase">Kosakata Disimpan</span>
+                <span className="text-[10px] font-mono text-text-muted uppercase">Vocabulary saved</span>
                 <p className="text-base font-bold font-mono text-text-primary">{statsSummary.kotobaCount}</p>
               </div>
               <div className="p-2.5 rounded-xl bg-surface-inset border border-border-subtle">
-                <span className="text-[10px] font-mono text-text-muted uppercase">Kanji & Pola Kalimat</span>
+                <span className="text-[10px] font-mono text-text-muted uppercase">Letters & grammar</span>
                 <p className="text-base font-bold font-mono text-text-primary">{statsSummary.kanjiCount + statsSummary.bunpouCount}</p>
               </div>
             </div>
@@ -587,7 +587,7 @@ export const BukuSakuView: React.FC<BukuSakuViewProps> = ({
                           <button
                             onClick={() => handleDeleteDeck(deck.id)}
                             className="p-1.5 rounded-lg text-text-muted hover:text-wine-accent hover:bg-surface-inset transition-colors"
-                            title="Hapus Deck"
+                            title="Delete deck"
                           >
                             <Trash2 className="w-3.5 h-3.5" />
                           </button>
@@ -610,13 +610,13 @@ export const BukuSakuView: React.FC<BukuSakuViewProps> = ({
                         <span>0 materi</span>
                       ) : (
                         <span>
-                          {itemCount} materi ({kotobaCount} 語 • {kanjiCount} 字 • {bunpouCount} 文)
+                          {itemCount} items ({kotobaCount} words • {kanjiCount} letters • {bunpouCount} grammar)
                         </span>
                       )}
                     </div>
 
                     <span className="font-heading font-bold text-xs text-text-primary group-hover:translate-x-0.5 transition-transform flex items-center gap-1">
-                      Buka Deck &rarr;
+                      Open deck &rarr;
                     </span>
                   </div>
                 </div>
@@ -732,7 +732,7 @@ export const BukuSakuView: React.FC<BukuSakuViewProps> = ({
                   Target Level JLPT
                 </label>
                 <div className="flex flex-wrap gap-1">
-                  {(['all', 'N5', 'N4', 'N3', 'N2', 'N1', 'Kaigo'] as const).map((lvl) => (
+                  {(['all', 'A1', 'A2', 'B1', 'B2', 'C1', 'Kaigo'] as const).map((lvl) => (
                     <button
                       key={lvl}
                       type="button"
@@ -751,7 +751,7 @@ export const BukuSakuView: React.FC<BukuSakuViewProps> = ({
 
               <div>
                 <label className="block font-bold text-text-secondary uppercase tracking-wider mb-1">
-                  Jumlah Materi Ditambahkan
+                  Items added
                 </label>
                 <div className="grid grid-cols-4 gap-1.5">
                   {[10, 20, 30, 50].map((cnt) => (
@@ -772,7 +772,7 @@ export const BukuSakuView: React.FC<BukuSakuViewProps> = ({
               </div>
 
               <div className="p-3 rounded-xl bg-surface-inset border border-border-subtle text-text-secondary">
-                Materi akan disaring sesuai tipe deck (<strong>{activeDeck.type}</strong>) dan dimasukkan langsung ke dalam deck ini tanpa menghapus materi yang sudah ada.
+                Items will be filtered by deck type (<strong>{activeDeck.type}</strong>) and added directly to this deck without removing existing items.
               </div>
             </div>
 

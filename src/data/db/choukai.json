@@ -1,0 +1,284 @@
+{
+  "choukai_a1_01": {
+    "id": "choukai_a1_01",
+    "title": "Listening: Ordering Lunch",
+    "level": "A1",
+    "dialogueSpeaker": "Customer and waiter",
+    "audioText": "Waiter: Hello! What would you like? Customer: I would like a sandwich, please. Waiter: Do you want something to drink? Customer: Yes, a glass of water, please. Waiter: Okay. Anything else? Customer: No, thank you.",
+    "transcript": "Waiter: Hello! What would you like? Customer: I would like a sandwich, please. Waiter: Do you want something to drink? Customer: Yes, a glass of water, please. Waiter: Okay. Anything else? Customer: No, thank you.",
+    "speechRate": 0.85,
+    "questions": [
+      {
+        "id": "choukai_a1_01_q1",
+        "prompt": "What does the customer want to eat?",
+        "options": [
+          "A salad",
+          "A sandwich",
+          "Soup",
+          "A cake"
+        ],
+        "correctIndex": 1,
+        "explanation": "The customer says: \"I would like a sandwich, please.\""
+      },
+      {
+        "id": "choukai_a1_01_q2",
+        "prompt": "What does the customer want to drink?",
+        "options": [
+          "Coffee",
+          "Milk",
+          "Water",
+          "Juice"
+        ],
+        "correctIndex": 2,
+        "explanation": "The customer asks for a glass of water."
+      },
+      {
+        "id": "choukai_a1_01_q3",
+        "prompt": "Does the customer want anything else?",
+        "options": [
+          "Yes, a dessert",
+          "Yes, a coffee",
+          "No, thank you",
+          "Yes, a bill"
+        ],
+        "correctIndex": 2,
+        "explanation": "The customer says, \"No, thank you.\""
+      }
+    ]
+  },
+  "choukai_a1_02": {
+    "id": "choukai_a1_02",
+    "title": "Listening: Meeting a Friend",
+    "level": "A1",
+    "dialogueSpeaker": "Two friends",
+    "audioText": "Maria: Hi, Tom! How are you? Tom: I am fine, thanks. And you? Maria: I am good. Are you busy tomorrow? Tom: No, I am free. Why? Maria: Let us go to the cinema at three o'clock. Tom: Sounds great! See you at two thirty at the station.",
+    "transcript": "Maria: Hi, Tom! How are you? Tom: I am fine, thanks. And you? Maria: I am good. Are you busy tomorrow? Tom: No, I am free. Why? Maria: Let us go to the cinema at three o'clock. Tom: Sounds great! See you at two thirty at the station.",
+    "speechRate": 0.85,
+    "questions": [
+      {
+        "id": "choukai_a1_02_q1",
+        "prompt": "When are they going to the cinema?",
+        "options": [
+          "Today at three",
+          "Tomorrow at three",
+          "Tomorrow at two thirty",
+          "On Monday"
+        ],
+        "correctIndex": 1,
+        "explanation": "Maria suggests going tomorrow at three o'clock."
+      },
+      {
+        "id": "choukai_a1_02_q2",
+        "prompt": "Where will they meet?",
+        "options": [
+          "At the cinema",
+          "At the station",
+          "At school",
+          "At home"
+        ],
+        "correctIndex": 1,
+        "explanation": "Tom says: \"See you at two thirty at the station.\""
+      },
+      {
+        "id": "choukai_a1_02_q3",
+        "prompt": "How does Tom feel about the plan?",
+        "options": [
+          "Bored",
+          "Angry",
+          "Excited",
+          "Tired"
+        ],
+        "correctIndex": 2,
+        "explanation": "Tom says, \"Sounds great!\""
+      }
+    ]
+  },
+  "choukai_a2_01": {
+    "id": "choukai_a2_01",
+    "title": "Listening: Booking a Hotel",
+    "level": "A2",
+    "dialogueSpeaker": "Receptionist and guest",
+    "audioText": "Receptionist: Good evening. How can I help you? Guest: I would like to book a room for two nights, from Friday to Sunday. Receptionist: Of course. Would you prefer a room with a sea view? Guest: Yes, that would be lovely, but the price should not be too high. Receptionist: We have a double room for one hundred and twenty dollars per night. Guest: That sounds perfect. I will take it.",
+    "transcript": "Receptionist: Good evening. How can I help you? Guest: I would like to book a room for two nights, from Friday to Sunday. Receptionist: Of course. Would you prefer a room with a sea view? Guest: Yes, that would be lovely, but the price should not be too high. Receptionist: We have a double room for one hundred and twenty dollars per night. Guest: That sounds perfect. I will take it.",
+    "speechRate": 0.9,
+    "questions": [
+      {
+        "id": "choukai_a2_01_q1",
+        "prompt": "How many nights does the guest want?",
+        "options": [
+          "One",
+          "Two",
+          "Three",
+          "Four"
+        ],
+        "correctIndex": 1,
+        "explanation": "The guest wants a room for two nights, from Friday to Sunday."
+      },
+      {
+        "id": "choukai_a2_01_q2",
+        "prompt": "What kind of view does the guest want?",
+        "options": [
+          "A mountain view",
+          "A city view",
+          "A sea view",
+          "No view"
+        ],
+        "correctIndex": 2,
+        "explanation": "The guest would prefer a room with a sea view."
+      },
+      {
+        "id": "choukai_a2_01_q3",
+        "prompt": "What is the decision at the end?",
+        "options": [
+          "The guest will look elsewhere",
+          "The guest will take the double room",
+          "The guest will cancel",
+          "The guest will pay later"
+        ],
+        "correctIndex": 1,
+        "explanation": "The guest says, \"That sounds perfect. I will take it.\""
+      }
+    ]
+  },
+  "choukai_a2_02": {
+    "id": "choukai_a2_02",
+    "title": "Listening: Asking for Directions",
+    "level": "A2",
+    "dialogueSpeaker": "Tourist and local",
+    "audioText": "Tourist: Excuse me, is there a bank near here? Local: Yes, there is one on the corner of Green Street. Tourist: How do I get there? Local: Go straight for two blocks, then turn left. It is next to a big pharmacy. Tourist: Thank you so much! Local: You are welcome.",
+    "transcript": "Tourist: Excuse me, is there a bank near here? Local: Yes, there is one on the corner of Green Street. Tourist: How do I get there? Local: Go straight for two blocks, then turn left. It is next to a big pharmacy. Tourist: Thank you so much! Local: You are welcome.",
+    "speechRate": 0.9,
+    "questions": [
+      {
+        "id": "choukai_a2_02_q1",
+        "prompt": "What is the tourist looking for?",
+        "options": [
+          "A hotel",
+          "A bank",
+          "A pharmacy",
+          "A museum"
+        ],
+        "correctIndex": 1,
+        "explanation": "The tourist asks if there is a bank near here."
+      },
+      {
+        "id": "choukai_a2_02_q2",
+        "prompt": "How far should the tourist walk straight?",
+        "options": [
+          "One block",
+          "Two blocks",
+          "Three blocks",
+          "Five blocks"
+        ],
+        "correctIndex": 1,
+        "explanation": "The local says: \"Go straight for two blocks.\""
+      },
+      {
+        "id": "choukai_a2_02_q3",
+        "prompt": "What is next to the bank?",
+        "options": [
+          "A school",
+          "A park",
+          "A big pharmacy",
+          "A restaurant"
+        ],
+        "correctIndex": 2,
+        "explanation": "The bank is next to a big pharmacy."
+      }
+    ]
+  },
+  "choukai_b1_01": {
+    "id": "choukai_b1_01",
+    "title": "Listening: A Job Interview",
+    "level": "B1",
+    "dialogueSpeaker": "Interviewer and candidate",
+    "audioText": "Interviewer: Can you tell me about your previous experience? Candidate: Certainly. For the last three years, I have worked as a sales assistant. I have learned to handle customers and to solve problems quickly. Interviewer: Why do you want to work for our company? Candidate: I have always admired your commitment to sustainability, and I would like to contribute to that goal.",
+    "transcript": "Interviewer: Can you tell me about your previous experience? Candidate: Certainly. For the last three years, I have worked as a sales assistant. I have learned to handle customers and to solve problems quickly. Interviewer: Why do you want to work for our company? Candidate: I have always admired your commitment to sustainability, and I would like to contribute to that goal.",
+    "speechRate": 0.95,
+    "questions": [
+      {
+        "id": "choukai_b1_01_q1",
+        "prompt": "How long has the candidate worked as a sales assistant?",
+        "options": [
+          "One year",
+          "Two years",
+          "Three years",
+          "Five years"
+        ],
+        "correctIndex": 2,
+        "explanation": "The candidate says: \"For the last three years\"."
+      },
+      {
+        "id": "choukai_b1_01_q2",
+        "prompt": "What skill does the candidate mention?",
+        "options": [
+          "Cooking",
+          "Solving problems quickly",
+          "Driving",
+          "Painting"
+        ],
+        "correctIndex": 1,
+        "explanation": "The candidate has learned to solve problems quickly."
+      },
+      {
+        "id": "choukai_b1_01_q3",
+        "prompt": "Why does the candidate want the job?",
+        "options": [
+          "For the high salary",
+          "Because of the company's commitment to sustainability",
+          "Because it is close to home",
+          "Because of the holidays"
+        ],
+        "correctIndex": 1,
+        "explanation": "The candidate admires the company's commitment to sustainability."
+      }
+    ]
+  },
+  "choukai_b1_02": {
+    "id": "choukai_b1_02",
+    "title": "Listening: Planning a Community Event",
+    "level": "B1",
+    "dialogueSpeaker": "Two neighbours",
+    "audioText": "Anna: We should organise a street festival this summer. Ben: That is a great idea, but we need permission from the council first. Anna: I already contacted them, and they said the application must be submitted by the end of May. Ben: Then we should arrange a meeting next week to divide the tasks. Anna: Agreed. I will prepare the invitations, and you could ask local shops to donate prizes.",
+    "transcript": "Anna: We should organise a street festival this summer. Ben: That is a great idea, but we need permission from the council first. Anna: I already contacted them, and they said the application must be submitted by the end of May. Ben: Then we should arrange a meeting next week to divide the tasks. Anna: Agreed. I will prepare the invitations, and you could ask local shops to donate prizes.",
+    "speechRate": 0.95,
+    "questions": [
+      {
+        "id": "choukai_b1_02_q1",
+        "prompt": "What do they need before holding the festival?",
+        "options": [
+          "A new car",
+          "Permission from the council",
+          "More money",
+          "A bigger street"
+        ],
+        "correctIndex": 1,
+        "explanation": "Ben says they need permission from the council first."
+      },
+      {
+        "id": "choukai_b1_02_q2",
+        "prompt": "When must the application be submitted?",
+        "options": [
+          "By the end of April",
+          "By the end of May",
+          "By the end of June",
+          "Next week"
+        ],
+        "correctIndex": 1,
+        "explanation": "Anna says the application must be submitted by the end of May."
+      },
+      {
+        "id": "choukai_b1_02_q3",
+        "prompt": "What is Ben asked to do?",
+        "options": [
+          "Prepare the invitations",
+          "Ask shops to donate prizes",
+          "Contact the council",
+          "Organise the meeting"
+        ],
+        "correctIndex": 1,
+        "explanation": "Anna suggests Ben could ask local shops to donate prizes."
+      }
+    ]
+  }
+}

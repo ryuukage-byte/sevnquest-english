@@ -1,9 +1,30 @@
-# Nihongo Quest RPG
+# SevnQuest — English Edition
 
-A gamified Japanese learning RPG featuring JLPT preparation, kanji stroke practice, grammar drills, audio listening, and cloud sync.
+An RPG for learning English (CEFR A1–B2): vocabulary, a letter library with stroke-order writing, grammar,
+reading passages, listening dialogues, quizzes, flashcards, missions and an arena arcade.
 
-## Atribusi data
+This branch (`english-edition`) is the English counterpart of the Japanese app on `main`.
+See **[ENGLISH_EDITION.md](ENGLISH_EDITION.md)** for what changed, what is still in Indonesian or Japanese,
+and what to do next.
 
-Sebagian kosakata (ID `kotoba_jm_*`) berasal dari [JMdict](https://www.edrdg.org/jmdict/j_jmdict.html)
-© Electronic Dictionary Research and Development Group, dipakai sesuai
-[lisensi EDRDG](https://www.edrdg.org/edrdg/licence.html) (CC BY-SA 4.0). Lihat `scripts/jmdict/README.md`.
+## Quick start
+
+```bash
+npm install
+npm run dev        # http://localhost:3000
+```
+
+```bash
+npx tsc --noEmit   # type check
+npm run build      # production build (dist/)
+npm test           # unit tests
+```
+
+## Configuration
+
+Copy `.env.example` to `.env` and set your own Supabase project if you want cloud save and the leaderboard.
+Without it the app runs fully in the browser (progress saved locally). Do not reuse the Japanese project's keys.
+
+## Deploy
+
+Deploy the `dist/` folder as a static site (Vercel config included: SPA rewrite and cache headers).

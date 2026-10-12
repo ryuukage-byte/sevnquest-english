@@ -43,37 +43,37 @@ export function getEntityBaseExp(category: string, id: string): number | null {
  * Base EXP constants based on JLPT tier difficulty.
  */
 const KANJI_LEVEL_BASE_EXP: Record<string, number> = {
-  KANA: 12,
+  ALPHABET: 12,
   SUUJI: 12,
-  N5: 20,
-  N4: 30,
-  N3: 45,
-  N2: 65,
-  N1: 90,
+  A1: 20,
+  A2: 30,
+  B1: 45,
+  B2: 65,
+  C1: 90,
 };
 
 const KOTOBA_LEVEL_BASE_EXP: Record<string, number> = {
-  N5: 15,
-  N4: 22,
-  N3: 32,
-  N2: 48,
-  N1: 65,
+  A1: 15,
+  A2: 22,
+  B1: 32,
+  B2: 48,
+  C1: 65,
 };
 
 const BUNPOU_LEVEL_BASE_EXP: Record<string, number> = {
-  N5: 25,
-  N4: 35,
-  N3: 50,
-  N2: 70,
-  N1: 95,
+  A1: 25,
+  A2: 35,
+  B1: 50,
+  B2: 70,
+  C1: 95,
 };
 
 const QUIZ_LEVEL_BASE_EXP: Record<string, number> = {
-  N5: 18,
-  N4: 25,
-  N3: 35,
-  N2: 50,
-  N1: 70,
+  A1: 18,
+  A2: 25,
+  B1: 35,
+  B2: 50,
+  C1: 70,
 };
 
 /**
@@ -90,14 +90,14 @@ export function getKanjiBaseExp(kanji: {
   const isKana = char.length > 0 && char.charCodeAt(0) >= 0x3040 && char.charCodeAt(0) <= 0x30ff;
   const isSuuji = ['一', '二', '三', '四', '五', '六', '七', '八', '九', '十', '百', '千', '万', '零'].includes(char);
 
-  let levelKey = kanji.jlpt?.toUpperCase() || 'N3';
+  let levelKey = kanji.jlpt?.toUpperCase() || 'B1';
   if (isKana || kanji.radical === 'Hiragana' || kanji.radical === 'Katakana') {
-    levelKey = 'KANA';
+    levelKey = 'ALPHABET';
   } else if (isSuuji) {
     levelKey = 'SUUJI';
   }
 
-  const levelBase = KANJI_LEVEL_BASE_EXP[levelKey] || KANJI_LEVEL_BASE_EXP.N3;
+  const levelBase = KANJI_LEVEL_BASE_EXP[levelKey] || KANJI_LEVEL_BASE_EXP.B1;
   const strokes = kanji.strokeCount || (isKana ? 3 : 8);
 
   return levelBase + Math.round(strokes * 2.5);
@@ -112,8 +112,8 @@ export function getKotobaBaseExp(kotoba: {
   jlpt?: string;
   kanjiComponents?: string[];
 }): number {
-  const levelKey = kotoba.jlpt?.toUpperCase() || 'N5';
-  const levelBase = KOTOBA_LEVEL_BASE_EXP[levelKey] || KOTOBA_LEVEL_BASE_EXP.N5;
+  const levelKey = kotoba.jlpt?.toUpperCase() || 'A1';
+  const levelBase = KOTOBA_LEVEL_BASE_EXP[levelKey] || KOTOBA_LEVEL_BASE_EXP.A1;
 
   const wordLength = Array.from(kotoba.word || '').length;
   const kanjiCount = kotoba.kanjiComponents?.length || 0;
@@ -129,8 +129,8 @@ export function getBunpouBaseExp(bunpou: {
   level?: string;
   subFormulas?: any[];
 }): number {
-  const levelKey = bunpou.level?.toUpperCase() || 'N3';
-  const levelBase = BUNPOU_LEVEL_BASE_EXP[levelKey] || BUNPOU_LEVEL_BASE_EXP.N3;
+  const levelKey = bunpou.level?.toUpperCase() || 'B1';
+  const levelBase = BUNPOU_LEVEL_BASE_EXP[levelKey] || BUNPOU_LEVEL_BASE_EXP.B1;
   const subCount = bunpou.subFormulas?.length || 0;
 
   return levelBase + (subCount * 5);
@@ -302,13 +302,13 @@ export function calculateQuizReward(
   maybeTotalQuestions?: number,
   maybePlayerInt?: number
 ): QuizRewardResult {
-  let level = 'N5';
+  let level = 'A1';
   let totalQuestions = 0;
   let correctCount = 0;
   let playerInt = 0;
 
   if (typeof optionsOrLevel === 'object' && optionsOrLevel !== null) {
-    level = optionsOrLevel.level || 'N5';
+    level = optionsOrLevel.level || 'A1';
     totalQuestions = optionsOrLevel.totalQuestions ?? 0;
     correctCount = optionsOrLevel.correctCount ?? 0;
     playerInt = optionsOrLevel.playerInt ?? 0;
@@ -322,8 +322,8 @@ export function calculateQuizReward(
     playerInt = maybePlayerInt ?? 0;
   }
 
-  const cleanLevel = (level || 'N5').toUpperCase();
-  const basePerQuestion = QUIZ_LEVEL_BASE_EXP[cleanLevel] || QUIZ_LEVEL_BASE_EXP.N5;
+  const cleanLevel = (level || 'A1').toUpperCase();
+  const basePerQuestion = QUIZ_LEVEL_BASE_EXP[cleanLevel] || QUIZ_LEVEL_BASE_EXP.A1;
 
   const accuracy = totalQuestions > 0 ? Math.min(1, Math.max(0, correctCount / totalQuestions)) : 0;
   const accuracyPercentage = Math.round(accuracy * 100);

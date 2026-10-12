@@ -53,35 +53,22 @@ function deckAiDevApi(env: Record<string, string>): Plugin {
   };
 }
 
-// Di dev, /api/captions memakai handler yang sama dengan fungsi Vercel (api/captions.ts).
-function captionsDevApi(): Plugin {
-  return {
-    name: 'captions-dev-api',
-    configureServer(server) {
-      server.middlewares.use('/api/captions', async (req, res) => {
-        const mod = await server.ssrLoadModule('/api/captions.ts');
-        await mod.default(req, res);
-      });
-    },
-  };
-}
-
 export default defineConfig(({mode}) => {
   const env = loadEnv(mode, process.cwd(), '');
   // Target proxy dev/preview. Bisa diganti lewat VITE_SUPABASE_URL tanpa mengubah kode.
-  const supabaseTarget = env.VITE_SUPABASE_URL || 'https://iokhdhqnpslpwsxspvaj.supabase.co';
-  const supabaseProxy = {
+  // Dev/preview proxy only when your own Supabase URL is configured (no default backend in the English edition).
+  const supabaseProxy: Record<string, object> = env.VITE_SUPABASE_URL ? {
     '/supabase-proxy': {
-      target: supabaseTarget,
+      target: env.VITE_SUPABASE_URL,
       changeOrigin: true,
       rewrite: (p: string) => p.replace(/^\/supabase-proxy/, ''),
       secure: true,
     },
-  };
+  } : {};
 
   return {
     base: './',
-    plugins: [react(), tailwindcss(), deckAiDevApi(env), captionsDevApi()],
+    plugins: [react(), tailwindcss(), deckAiDevApi(env)],
     resolve: {
       dedupe: ['react', 'react-dom'],
       alias: {

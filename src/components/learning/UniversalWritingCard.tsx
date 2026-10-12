@@ -59,7 +59,7 @@ export const UniversalWritingCard: React.FC<UniversalWritingCardProps> = ({
   if (!writableTrait) {
     return (
       <div className={`w-full text-center p-6 panel panel-stitched rounded-2xl text-text-muted ${className}`}>
-        Materi ini tidak memiliki data goresan untuk ditulis.
+        This item has no stroke data to write.
       </div>
     );
   }
@@ -99,15 +99,15 @@ export const UniversalWritingCard: React.FC<UniversalWritingCardProps> = ({
       id: (item as any).id || 'custom_kotoba_write',
       word: writableTrait.character,
       reading: (item as any).reading || (item as any).displayReading || writableTrait.character,
-      meaningId: writableTrait.meaning || 'Latihan Menulis',
+      meaningId: writableTrait.meaning || 'Writing practice',
       meaningEn: (item as any).meaningEn || 'Writing Practice',
       meaningJa: writableTrait.character,
-      jlpt: writableTrait.level || 'N5',
+      jlpt: writableTrait.level || 'A1',
       wordType: 'noun',
       kanjiComponents: writableTrait.characters,
       exampleSentence: {
-        japanese: `${writableTrait.character}を練習します。`,
-        reading: `${writableTrait.character}をれんしゅうします。`,
+        japanese: `Practise writing ${writableTrait.character}.`,
+        reading: '',
         meaningId: `Berlatih menulis ${writableTrait.character}.`,
       },
     };

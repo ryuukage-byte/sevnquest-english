@@ -34,8 +34,8 @@ export const DokkaiModule: React.FC<DokkaiModuleProps> = ({
 
   const fallbackDokkai: DokkaiItem = Object.values(DOKKAI_DATABASE)[0] || {
     id: 'dokkai_001',
-    title: 'Wacana Permulaan (N5)',
-    level: 'N5',
+    title: 'Wacana Permulaan (A1)',
+    level: 'A1',
     category: 'Wacana Singkat',
     text: 'はじめまして。わたしはがくせいです。にほんごをべんきょうしています。',
     questions: [],
@@ -68,7 +68,7 @@ export const DokkaiModule: React.FC<DokkaiModuleProps> = ({
         </div>
 
         <QuizEngine
-          title={`📚 Soal Pemahaman: ${currentReading.title}`}
+          title={`📚 Reading questions: ${currentReading.title}`}
           questions={currentReading.questions}
           playerMp={playerMp}
           playerInt={playerInt}
@@ -101,7 +101,7 @@ export const DokkaiModule: React.FC<DokkaiModuleProps> = ({
             {diagnosticResult.weakGrammars.length > 0 && (
               <div className="pt-2 border-t border-border-subtle">
                 <span className="text-[11px] font-bold text-text-muted block mb-1">
-                  Pola Tata Bahasa Terkait (Otomatis ditambahkan ke antrean Recall):
+                  Related grammar (automatically added to the Recall queue):
                 </span>
                 <div className="flex flex-wrap gap-1.5">
                   {diagnosticResult.weakGrammars.map(g => (
@@ -128,10 +128,10 @@ export const DokkaiModule: React.FC<DokkaiModuleProps> = ({
           </span>
           <div>
             <h2 className="text-base sm:text-lg font-bold text-text-primary font-heading flex items-center gap-2">
-              <span className="text-teal-400">読</span> DOKKAI (Membaca Teks Terpadu)
+              <span className="text-teal-400">📖</span> READING (Reading passages)
             </h2>
             <p className="text-xs text-text-secondary">
-              Integrasi tata bahasa, kosakata, dan kanji dalam teks utuh
+              Grammar and vocabulary used together in a full passage
             </p>
           </div>
         </div>
@@ -153,7 +153,7 @@ export const DokkaiModule: React.FC<DokkaiModuleProps> = ({
                     : 'text-text-muted hover:text-text-primary'
                 }`}
               >
-                Reading {idx + 1} ({reading.questions.length} Soal)
+                Reading {idx + 1} ({reading.questions.length} questions)
               </button>
             );
           })}
@@ -194,10 +194,10 @@ export const DokkaiModule: React.FC<DokkaiModuleProps> = ({
           <div className="p-3 rounded-2xl bg-surface-inset border border-border-subtle flex flex-wrap items-center justify-between gap-2 text-xs">
             <div className="flex items-center gap-1.5 text-text-secondary text-[11px]">
               <Layers className="w-3.5 h-3.5 text-gold" />
-              <span>Komposisi Materi Integrasi:</span>
+              <span>Lesson mix:</span>
             </div>
             <div className="flex items-center gap-2 text-[11px] font-mono">
-              <span className="text-gold font-bold">70% Materi Stage Ini</span>
+              <span className="text-gold font-bold">70% of this stage</span>
               <span className="text-border-primary">•</span>
               <span className="text-text-secondary font-bold">20% Stage Lalu</span>
               <span className="text-border-primary">•</span>
@@ -211,7 +211,7 @@ export const DokkaiModule: React.FC<DokkaiModuleProps> = ({
           <div className="p-4 rounded-2xl bg-surface-inset border border-border-subtle space-y-2">
             <h4 className="text-xs font-bold uppercase tracking-wider text-text-secondary flex items-center gap-1.5 font-heading">
               <FileText className="w-3.5 h-3.5 text-gold" />
-              Kosakata Kunci Dalam Teks
+              Key vocabulary in this passage
             </h4>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
               {(currentReading.vocabularyList || []).map((vocab, i) => (
@@ -242,7 +242,7 @@ export const DokkaiModule: React.FC<DokkaiModuleProps> = ({
           }}
           className="w-full py-3.5 rounded-2xl btn-cta font-bold text-sm transition-all flex items-center justify-center gap-2 font-heading"
         >
-          <span>Jawab {currentReading.questions.length} Soal Pemahaman Dokkai</span>
+          <span>Answer the {currentReading.questions.length} reading questions</span>
         </button>
       </div>
     </div>

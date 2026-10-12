@@ -5,8 +5,8 @@ import {
   Swords, Play, RotateCcw, Trophy, Award, ArrowRight, 
   ArrowLeft, Layers, Compass, Clock, Flame
 } from 'lucide-react';
-import { ALL_TRYOUTS } from '../../data/tryouts';
 import { TryOutData } from '../../types/content';
+const ALL_TRYOUTS: any[] = []; // Japanese JLPT mock exams are not ported to the English edition
 import { KANJI_QUESTION_BANK as kanjiQuestionsDb, BUNPOU_QUESTION_BANK as bunpouQuestionsDb } from '../../data/questionBank';
 import { CHOUKAI_DATABASE } from '../../data/choukai';
 import { CHOUKAI_ENABLED } from '../../data/featureFlags';
@@ -15,10 +15,8 @@ import { playSound, speakJapanese } from '../../utils/audio';
 import { RubyText } from '../learning/RubyText';
 import { calculateQuizReward } from '../../utils/rewards';
 import { smartSample } from '../../utils/smartRandomizer';
-import furiganaDictRaw from '../../data/furiganaDictionary.json';
 import { isKanji } from '../../utils/furiganaUtils';
 
-const DungeonBattleModule = lazy(() => import('../dungeon/DungeonBattleModule').then(m => ({ default: m.DungeonBattleModule })));
 
 export type JlptSection = 'all' | 'mojiGoi' | 'bunpou' | 'dokkai' | 'choukai' | 'tryout';
 
@@ -38,7 +36,7 @@ export interface UnifiedQuestionItem {
   id: string;
   section: 'mojiGoi' | 'bunpou' | 'dokkai' | 'choukai';
   subCategory: QuestionSubCategory;
-  level: 'N5' | 'N4' | 'N3' | 'N2' | 'N1' | 'JFT';
+  level: 'A1' | 'A2' | 'B1' | 'B2' | 'C1' | 'JFT';
   sourceTitle: string;
   instruction?: string;
   prompt: string;
@@ -55,16 +53,16 @@ export const SUBCATEGORY_CONFIG: Record<
   QuestionSubCategory,
   { label: string; jp: string; section: JlptSection; color: string; bg: string }
 > = {
-  all: { label: 'Semua Format', jp: '全て', section: 'all', color: 'text-text-primary', bg: 'bg-surface-inset border-border-subtle' },
-  kanji_reading: { label: 'Cara Baca Kanji', jp: '漢字読み', section: 'mojiGoi', color: 'text-indigo dark:text-indigo-soft', bg: 'bg-indigo/15 border-border-subtle' },
-  kanji_writing: { label: 'Penulisan Aksara', jp: '表記', section: 'mojiGoi', color: 'text-blue-500 dark:text-blue-400', bg: 'bg-blue-500/15 border-border-subtle' },
-  vocab_context: { label: 'Konteks Kosakata', jp: '文脈規定', section: 'mojiGoi', color: 'text-emerald-800 dark:text-emerald-400', bg: 'bg-emerald-500/15 border-border-subtle' },
-  synonym: { label: 'Sinonim / Semakna', jp: '言い換え', section: 'mojiGoi', color: 'text-teal-600 dark:text-teal-400', bg: 'bg-teal-500/15 border-border-subtle' },
-  vocab_usage: { label: 'Penggunaan Kata', jp: '用法', section: 'mojiGoi', color: 'text-red-700 dark:text-amber-400', bg: 'bg-red-700/15 border-border-subtle' },
-  grammar_form: { label: 'Pola & Konjugasi', jp: '文法形式', section: 'bunpou', color: 'text-purple-500 dark:text-purple-400', bg: 'bg-purple-500/15 border-border-subtle' },
-  sentence_star: { label: 'Susun Kalimat (★)', jp: '文の組み立て', section: 'bunpou', color: 'text-gold dark:text-gold', bg: 'bg-gold/15 border-border-subtle' },
-  dokkai_reading: { label: 'Wacana Bacaan', jp: '読解', section: 'dokkai', color: 'text-rose-500 dark:text-rose-400', bg: 'bg-rose-500/15 border-border-subtle' },
-  choukai_audio: { label: 'Dialog Menyimak', jp: '聴解', section: 'choukai', color: 'text-cyan-500 dark:text-cyan-400', bg: 'bg-cyan-500/15 border-border-subtle' },
+  all: { label: 'All formats', jp: 'All', section: 'all', color: 'text-text-primary', bg: 'bg-surface-inset border-border-subtle' },
+  kanji_reading: { label: 'Letter sounds', jp: 'Sounds', section: 'mojiGoi', color: 'text-indigo dark:text-indigo-soft', bg: 'bg-indigo/15 border-border-subtle' },
+  kanji_writing: { label: 'Letter writing', jp: 'Writing', section: 'mojiGoi', color: 'text-blue-500 dark:text-blue-400', bg: 'bg-blue-500/15 border-border-subtle' },
+  vocab_context: { label: 'Vocabulary in context', jp: 'Context', section: 'mojiGoi', color: 'text-emerald-800 dark:text-emerald-400', bg: 'bg-emerald-500/15 border-border-subtle' },
+  synonym: { label: 'Synonyms / meaning', jp: 'Synonyms', section: 'mojiGoi', color: 'text-teal-600 dark:text-teal-400', bg: 'bg-teal-500/15 border-border-subtle' },
+  vocab_usage: { label: 'Word usage', jp: 'Usage', section: 'mojiGoi', color: 'text-red-700 dark:text-amber-400', bg: 'bg-red-700/15 border-border-subtle' },
+  grammar_form: { label: 'Grammar patterns', jp: 'Grammar', section: 'bunpou', color: 'text-purple-500 dark:text-purple-400', bg: 'bg-purple-500/15 border-border-subtle' },
+  sentence_star: { label: 'Sentence building (★)', jp: 'Sentences', section: 'bunpou', color: 'text-gold dark:text-gold', bg: 'bg-gold/15 border-border-subtle' },
+  dokkai_reading: { label: 'Reading passages', jp: 'Reading', section: 'dokkai', color: 'text-rose-500 dark:text-rose-400', bg: 'bg-rose-500/15 border-border-subtle' },
+  choukai_audio: { label: 'Listening dialogues', jp: 'Listening', section: 'choukai', color: 'text-cyan-500 dark:text-cyan-400', bg: 'bg-cyan-500/15 border-border-subtle' },
 };
 
 export function detectQuestionSubCategory(
@@ -164,8 +162,8 @@ export function getQuestionTargetWord(q: {
 
   if (cleanOptions.length === 0) return undefined;
 
-  const dictWords = furiganaDictRaw.words as Record<string, string>;
-  const dictKanji = furiganaDictRaw.kanji as Record<string, string>;
+  const dictWords: Record<string, string> = {};
+  const dictKanji: Record<string, string> = {};
 
   // A. Check compound words from dictionary that exist in prompt (longer matches first)
   const candidateWords = Object.keys(dictWords)
@@ -264,11 +262,11 @@ const SECTION_TABS = ALL_SECTION_TABS.filter(t => CHOUKAI_ENABLED || t.value !==
 
 const LEVEL_OPTIONS = [
   { value: 'all', label: 'Semua Level' },
-  { value: 'N5', label: 'N5' },
-  { value: 'N4', label: 'N4' },
-  { value: 'N3', label: 'N3' },
-  { value: 'N2', label: 'N2' },
-  { value: 'N1', label: 'N1' },
+  { value: 'A1', label: 'A1' },
+  { value: 'A2', label: 'A2' },
+  { value: 'B1', label: 'B1' },
+  { value: 'B2', label: 'B2' },
+  { value: 'C1', label: 'C1' },
   { value: 'JFT', label: 'JFT-Basic' },
 ];
 
@@ -281,11 +279,11 @@ const SECTION_BADGE_STYLE: Record<string, { bg: string; text: string; label: str
 };
 
 const LEVEL_COLORS: Record<string, { bg: string; text: string; border: string }> = {
-  N1: { bg: 'bg-rose-500/15', text: 'text-rose-400', border: 'border-border-subtle' },
-  N2: { bg: 'bg-indigo/15', text: 'text-indigo', border: 'border-border-subtle' },
-  N3: { bg: 'bg-gold/15', text: 'text-gold', border: 'border-border-subtle' },
-  N4: { bg: 'bg-surface-inset', text: 'text-emerald-800 dark:text-emerald-400', border: 'border-border-subtle' },
-  N5: { bg: 'bg-cyan-500/15', text: 'text-cyan-600 dark:text-cyan-400', border: 'border-border-subtle' },
+  C1: { bg: 'bg-rose-500/15', text: 'text-rose-400', border: 'border-border-subtle' },
+  B2: { bg: 'bg-indigo/15', text: 'text-indigo', border: 'border-border-subtle' },
+  B1: { bg: 'bg-gold/15', text: 'text-gold', border: 'border-border-subtle' },
+  A2: { bg: 'bg-surface-inset', text: 'text-emerald-800 dark:text-emerald-400', border: 'border-border-subtle' },
+  A1: { bg: 'bg-cyan-500/15', text: 'text-cyan-600 dark:text-cyan-400', border: 'border-border-subtle' },
   JFT: { bg: 'bg-surface-inset', text: 'text-red-700 dark:text-amber-400', border: 'border-border-subtle' },
 };
 
@@ -341,7 +339,7 @@ export const QuestionLibraryView: React.FC<QuestionLibraryViewProps> = ({
 
       // Moji Goi
       if (data?.sections?.mojiGoi?.questions) {
-        data.sections.mojiGoi.questions.forEach((q, idx) => {
+        data.sections.mojiGoi.questions.forEach((q: any, idx: number) => {
           const subCat = detectQuestionSubCategory('mojiGoi', q.instruction, q.prompt);
           const targetWord = getQuestionTargetWord({
             subCategory: subCat,
@@ -369,7 +367,7 @@ export const QuestionLibraryView: React.FC<QuestionLibraryViewProps> = ({
 
       // Bunpou & Dokkai
       if (data?.sections?.bunpouDokkai?.questions) {
-        data.sections.bunpouDokkai.questions.forEach((q, idx) => {
+        data.sections.bunpouDokkai.questions.forEach((q: any, idx: number) => {
           const isDokkai = Boolean(q.passage) || (q.instruction && q.instruction.includes('文章'));
           const sec = isDokkai ? 'dokkai' : 'bunpou';
           const subCat = isDokkai ? 'dokkai_reading' : detectQuestionSubCategory('bunpou', q.instruction, q.prompt, q.passage);
@@ -400,7 +398,7 @@ export const QuestionLibraryView: React.FC<QuestionLibraryViewProps> = ({
 
       // Choukai
       if (data?.sections?.choukai?.questions) {
-        data.sections.choukai.questions.forEach((q, idx) => {
+        data.sections.choukai.questions.forEach((q: any, idx: number) => {
           list.push({
             id: `to_${tryout.id}_ck_${q.id || idx}`,
             section: 'choukai',
@@ -420,7 +418,7 @@ export const QuestionLibraryView: React.FC<QuestionLibraryViewProps> = ({
 
     // 2. From Choukai Database
     Object.values(CHOUKAI_DATABASE).forEach((ck) => {
-      const lvl = (ck.level?.includes('N4') ? 'N4' : ck.level?.includes('N5') ? 'N5' : 'N3') as 'N5' | 'N4' | 'N3';
+      const lvl = (ck.level?.includes('A2') ? 'A2' : ck.level?.includes('A1') ? 'A1' : 'B1') as 'A1' | 'A2' | 'B1';
       (ck.questions || []).forEach((q, qIdx) => {
         list.push({
           id: `db_ck_${ck.id}_${q.id || qIdx}`,
@@ -440,7 +438,7 @@ export const QuestionLibraryView: React.FC<QuestionLibraryViewProps> = ({
 
     // 3. From Dokkai Database
     Object.values(DOKKAI_DATABASE).forEach((dk) => {
-      const lvl = (dk.level?.includes('N4') ? 'N4' : dk.level?.includes('N5') ? 'N5' : 'N3') as 'N5' | 'N4' | 'N3';
+      const lvl = (dk.level?.includes('A2') ? 'A2' : dk.level?.includes('A1') ? 'A1' : 'B1') as 'A1' | 'A2' | 'B1';
       (dk.questions || []).forEach((q, qIdx) => {
         list.push({
           id: `db_dk_${dk.id}_${q.id || qIdx}`,
@@ -460,7 +458,7 @@ export const QuestionLibraryView: React.FC<QuestionLibraryViewProps> = ({
 
     // 4. Sample slice from Kanji Questions (Moji/Goi)
     if (Array.isArray(kanjiQuestionsDb)) {
-      kanjiQuestionsDb.slice(0, 100).forEach((kq) => {
+      (kanjiQuestionsDb as any[]).slice(0, 100).forEach((kq: any) => {
         const targetWord = getQuestionTargetWord({
           subCategory: 'kanji_reading',
           instruction: 'Pilihlah cara baca (yomikata) atau kanji yang tepat:',
@@ -472,7 +470,7 @@ export const QuestionLibraryView: React.FC<QuestionLibraryViewProps> = ({
           id: `kq_${kq.id}`,
           section: 'mojiGoi',
           subCategory: 'kanji_reading',
-          level: 'N3',
+          level: 'B1',
           sourceTitle: 'Bank Soal Aksara Kanji',
           instruction: 'Pilihlah cara baca (yomikata) atau kanji yang tepat:',
           prompt: kq.prompt,
@@ -487,7 +485,7 @@ export const QuestionLibraryView: React.FC<QuestionLibraryViewProps> = ({
 
     // 5. Sample slice from Bunpou Questions (Grammar)
     if (Array.isArray(bunpouQuestionsDb)) {
-      bunpouQuestionsDb.slice(0, 100).forEach((bq) => {
+      (bunpouQuestionsDb as any[]).slice(0, 100).forEach((bq: any) => {
         const targetWord = getQuestionTargetWord({
           subCategory: 'grammar_form',
           instruction: 'Lengkapi kalimat berikut dengan pola tata bahasa yang tepat:',
@@ -499,7 +497,7 @@ export const QuestionLibraryView: React.FC<QuestionLibraryViewProps> = ({
           id: `bq_${bq.id}`,
           section: 'bunpou',
           subCategory: 'grammar_form',
-          level: 'N3',
+          level: 'B1',
           sourceTitle: 'Bank Soal Tata Bahasa',
           instruction: 'Lengkapi kalimat berikut dengan pola tata bahasa yang tepat:',
           prompt: bq.prompt,
@@ -532,7 +530,7 @@ export const QuestionLibraryView: React.FC<QuestionLibraryViewProps> = ({
   }, [allQuestions]);
 
   const countsByLevel = useMemo(() => {
-    const counts: Record<string, number> = { all: allQuestions.length, N5: 0, N4: 0, N3: 0, N2: 0, N1: 0, JFT: 0 };
+    const counts: Record<string, number> = { all: allQuestions.length, A1: 0, A2: 0, B1: 0, B2: 0, C1: 0, JFT: 0 };
     for (const q of allQuestions) {
       if (counts[q.level] !== undefined) counts[q.level]++;
     }
@@ -689,7 +687,7 @@ export const QuestionLibraryView: React.FC<QuestionLibraryViewProps> = ({
         }
       });
 
-      const levelSample = levelFilter === 'all' ? (drillQuestions[0]?.level || 'N3') : levelFilter;
+      const levelSample = levelFilter === 'all' ? (drillQuestions[0]?.level || 'B1') : levelFilter;
       const quizReward = calculateQuizReward(levelSample, correctScore, drillQuestions.length);
       const expGain = quizReward.totalExpGained;
       const goldGain = quizReward.goldGained;
@@ -724,29 +722,6 @@ export const QuestionLibraryView: React.FC<QuestionLibraryViewProps> = ({
     }
   };
 
-  // --- IF RUNNING FULL DUNGEON EXAM SIMULATOR ---
-  if (activeDungeonTryout) {
-    return (
-      <div className="space-y-4 animate-fade-in">
-        <Suspense fallback={<div className="panel panel-stitched p-12 text-center text-text-muted font-mono">Memuat Simulator Ujian...</div>}>
-          <DungeonBattleModule
-            tryOutData={activeDungeonTryout}
-            onComplete={(score, total, exp, gold, tryoutId) => {
-              if (onCompleteStudyItem) {
-                onCompleteStudyItem('tryOuts', exp, gold, tryoutId || 'tryout_exam', score, total);
-              } else {
-                onRewardPlayer?.(exp, gold);
-                onRecordStudy?.('tryOuts', tryoutId || 'tryout_exam', total);
-              }
-              setActiveDungeonTryout(null);
-            }}
-            onBack={() => setActiveDungeonTryout(null)}
-            soundEnabled={soundEnabled}
-          />
-        </Suspense>
-      </div>
-    );
-  }
 
   // --- IF RUNNING LATIHAN HARIAN (10 SOAL) INTERACTIVE DRILL ---
   if (isDrillActive) {
@@ -1285,7 +1260,7 @@ export const QuestionLibraryView: React.FC<QuestionLibraryViewProps> = ({
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {filteredTryouts.map((to) => {
-              const lvlColor = LEVEL_COLORS[to.level] || LEVEL_COLORS.N5;
+              const lvlColor = LEVEL_COLORS[to.level] || LEVEL_COLORS.A1;
 
               return (
                 <div

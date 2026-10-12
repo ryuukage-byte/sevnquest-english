@@ -65,7 +65,7 @@ export const BookDetailView: React.FC<BookDetailViewProps> = ({
           className="flex items-center gap-2 text-xs sm:text-sm font-heading font-bold text-text-muted hover:text-text-primary transition-colors p-2 rounded-xl hover:bg-surface-inset"
         >
           <ArrowLeft className="w-4 h-4" />
-          <span>Kembali ke Rak Buku</span>
+          <span>Back to the bookshelf</span>
         </button>
 
         <span className="text-xs font-mono text-text-muted">
@@ -94,7 +94,7 @@ export const BookDetailView: React.FC<BookDetailViewProps> = ({
                   {book.level}
                 </span>
                 <span className="text-xs font-mono text-text-muted">
-                  {book.chapters.length} Deck Bab · {totalBookItems} Total Materi
+                  {book.chapters.length} chapter decks · {totalBookItems} items in total
                 </span>
               </div>
               <h1 className="text-xl sm:text-2xl font-bold text-text-primary font-heading">
@@ -109,10 +109,10 @@ export const BookDetailView: React.FC<BookDetailViewProps> = ({
       <div className="space-y-1 px-1">
         <h2 className="text-base sm:text-lg font-bold text-text-primary font-heading flex items-center gap-2">
           <Layers className="w-4 h-4 text-gold" />
-          <span>Daftar Deck Bab Pembelajaran ({book.chapters.length} Deck)</span>
+          <span>Chapter decks ({book.chapters.length})</span>
         </h2>
         <p className="text-xs text-text-secondary font-body">
-          Pilih salah satu deck di bawah untuk membuka kartu hafalan, belajar flashcard, latihan menulis kuas, atau menyalin ke Buku Saku pribadimu.
+          Choose a deck below to open flashcards, practise writing, or copy it to your own Notebook.
         </p>
       </div>
 
@@ -142,7 +142,7 @@ export const BookDetailView: React.FC<BookDetailViewProps> = ({
                     </div>
                     <div className="flex items-center gap-1.5 flex-wrap">
                       <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider font-mono text-gold bg-gold/10 px-2 py-0.5 rounded-md border border-border-subtle">
-                        Deck Bab {chapter.chapterNumber}
+                        Chapter {chapter.chapterNumber}
                       </span>
                       <span className="text-[10px] font-mono text-text-muted">
                         {book.level}
@@ -163,7 +163,7 @@ export const BookDetailView: React.FC<BookDetailViewProps> = ({
                         ? 'bg-emerald-500/15 text-emerald-500 border-border-subtle'
                         : 'bg-surface-inset text-text-muted hover:text-gold hover:border-border-primary border-border-subtle'
                     }`}
-                    title={isCloned ? 'Sudah tersalin ke Buku Saku Saya' : 'Salin deck bab ini ke Buku Saku Saya'}
+                    title={isCloned ? 'Already copied to your Notebook' : 'Copy this chapter deck to your Notebook'}
                   >
                     {isCloned ? (
                       <Check className="w-4 h-4 text-emerald-500" />
@@ -187,7 +187,7 @@ export const BookDetailView: React.FC<BookDetailViewProps> = ({
                   </span>
                   {stats.kanjiCount > 0 && (
                     <span className="px-2 py-0.5 rounded-md text-[10px] font-mono font-semibold bg-emerald-500/10 text-emerald-400 border border-border-subtle">
-                      {stats.kanjiCount} Kanji
+                      {stats.kanjiCount} letters
                     </span>
                   )}
                   {stats.kotobaCount > 0 && (
@@ -212,11 +212,11 @@ export const BookDetailView: React.FC<BookDetailViewProps> = ({
                         {stats.pct}% Dikuasai ({stats.mastered}/{stats.total})
                       </span>
                     ) : (
-                      <span>Belum dipelajari</span>
+                      <span>Not started</span>
                     )}
                   </div>
                   <span className="font-heading font-bold text-xs text-gold group-hover:translate-x-1 transition-transform flex items-center gap-1">
-                    Buka Deck <ChevronRight className="w-3.5 h-3.5" />
+                    Open deck <ChevronRight className="w-3.5 h-3.5" />
                   </span>
                 </div>
 

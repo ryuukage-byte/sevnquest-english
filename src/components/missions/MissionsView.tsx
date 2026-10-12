@@ -39,12 +39,12 @@ export const MissionsView: React.FC<MissionsViewProps> = ({
       <div className="panel panel-stitched p-4 sm:p-5 mb-3 shadow-md border border-border-subtle">
         <div>
           <h2 className="text-base sm:text-lg font-bold font-heading tracking-wide text-text-primary flex items-center gap-2">
-            {activeTab === 'daily' ? <><ScrollIcon className="w-5 h-5 text-gold" /> Papan Sayembara Harian</> : <><Calendar className="w-5 h-5 text-gold" /> Mandat Ekspedisi Mingguan</>}
+            {activeTab === 'daily' ? <><ScrollIcon className="w-5 h-5 text-gold" /> Daily quest board</> : <><Calendar className="w-5 h-5 text-gold" /> Mandat Ekspedisi Mingguan</>}
           </h2>
           <p className="text-xs text-text-secondary mt-0.5">
             {activeTab === 'daily'
-              ? 'Reset otomatis setiap jam 00:00 malam untuk farming EXP & Gold rutin.'
-              : 'Tantangan mingguan dengan hadiah EXP & Gold berlipat ganda!'}
+              ? 'Resets automatically at midnight for steady EXP & Gold.'
+              : 'Weekly challenges with double EXP & Gold rewards!'}
           </p>
         </div>
       </div>
@@ -59,7 +59,7 @@ export const MissionsView: React.FC<MissionsViewProps> = ({
           className={`skeuo-tier-pill flex-1 flex justify-center items-center gap-2 ${activeTab === 'daily' ? 'active' : ''}`}
         >
           <ScrollIcon className="w-3.5 h-3.5" />
-          Misi Harian
+          Daily quests
         </button>
         <button
           onClick={() => {
@@ -69,7 +69,7 @@ export const MissionsView: React.FC<MissionsViewProps> = ({
           className={`skeuo-tier-pill flex-1 flex justify-center items-center gap-2 ${activeTab === 'weekly' ? 'active' : ''}`}
         >
           <Calendar className="w-3.5 h-3.5" />
-          Mandat Mingguan
+          Weekly quests
         </button>
       </div>
 
@@ -80,7 +80,7 @@ export const MissionsView: React.FC<MissionsViewProps> = ({
           <span>Waktu Reset: <strong className="text-text-primary font-mono font-bold">00:00 (Tengah Malam)</strong></span>
         </div>
         <span className="text-gold font-mono font-bold relative z-10">
-          {currentList.filter(m => m.claimed).length} / {currentList.length} Selesai
+          {currentList.filter(m => m.claimed).length} / {currentList.length} done
         </span>
       </div>
 
@@ -105,7 +105,7 @@ export const MissionsView: React.FC<MissionsViewProps> = ({
                   </h3>
                   {mission.claimed && (
                     <span className="text-[10px] px-2 py-0.5 rounded-md bg-surface-inset text-gold border border-border-subtle font-mono">
-                      Selesai
+                      Done
                     </span>
                   )}
                 </div>
@@ -159,7 +159,7 @@ export const MissionsView: React.FC<MissionsViewProps> = ({
                     disabled
                     className="skeuo-btn-disabled w-full sm:w-auto"
                   >
-                    Belum Selesai
+                    Not done yet
                   </button>
                 )}
               </div>

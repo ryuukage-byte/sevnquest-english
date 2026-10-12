@@ -37,18 +37,18 @@ export const KanjiModule: React.FC<KanjiModuleProps> = ({
 
   const fallbackKanji: KanjiItem = {
     id: 'kanji_001',
-    character: '関',
+    character: 'A',
     meaningId: 'Hubungan / Relasi',
     meaningEn: 'connection, barrier',
-    onyomi: ['カン (KAN)'],
-    kunyomi: ['せき (seki)', 'かか.わる (kaka.waru)'],
-    jlpt: 'N3',
+    onyomi: ['/eɪ/'],
+    kunyomi: ['apple', 'ant'],
+    jlpt: 'B1',
     strokeCount: 14,
-    radical: '門 (mon)',
-    radicalName: 'Mon (もん)',
+    radical: 'Straight strokes',
+    radicalName: 'Straight strokes',
     relatedWords: [
-      { word: '関係', reading: 'かんけい', meaningId: 'Hubungan / Relasi' },
-      { word: '玄関', reading: 'げんかん', meaningId: 'Pintu masuk' }
+      { word: 'apple', reading: '/ˈæpəl/', meaningId: 'a round red or green fruit' },
+      { word: 'ant', reading: '/ænt/', meaningId: 'a small insect' }
     ],
     questions: []
   };
@@ -77,24 +77,24 @@ export const KanjiModule: React.FC<KanjiModuleProps> = ({
       );
 
       if (qType === 0) {
-        instruction = '漢字の意味として最も適切なものを一つ選びなさい。';
-        instructionId = 'Pilihlah arti yang paling tepat untuk kanji berikut.';
+        instruction = 'Choose the best meaning for this letter.';
+        instructionId = 'Pick the meaning that fits this letter.';
         correctAns = item.meaningId;
         distractors = Array.from(new Set(otherKanjis.map(k => k.meaningId))).slice(0, 3);
       } else if (qType === 1) {
-        instruction = '下線部の意味を表す漢字を一つ選びなさい。';
-        instructionId = 'Pilihlah karakter kanji yang tepat untuk arti berikut.';
+        instruction = 'Choose the letter that matches this meaning.';
+        instructionId = 'Pick the letter that matches the description.';
         correctAns = item.character;
         distractors = Array.from(new Set(otherKanjis.map(k => k.character))).slice(0, 3);
       } else {
-        instruction = '漢字の正しい読み方（音読み・訓読み）を一つ選びなさい。';
-        instructionId = 'Pilihlah cara baca (Onyomi/Kunyomi) yang benar untuk kanji berikut.';
+        instruction = 'Choose the correct sound for this letter.';
+        instructionId = 'Pick the sound that matches this letter.';
         correctAns = [...(item.onyomi || []), ...(item.kunyomi || [])].join(', ') || item.character;
         distractors = Array.from(new Set(otherKanjis.map(k => [...(k.onyomi || []), ...(k.kunyomi || [])].join(', ') || k.character))).slice(0, 3);
       }
 
       while (distractors.length < 3) {
-        distractors.push(['Melakukan kegiatan', 'Menyatakan keadaan', 'Sesuatu yang besar'][distractors.length]);
+        distractors.push(['A capital letter', 'A small letter', 'A vowel'][distractors.length]);
       }
 
       const options = fisherYatesShuffle([correctAns, ...distractors]);
@@ -109,7 +109,7 @@ export const KanjiModule: React.FC<KanjiModuleProps> = ({
         audioPrompt: item.character,
         options,
         correctIndex,
-        explanation: `Kanji 「${item.character}」 artinya "${item.meaningId}". Bacaan: Onyomi [${item.onyomi?.join(', ') || '-'}], Kunyomi [${item.kunyomi?.join(', ') || '-'}]`
+        explanation: `Letter ${item.character} is "${item.meaningId}". Sound: [${item.onyomi?.join(', ') || '-'}], Kunyomi [${item.kunyomi?.join(', ') || '-'}]`
       };
     });
   };
@@ -134,7 +134,7 @@ export const KanjiModule: React.FC<KanjiModuleProps> = ({
     return (
       <div className="w-full space-y-4">
         <QuizEngine
-          title={`🎯 Quiz Aksara & Kanji (${activeQuestions.length} Soal)`}
+          title={`🎯 Letter quiz (${activeQuestions.length} questions)`}
           questions={activeQuestions}
           playerMp={playerMp}
           playerInt={playerInt}
@@ -162,10 +162,10 @@ export const KanjiModule: React.FC<KanjiModuleProps> = ({
           </span>
           <div>
             <h2 className="text-lg font-bold text-text-primary font-heading flex items-center gap-2">
-              <span className="text-wine-accent">漢</span> KANJI (Karakter)
+              <span className="text-wine-accent">Aa</span> LETTERS (Alphabet)
             </h2>
             <p className="text-xs text-text-secondary">
-              Pelajari {safeKanjiList.length} Karakter, latihan menulis lembar stroke & selesaikan Quiz
+              Learn {safeKanjiList.length} letters, practise stroke writing and finish the quiz
             </p>
           </div>
         </div>
@@ -184,13 +184,13 @@ export const KanjiModule: React.FC<KanjiModuleProps> = ({
                 : 'opacity-70 hover:opacity-100'
             }`}
           >
-            📋 Daftar Karakter ({safeKanjiList.length})
+            📋 Letter list ({safeKanjiList.length})
           </button>
           <button
             onClick={handleStartQuiz}
             className="btn btn-pill flex items-center gap-1.5 text-gold"
           >
-            <span>🎯 Latihan ({compiledQuestions.length})</span>
+            <span>🎯 Quiz ({compiledQuestions.length})</span>
           </button>
         </div>
       </div>
@@ -207,7 +207,7 @@ export const KanjiModule: React.FC<KanjiModuleProps> = ({
             setSelectedKanjiId(null);
             playSound('click', soundEnabled);
           }}
-          backButtonLabel="Kembali ke Daftar Kanji"
+          backButtonLabel="Back to the letter list"
           onCompleteSheet={(sheet, score, reward) => {
             // Writing practice gives dynamic EXP & gold based on level, stroke count, speed, watermark, and hints
             const exp = reward?.expGained ?? 15;
@@ -259,17 +259,17 @@ export const KanjiModule: React.FC<KanjiModuleProps> = ({
           <div className="panel panel-stitched p-5 border border-border-subtle flex flex-col sm:flex-row items-center justify-between gap-4">
             <div className="space-y-1 text-center sm:text-left">
               <h3 className="text-base font-bold text-wine-accent font-heading">
-                🎯 Uji Semua Kanji Hari Ini (7 Soal)
+                🎯 Test all letters today (7 questions)
               </h3>
               <p className="text-xs text-text-secondary">
-                Quiz kanji mencakup seluruh kanji pada stage ini dengan soal berbasis kosakata kontekstual.
+                The letter quiz covers every letter in this stage, using questions based on real words.
               </p>
             </div>
             <button
               onClick={handleStartQuiz}
               className="btn btn-pill py-3 px-6 text-wine-accent font-bold text-xs shrink-0"
             >
-              Mulai Quiz Kanji
+              Start letter quiz
             </button>
           </div>
         </div>

@@ -268,7 +268,7 @@ export function toggleItemInDeck(
 
 export interface GeneratePresetOptions {
   type: DeckType;
-  level: 'all' | 'N5' | 'N4' | 'N3' | 'N2' | 'N1' | 'Kaigo';
+  level: 'all' | 'A1' | 'A2' | 'B1' | 'B2' | 'C1' | 'Kaigo';
   count: number;
 }
 
@@ -300,7 +300,7 @@ export function generatePresetDeckItems(options: GeneratePresetOptions): DeckIte
   const matchingBunpou = Object.values(BUNPOU_DATABASE).filter(item => {
     if (!item) return false;
     if (level === 'all') return true;
-    if (level === 'Kaigo') return item.level === 'N4' || item.level === 'N3';
+    if (level === 'Kaigo') return item.level === 'A2' || item.level === 'B1';
     return item.level === level;
   });
 
@@ -455,7 +455,7 @@ export function resolveDeckItem(ref: DeckItemRef): ResolvedDeckItem | null {
     (ref.category === 'bunpou' && Boolean(BUNPOU_DATABASE[ref.id]));
   if (ref.customData && !hasMaster) {
     const cd = ref.customData;
-    const levelStr = cd.level || 'N5';
+    const levelStr = cd.level || 'A1';
 
     // Contoh kalimat kustom -> bentuk sesuai tipe konten (exampleSentence / ExampleSentence / RelatedWord).
     const exampleJp = cd.exampleJp;
@@ -485,7 +485,7 @@ export function resolveDeckItem(ref: DeckItemRef): ResolvedDeckItem | null {
         displayTitle: pseudoKotoba.word,
         displayReading: pseudoKotoba.reading,
         displayMeaning: pseudoKotoba.meaningId || '',
-        level: pseudoKotoba.jlpt || 'N5',
+        level: pseudoKotoba.jlpt || 'A1',
       };
     }
 
@@ -514,7 +514,7 @@ export function resolveDeckItem(ref: DeckItemRef): ResolvedDeckItem | null {
         displayTitle: pseudoKanji.character,
         displayReading: cd.reading || '',
         displayMeaning: pseudoKanji.meaningId || '',
-        level: pseudoKanji.jlpt || 'N5',
+        level: pseudoKanji.jlpt || 'A1',
       };
     }
 
@@ -541,7 +541,7 @@ export function resolveDeckItem(ref: DeckItemRef): ResolvedDeckItem | null {
         displayTitle: pseudoBunpou.title,
         displayReading: pseudoBunpou.formula,
         displayMeaning: pseudoBunpou.meaningId || '',
-        level: pseudoBunpou.level || 'N3',
+        level: pseudoBunpou.level || 'B1',
       };
     }
   }
@@ -557,7 +557,7 @@ export function resolveDeckItem(ref: DeckItemRef): ResolvedDeckItem | null {
       displayTitle: item.word,
       displayReading: item.reading,
       displayMeaning: item.meaningId || item.meaningEn || '',
-      level: item.jlpt || 'N5',
+      level: item.jlpt || 'A1',
     };
   }
 
@@ -575,7 +575,7 @@ export function resolveDeckItem(ref: DeckItemRef): ResolvedDeckItem | null {
       displayTitle: item.character,
       displayReading: reading,
       displayMeaning: item.meaningId || item.meaningEn || '',
-      level: item.jlpt || 'N5',
+      level: item.jlpt || 'A1',
     };
   }
 
@@ -589,7 +589,7 @@ export function resolveDeckItem(ref: DeckItemRef): ResolvedDeckItem | null {
       displayTitle: item.title,
       displayReading: item.formula,
       displayMeaning: item.meaningId || '',
-      level: item.level || 'N3',
+      level: item.level || 'B1',
     };
   }
 

@@ -30,7 +30,7 @@ export function BootSplash({ failed = false, onRetry }: BootSplashProps) {
           onClick={onRetry}
           className="btn-physical-primary min-h-[44px] py-2.5 px-6 rounded-xl text-sm font-bold font-heading cursor-pointer"
         >
-          Muat Ulang
+          Reload
         </button>
       ) : (
         <div className="w-40 h-2 rounded-full bg-surface-inset border border-border-subtle shadow-inner overflow-hidden">

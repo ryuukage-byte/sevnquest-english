@@ -4,7 +4,7 @@ import { motion } from 'motion/react';
 import HanziWriter from 'hanzi-writer';
 import { playSound, speakJapanese } from '../../utils/audio';
 import { sendScoreEvent } from '../../lib/supabase';
-import { KANA_STROKE_DICT } from '../../data/kanaStrokeDict';
+import LETTER_STROKES from '../../data/letters/strokeData.json';
 import { getKanjiBaseExp, calculateWritingReward, WritingRewardResult } from '../../utils/rewards';
 import { KANJI_DATABASE } from '../../data/kanji';
 import { KOTOBA_DATABASE } from '../../data/kotoba';
@@ -177,12 +177,10 @@ export const getCachedStrokeData = (char: string): any | null => {
   if (strokeDataCache.has(char)) {
     return strokeDataCache.get(char);
   }
-  if (KANA_STROKE_DICT[char]) {
-    const data = isSmallKana(char)
-      ? transformSmallKanaData(KANA_STROKE_DICT[char])
-      : KANA_STROKE_DICT[char];
-    strokeDataCache.set(char, data);
-    return data;
+  const letter = (LETTER_STROKES as Record<string, unknown>)[char];
+  if (letter) {
+    strokeDataCache.set(char, letter);
+    return letter;
   }
   try {
     const raw = localStorage.getItem(`nq_stroke_${char}`);
@@ -328,90 +326,11 @@ export const fetchSingleCharStrokeData = async (char: string): Promise<any> => {
   const cached = getCachedStrokeData(char);
   if (cached) return cached;
 
-  if (activeFetches.has(char)) {
-    return activeFetches.get(char)!;
-  }
-
-  const code = char.charCodeAt(0);
-  const isKana = (code >= 0x3040 && code <= 0x30ff) || (code >= 0x31f0 && code <= 0x31ff);
-  const encoded = encodeURIComponent(char);
-  const hex = code.toString(16).toLowerCase();
-
-  const fetchPromise = (async () => {
-    let rawData: any = null;
-
-    if (isKana) {
-      // 1. Try local kana files first
-      rawData = await tryFetchLocal('kana-strokes', `${encoded}.json`);
-      if (!rawData) {
-        rawData = await tryFetchLocal('kana-strokes', `${hex}.json`);
-      }
-      if (!rawData) {
-        rawData = await tryFetchLocal('kanji-strokes', `${encoded}.json`);
-      }
-      if (!rawData) {
-        rawData = await tryFetchLocal('kanji-strokes', `${hex}.json`);
-      }
-      // 2. Fallback to fast CDN mirrors with 10s timeout if local missing (dilewati saat offline)
-      if (!rawData && isOffline()) {
-        throw new Error(`Data goresan "${char}" tidak tersedia offline`);
-      }
-      if (!rawData) {
-        rawData = await fetchFastest([
-          `https://unpkg.com/hanzi-writer-data-jp@0.0.1/${encoded}.json`,
-          `https://cdn.jsdelivr.net/npm/hanzi-writer-data-jp@0.0.1/${encoded}.json`,
-          `https://fastly.jsdelivr.net/npm/hanzi-writer-data-jp@0.0.1/${encoded}.json`
-        ], 10000);
-      }
-    } else {
-      // Kanji: 1. Try bundled local kanji stroke data FIRST (Instant 0ms-2ms local load!)
-      rawData = await tryFetchLocal('kanji-strokes', `${encoded}.json`);
-      if (!rawData) {
-        rawData = await tryFetchLocal('kanji-strokes', `${hex}.json`);
-      }
-
-      // 2. Fallback to CDNs only if character is not bundled locally (dilewati saat offline)
-      if (!rawData && isOffline()) {
-        throw new Error(`Data goresan "${char}" tidak tersedia offline`);
-      }
-      if (!rawData) {
-        const primaryMirrors = [
-          `https://unpkg.com/hanzi-writer-data-jp@0.0.1/${encoded}.json`,
-          `https://cdn.jsdelivr.net/npm/hanzi-writer-data-jp@0.0.1/${encoded}.json`,
-          `https://fastly.jsdelivr.net/npm/hanzi-writer-data-jp@0.0.1/${encoded}.json`
-        ];
-
-        try {
-          rawData = await fetchFastest(primaryMirrors, 10000);
-        } catch {
-          const fallbackMirrors = [
-            `https://unpkg.com/hanzi-writer-data@2.0.1/${encoded}.json`,
-            `https://cdn.jsdelivr.net/npm/hanzi-writer-data@2.0.1/${encoded}.json`,
-            `https://fastly.jsdelivr.net/npm/hanzi-writer-data@2.0.1/${encoded}.json`
-          ];
-          try {
-            rawData = await fetchFastest(fallbackMirrors, 10000);
-          } catch {
-            rawData = await fetchWithTimeout(
-              `https://cdn.jsdelivr.net/gh/MadLadSquad/hanzi-writer-data-youyin/data/${encoded}.json`,
-              10000
-            );
-          }
-        }
-      }
-    }
-
-    const finalData = isSmallKana(char) ? transformSmallKanaData(rawData) : rawData;
-    saveStrokeDataToCache(char, finalData);
-    activeFetches.delete(char);
-    return finalData;
-  })().catch(err => {
-    activeFetches.delete(char);
-    throw err;
-  });
-
-  activeFetches.set(char, fetchPromise);
-  return fetchPromise;
+  // English edition: stroke data exists only for the letters A–Z and a–z (bundled, works offline).
+  const letter = (LETTER_STROKES as Record<string, { strokes: string[]; medians: number[][][] }>)[char];
+  if (!letter) throw new Error(`No stroke data for "${char}"`);
+  saveStrokeDataToCache(char, letter);
+  return letter;
 };
 
 export const preloadStrokeData = (word: string): Promise<any[]> => {
@@ -565,7 +484,7 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
       meaningEn: dbItem?.meaningEn || '',
       onyomi: onyomiList,
       kunyomi: kunyomiList,
-      jlpt: level || dbItem?.jlpt || (isKana ? 'KANA' : 'N5'),
+      jlpt: level || dbItem?.jlpt || (isKana ? 'ALPHABET' : 'A1'),
       strokeCount: strokeCount || dbItem?.strokeCount || 1,
       radical: dbItem?.radical || '',
       radicalName: dbItem?.radicalName || '',
@@ -1192,14 +1111,14 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
                     ? 'bg-sky-500/15 text-sky-600 dark:text-sky-400 border-border-subtle'
                     : 'bg-surface-inset text-wine-accent border-border-subtle'
               }`}>
-                {isHiragana ? 'Hiragana' : isKatakana ? 'Katakana' : `JLPT ${level || promptKanjiItem.jlpt || 'N5'} Kanji`}
+                {isHiragana ? 'Hiragana' : isKatakana ? 'Katakana' : `${level || promptKanjiItem.jlpt || 'A1'} letter`}
               </span>
               <span className="px-2.5 py-0.5 rounded-lg bg-surface-inset text-text-secondary border border-border-subtle font-medium">
-                {totalCharStrokes || strokeCount || 1} Goresan
+                {totalCharStrokes || strokeCount || 1} strokes
               </span>
               {promptKanjiItem.radical && (
                 <span className="px-2 py-0.5 rounded-lg bg-surface-inset text-text-muted border border-border-subtle font-jp text-[11px]">
-                  {isKana ? 'Kategori: ' : '部首: '}{promptKanjiItem.radical}
+                  {'Shape: '}{promptKanjiItem.radical}
                 </span>
               )}
             </div>
@@ -1230,7 +1149,7 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
                   playSound('click', soundEnabled);
                 }}
                 className="btn-physical-secondary absolute -bottom-2 -right-2 p-2 rounded-full hover:text-wine-accent transition-all cursor-pointer"
-                title="Dengar pelafalan"
+                title="Hear the pronunciation"
               >
                 <Volume2 className="w-4 h-4" />
               </button>
@@ -1241,7 +1160,7 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
               {isKana ? (
                 <div className="space-y-1">
                   <span className="text-[11px] font-bold text-text-muted uppercase tracking-wider font-mono">
-                    Pelafalan Romaji & Suara
+                    Sound (IPA)
                   </span>
                   <div className="flex items-center justify-center sm:justify-start gap-2">
                     <span className="text-xl font-bold font-mono text-text-primary px-3 py-1 rounded-xl bg-surface-inset border border-border-subtle">
@@ -1265,7 +1184,7 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
                   {/* Onyomi */}
                   <div className="p-2.5 rounded-xl bg-surface-inset border border-border-subtle space-y-1">
                     <span className="text-[10px] font-bold text-wine-accent uppercase tracking-wider font-mono block">
-                      音読み (Onyomi)
+                      Sound
                     </span>
                     <div className="flex flex-wrap gap-1.5">
                       {cleanOnyomiList.length > 0 ? (
@@ -1278,7 +1197,7 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
                               playSound('click', soundEnabled);
                             }}
                             className="px-2 py-0.5 rounded-lg bg-surface-card text-wine-accent border border-border-subtle font-bold hover:border-border-strong flex items-center gap-1 text-xs font-jp transition-colors cursor-pointer"
-                            title="Klik untuk mendengar"
+                            title="Tap to hear"
                           >
                             <span>{on}</span>
                             <Volume2 className="w-3 h-3 text-wine-accent/60" />
@@ -1293,7 +1212,7 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
                   {/* Kunyomi */}
                   <div className="p-2.5 rounded-xl bg-surface-inset border border-border-subtle space-y-1">
                     <span className="text-[10px] font-bold text-state-success uppercase tracking-wider font-mono block">
-                      訓読み (Kunyomi)
+                      Example words
                     </span>
                     <div className="flex flex-wrap gap-1.5">
                       {cleanKunyomiList.length > 0 ? (
@@ -1306,7 +1225,7 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
                               playSound('click', soundEnabled);
                             }}
                             className="px-2 py-0.5 rounded-lg bg-surface-card text-state-success border border-border-subtle font-bold hover:border-border-strong flex items-center gap-1 text-xs font-jp transition-colors cursor-pointer"
-                            title="Klik untuk mendengar"
+                            title="Tap to hear"
                           >
                             <span>{kun}</span>
                             <Volume2 className="w-3 h-3 text-state-success/60" />
@@ -1339,7 +1258,7 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
           {effectiveRelatedWords && effectiveRelatedWords.length > 0 && (
             <div className="space-y-2">
               <h4 className="text-xs font-bold text-text-muted uppercase tracking-wider flex items-center gap-1.5">
-                <BookOpen className="w-3.5 h-3.5 text-wine-accent" /> Contoh Kosakata Terkait
+                <BookOpen className="w-3.5 h-3.5 text-wine-accent" /> Related example words
               </h4>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
                 {effectiveRelatedWords.slice(0, 4).map((rw, i) => {
@@ -1352,7 +1271,7 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
                         playSound('click', soundEnabled);
                       }}
                       className="p-2.5 rounded-xl bg-surface-inset hover:bg-surface-elevated border border-border-subtle hover:border-border-primary transition-all cursor-pointer flex items-center justify-between gap-2 shadow-xs group"
-                      title="Klik untuk mendengar pelafalan"
+                      title="Tap to hear the pronunciation"
                     >
                       <div className="space-y-0.5 min-w-0">
                         <div className="font-bold font-jp text-sm text-text-primary flex items-center gap-1">
@@ -1390,7 +1309,7 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
               onClick={handleProceedNext}
               className="flex-1 btn btn-cta py-3 px-4 rounded-2xl text-xs sm:text-sm font-bold flex items-center justify-center gap-2 transition-all cursor-pointer"
             >
-              <span>{nextButtonLabel || (isKana ? 'Lanjut ke Aksara Berikutnya' : 'Lanjut ke Kanji Berikutnya')}</span>
+              <span>{nextButtonLabel || 'Next letter'}</span>
               <ArrowRight className="w-4 h-4" />
             </button>
           </div>
@@ -1405,7 +1324,7 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
                 }}
                 className="text-xs text-text-muted hover:text-text-primary underline underline-offset-2 font-bold transition-colors cursor-pointer"
               >
-                Kembali ke Detail Materi
+                Back to item details
               </button>
             </div>
           )}
@@ -1436,7 +1355,7 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
                     key={i}
                     className="flex flex-col items-center justify-center py-1 px-1.5 rounded-xl bg-surface-card/80 hover:bg-surface-elevated border border-border-subtle hover:border-border-strong transition-all group cursor-pointer w-full text-center shadow-xs min-h-[42px]"
                     onClick={() => speakJapanese(cleanAudioWord)}
-                    title={`Dengar pengucapan: ${rw.reading} - ${rw.meaningId}`}
+                    title={`Hear the pronunciation: ${rw.reading} - ${rw.meaningId}`}
                   >
                     <div className="flex items-center justify-center gap-1 w-full min-w-0">
                       <span className="text-xs sm:text-sm font-bold font-jp truncate">
@@ -1461,7 +1380,7 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
                   cleanKunyomiList[0] || cleanOnyomiList[0] || reading || (isKana ? kanjiChar : '')
                 )
               }
-              title="Klik untuk mendengar audio"
+              title="Tap to hear the audio"
             >
               <div className="text-xs sm:text-sm font-bold font-jp text-text-primary flex items-center gap-1">
                 <span>
@@ -1528,7 +1447,7 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
             <span className="font-bold text-text-primary font-heading text-[11px]">
               Sheet {currentSheet}/{totalSheets}
             </span>
-            <span className="font-mono text-[11px]">{completedSheets.length} / {totalSheets} Selesai</span>
+            <span className="font-mono text-[11px]">{completedSheets.length} / {totalSheets} done</span>
           </div>
           <div
             className="grid gap-1.5"
@@ -1578,7 +1497,7 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
               className={`px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-surface-inset border border-border-subtle flex items-center gap-1 shadow-sm transition-opacity ${
                 isLoading ? 'text-text-muted opacity-60' : 'text-text-primary'
               }`}
-              title={isLoading ? 'Menyiapkan karakter...' : `Stopwatch (${isTimerRunning ? 'Berjalan' : 'Selesai'})`}
+              title={isLoading ? 'Preparing the letter...' : `Stopwatch (${isTimerRunning ? 'Running' : 'Stopped'})`}
             >
               <Clock className={`w-3 h-3 ${isLoading ? 'text-text-muted' : 'text-gold'}`} />
               <span>{formatTime(elapsedSeconds)}</span>
@@ -1593,7 +1512,7 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
             </span>
           ) : totalCharStrokes > 0 && !isQuizComplete ? (
             <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-surface-inset border border-border-subtle text-text-primary">
-              Goresan {Math.min(currentStrokeIndex + 1, totalCharStrokes)}/{totalCharStrokes}
+              Stroke {Math.min(currentStrokeIndex + 1, totalCharStrokes)}/{totalCharStrokes}
             </span>
           ) : null}
           {mistakesCount > 0 && !isQuizComplete ? (
@@ -1696,7 +1615,7 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
           type="button"
           onClick={clearCanvas}
           className="btn-physical-secondary py-2.5 px-2 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-all whitespace-nowrap select-none cursor-pointer"
-          title="Bersihkan kanvas untuk menulis ulang"
+          title="Clear the canvas to write again"
         >
           <RotateCcw className="w-4 h-4 shrink-0" />
           <span>Ulangi</span>
@@ -1712,17 +1631,17 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
               ? 'btn-physical-primary font-black'
               : 'bg-surface-inset text-text-muted cursor-not-allowed border border-border-subtle'
           }`}
-          title="Simpan dan selesaikan kanji ini"
+          title="Save and finish this letter"
         >
           <Check className="w-4 h-4 shrink-0 stroke-[3]" />
           <span className="truncate">
             {completedSheets.includes(currentSheet)
               ? currentSheet >= totalSheets
-                ? 'Selesai'
+                ? 'Done'
                 : `Next #${currentSheet + 1}`
               : totalSheets > 1
                 ? `#${currentSheet}`
-                : 'Selesai'}
+                : 'Done'}
           </span>
         </button>
       </div>

@@ -135,7 +135,7 @@ export function MainContent(props: MainContentProps) {
               >
                 <FreezeWhenHidden active={activeTab === 'daily' || activeTab === 'weekly'}>
                 {(visitedTabs.has('daily') || visitedTabs.has('weekly')) && (
-                  <ModuleBoundary label="Misi">
+                  <ModuleBoundary label="Quests">
                   <MissionsView
                     dailyMissions={dailyMissions}
                     weeklyMissions={weeklyMissions}
@@ -154,7 +154,7 @@ export function MainContent(props: MainContentProps) {
               >
                 <FreezeWhenHidden active={activeTab === 'leaderboard'}>
                 {visitedTabs.has('leaderboard') && (
-                  <ModuleBoundary label="Papan Peringkat">
+                  <ModuleBoundary label="Leaderboard">
                   <LeaderboardView
                     currentUserId={stats.userId!}
                     currentUserStats={stats}
@@ -175,7 +175,7 @@ export function MainContent(props: MainContentProps) {
               >
                 <FreezeWhenHidden active={activeTab === 'library'}>
                 {visitedTabs.has('library') && (
-                  <ModuleBoundary label="Perpustakaan">
+                  <ModuleBoundary label="Library">
                   <LibraryView
                     soundEnabled={stats.soundEnabled}
                     itemMastery={stats.itemMastery}
@@ -199,7 +199,7 @@ export function MainContent(props: MainContentProps) {
               >
                 <FreezeWhenHidden active={activeTab === 'deck'}>
                 {visitedTabs.has('deck') && (
-                  <ModuleBoundary label="Buku Saku">
+                  <ModuleBoundary label="Notebook">
                   <BukuSakuView
                     userDecks={stats.userDecks}
                     resetSignal={deckResetCount}
@@ -234,7 +234,7 @@ export function MainContent(props: MainContentProps) {
               >
                 <FreezeWhenHidden active={activeTab === 'settings'}>
                 {visitedTabs.has('settings') && (
-                  <ModuleBoundary label="Pengaturan">
+                  <ModuleBoundary label="Settings">
                   <SettingsView
                     stats={stats}
                     onUpdateSettings={(newSettings) => setStats(prev => ({ ...prev, ...newSettings }))}

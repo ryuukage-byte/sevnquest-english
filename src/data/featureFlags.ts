@@ -1,10 +1,13 @@
 /**
- * Saklar fitur. Fitur yang masih dalam pengembangan ditutup dari pemain lewat saklar ini
- * (kode & datanya tetap ada, hanya pintu masuknya yang dikunci).
+ * Feature switches. Features still under development are closed to players here
+ * (their code and data stay in place; only the entry point is locked).
  */
 
-/** Menara Nihongo: Menara 1 (Tutorial, 001–016) dan Menara 2 (Rangkai, 017–100) sudah dibuka. */
-export const TOWER_ENABLED = true;
+/**
+ * Castle Tower (Japanese kana/kanji floors, conjugation rooms). Not yet rewritten for English:
+ * the tower content still needs English floors (see ENGLISH_EDITION.md).
+ */
+export const TOWER_ENABLED = false;
 
-/** Choukai (聴解) di Library: disembunyikan sampai masalah audio selesai. Data soal tetap utuh. */
-export const CHOUKAI_ENABLED = false;
+/** Listening (choukai) in Library: English dialogues, spoken with the browser's English voice. */
+export const CHOUKAI_ENABLED = true;

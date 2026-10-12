@@ -98,12 +98,12 @@ export const RecallModule: React.FC<RecallModuleProps> = ({
     // progresnya hilang padahal hanya belum termuat dari cloud.
     const emptyState =
       syncStatus === 'syncing'
-        ? { icon: <ShieldAlert className="w-10 h-10" />, title: 'MEMUAT PROGRESMU…', body: 'Sedang mengambil progres dari cloud. Materi Recall akan muncul setelah selesai.' }
+        ? { icon: <ShieldAlert className="w-10 h-10" />, title: 'LOADING YOUR PROGRESS…', body: 'Sedang mengambil progres dari cloud. Materi Recall akan muncul setelah selesai.' }
         : syncStatus === 'error'
-          ? { icon: <ShieldAlert className="w-10 h-10" />, title: 'PROGRES BELUM TERMUAT', body: 'Sinkronisasi dengan cloud gagal, jadi materi Recall belum bisa dihitung. Progresmu tidak hilang. Periksa koneksi lalu buka Recall lagi.' }
+          ? { icon: <ShieldAlert className="w-10 h-10" />, title: 'PROGRESS NOT LOADED YET', body: 'Sinkronisasi dengan cloud gagal, jadi materi Recall belum bisa dihitung. Progresmu tidak hilang. Periksa koneksi lalu buka Recall lagi.' }
           : !hasProgress
-            ? { icon: <BookOpen className="w-10 h-10" />, title: 'BELUM ADA MATERI DIULANG', body: 'Recall mengulang materi yang sudah kamu pelajari. Selesaikan beberapa lantai di Menara atau latihan dulu, lalu kembali ke sini.' }
-            : { icon: <CheckCircle2 className="w-10 h-10" />, title: 'SEMUA MATERI TELAH SEGAR!', body: 'Tidak ada materi dalam antrean Recall yang perlu direview saat ini. Ingatanmu masih dalam kondisi prima.' };
+            ? { icon: <BookOpen className="w-10 h-10" />, title: 'NOTHING TO REVIEW YET', body: 'Recall mengulang materi yang sudah kamu pelajari. Selesaikan beberapa lantai di Menara atau latihan dulu, lalu kembali ke sini.' }
+            : { icon: <CheckCircle2 className="w-10 h-10" />, title: 'EVERYTHING IS FRESH!', body: 'Tidak ada materi dalam antrean Recall yang perlu direview saat ini. Ingatanmu masih dalam kondisi prima.' };
     return (
       <div className="w-full max-w-lg mx-auto p-6 sm:p-8 rounded-3xl panel panel-stitched border border-border-subtle text-center space-y-5 shadow-xl">
         <div className="p-4 inline-flex rounded-full bg-gold/15 border border-border-subtle text-gold shadow-md">
@@ -121,7 +121,7 @@ export const RecallModule: React.FC<RecallModuleProps> = ({
           onClick={onExit}
           className="rpg-btn rpg-btn-secondary w-full py-3.5 text-xs sm:text-sm font-heading"
         >
-          Kembali ke Beranda
+          Back to home
         </button>
       </div>
     );
@@ -130,7 +130,7 @@ export const RecallModule: React.FC<RecallModuleProps> = ({
   if (!currentItem) {
     return (
       <div className="w-full max-w-lg mx-auto p-6 rounded-3xl panel panel-stitched border border-border-subtle text-center space-y-4">
-        <p className="text-xs text-text-secondary">Tidak ada item pada filter ini.</p>
+        <p className="text-xs text-text-secondary">No items match this filter.</p>
         <button
           onClick={() => {
             setActiveFilter('ALL');
@@ -138,7 +138,7 @@ export const RecallModule: React.FC<RecallModuleProps> = ({
           }}
           className="rpg-btn rpg-btn-primary px-4 py-2 text-xs"
         >
-          Tampilkan Semua Materi
+          Show all items
         </button>
       </div>
     );
@@ -146,8 +146,8 @@ export const RecallModule: React.FC<RecallModuleProps> = ({
 
   const currentQ = currentItem.sampleQuestion || {
     id: `rc_${currentItem.itemId}`,
-    prompt: `Apa penggunaan yang tepat untuk materi 「${currentItem.title}」?`,
-    options: [currentItem.subtitle || 'Pilihan arti tepat', 'Pilihan tidak relevan', 'Bukan kalimat alami', 'Salah bentuk'],
+    prompt: `What is the correct use of 「${currentItem.title}」?`,
+    options: [currentItem.subtitle || 'The correct meaning', 'Pilihan tidak relevan', 'Bukan kalimat alami', 'Salah bentuk'],
     correctIndex: 0,
     explanation: `${currentItem.title}: ${currentItem.subtitle}`
   };
@@ -232,7 +232,7 @@ export const RecallModule: React.FC<RecallModuleProps> = ({
     if (hiddenOptions.length > 0 || isAnswered || currentQ.difficultyLevel === 5) return;
     const mpCost = 10;
     if (onUseMp && !onUseMp(mpCost)) {
-      alert('MP tidak cukup untuk Mantra 50/50!');
+      alert('Not enough MP for the 50/50 spell!');
       return;
     }
 
@@ -279,7 +279,7 @@ export const RecallModule: React.FC<RecallModuleProps> = ({
           onClick={onExit}
           className="rpg-btn rpg-btn-primary w-full py-3.5 text-sm"
         >
-          Selesai & Kembali ke Beranda
+          Selesai & Back to home
         </button>
       </div>
     );
@@ -376,7 +376,7 @@ export const RecallModule: React.FC<RecallModuleProps> = ({
               True Mastery: {currentItem.trueMasteryScore || 65}%
             </span>
             <span className="text-xs font-mono font-bold text-text-secondary">
-              Skor: {correctCount}/{currentIndex}
+              Score: {correctCount}/{currentIndex}
             </span>
           </div>
         </div>
@@ -466,7 +466,7 @@ export const RecallModule: React.FC<RecallModuleProps> = ({
             <div className="p-4 rounded-2xl bg-surface-inset border-2 border-dashed border-border-primary min-h-[64px] flex flex-wrap items-center gap-2">
               {selectedWords.length === 0 ? (
                 <span className="text-xs text-text-muted italic">
-                  Klik kata-kata di bawah untuk menyusun kalimat bahasa Jepang...
+                  Tap the words below to build the sentence...
                 </span>
               ) : (
                 selectedWords.map((word, idx) => (
@@ -516,7 +516,7 @@ export const RecallModule: React.FC<RecallModuleProps> = ({
                 className="rpg-btn rpg-btn-primary w-full py-3 text-xs sm:text-sm gap-2"
               >
                 <Check className="w-4 h-4" />
-                <span>Periksa Susunan Kalimat</span>
+                <span>Check the sentence</span>
               </button>
             )}
           </div>
@@ -582,7 +582,7 @@ export const RecallModule: React.FC<RecallModuleProps> = ({
               onClick={handleNext}
               className="rpg-btn rpg-btn-primary w-full py-3 text-xs sm:text-sm gap-2"
             >
-              <span>Materi Berikutnya</span>
+              <span>Next item</span>
               <ArrowRight className="w-4 h-4" />
             </button>
           </motion.div>

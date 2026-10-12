@@ -18,16 +18,16 @@ const BottomNavigationComponent: React.FC<BottomNavigationProps> = ({
   const navItems: { id: TabType; label: string; icon: React.ComponentType<{ className?: string }> }[] = [
     { id: 'home', label: 'Castle', icon: CastleIcon },
     { id: 'maps', label: 'World', icon: CompassIcon },
-    { id: 'daily', label: 'Misi', icon: ScrollIcon },
+    { id: 'daily', label: 'Quests', icon: ScrollIcon },
     { id: 'leaderboard', label: 'Rank', icon: TrophyIcon },
     { id: 'library', label: 'Library', icon: BookIcon },
-    { id: 'deck', label: 'Buku Saku', icon: BookmarkIcon },
+    { id: 'deck', label: 'Notebook', icon: BookmarkIcon },
     { id: 'settings', label: 'Menu', icon: SettingsIcon },
   ];
 
   return (
     <nav
-      aria-label="Navigasi Utama"
+      aria-label="Main navigation"
       style={{
         paddingBottom: 'max(0.375rem, env(safe-area-inset-bottom))',
         paddingLeft: 'max(0.25rem, env(safe-area-inset-left))',

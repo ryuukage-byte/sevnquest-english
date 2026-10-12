@@ -107,15 +107,15 @@ export const DeckWritingRunner: React.FC<DeckWritingRunnerProps> = ({
           <div className="w-12 h-12 rounded-2xl bg-surface-inset text-gold border border-border-subtle flex items-center justify-center mx-auto">
             <PenTool className="w-6 h-6" />
           </div>
-          <h3 className="text-lg font-heading font-bold text-text-primary">Tidak Ada Materi Tulisan</h3>
+          <h3 className="text-lg font-heading font-bold text-text-primary">No writing items</h3>
           <p className="text-xs text-text-secondary">
-            Deck ini tidak memiliki materi Kanji atau Kosakata. Tambahkan kanji atau kata untuk memulai latihan menulis.
+            This deck has no letters or words. Add some to start writing practice.
           </p>
           <button
             onClick={onClose}
             className="btn-physical-secondary px-5 py-2 rounded-xl text-xs font-bold"
           >
-            Kembali ke Buku Saku
+            Back to your Notebook
           </button>
         </div>
       </div>
@@ -134,12 +134,12 @@ export const DeckWritingRunner: React.FC<DeckWritingRunnerProps> = ({
           <span className="text-xl">{deck.coverIcon || '✍️'}</span>
           <div>
             <h3 className="font-heading font-bold text-sm sm:text-base text-text-primary flex items-center gap-2">
-              <span>Latihan Menulis: {deck.title}</span>
+              <span>Writing practice: {deck.title}</span>
             </h3>
             <p className="text-[11px] font-mono text-text-muted">
               {isFinishedAll
-                ? 'Selesai'
-                : `Materi ${currentIndex + 1} dari ${writableItems.length} (${currentItem?.category.toUpperCase()})`}
+                ? 'Done'
+                : `Item ${currentIndex + 1} of ${writableItems.length} (${currentItem?.category.toUpperCase()})`}
             </p>
           </div>
         </div>
@@ -170,13 +170,13 @@ export const DeckWritingRunner: React.FC<DeckWritingRunnerProps> = ({
 
             <div>
               <span className="text-xs font-mono font-bold uppercase tracking-wider text-gold">
-                Sesi Menulis Selesai
+                Writing session complete
               </span>
               <h2 className="text-xl sm:text-2xl font-black font-heading text-text-primary mt-1">
-                Latihan Kaligrafi Sukses!
+                Writing practice complete!
               </h2>
               <p className="text-xs text-text-secondary mt-1">
-                Kamu telah menyelesaikan latihan menulis {writableItems.length} kanji & kata dalam deck ini.
+                You have finished writing practice for {writableItems.length} letters and words in this deck.
               </p>
             </div>
 
@@ -209,13 +209,13 @@ export const DeckWritingRunner: React.FC<DeckWritingRunnerProps> = ({
                 className="btn-physical-secondary px-4 py-2.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-colors"
               >
                 <RotateCcw className="w-4 h-4" />
-                <span>Ulangi Sesi</span>
+                <span>Repeat session</span>
               </button>
               <button
                 onClick={onClose}
                 className="btn-physical-secondary px-6 py-2.5 rounded-xl text-xs font-heading font-bold transition-all"
               >
-                Selesai
+                Done
               </button>
             </div>
           </motion.div>
@@ -228,7 +228,7 @@ export const DeckWritingRunner: React.FC<DeckWritingRunnerProps> = ({
                 {/* Meta Bar matching Library view */}
                 {(() => {
                   const trait = asWritable(currentItem);
-                  const isKana = trait?.level === 'KANA' || (trait?.character && trait.character.charCodeAt(0) >= 0x3040 && trait.character.charCodeAt(0) <= 0x30ff);
+                  const isKana = trait?.level === 'ALPHABET' || (trait?.character && trait.character.charCodeAt(0) >= 0x3040 && trait.character.charCodeAt(0) <= 0x30ff);
                   return (
                     <div className="flex items-center justify-between gap-2 flex-wrap border-b border-border-subtle/60 pb-2.5 px-0.5">
                       <div className="flex items-center gap-1.5 flex-wrap text-xs">
@@ -237,14 +237,14 @@ export const DeckWritingRunner: React.FC<DeckWritingRunnerProps> = ({
                             ? 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-border-subtle'
                             : 'bg-surface-inset text-wine-accent border-border-subtle'
                         }`}>
-                          {isKana ? 'Aksara Kana' : `${trait?.level || 'N5'} Kanji`}
+                          {isKana ? 'Alphabet' : `${trait?.level || 'A1'} Letters`}
                         </span>
                         <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono bg-surface-inset border border-border-subtle text-text-secondary">
-                          {trait?.strokeCount || 1} Goresan
+                          {trait?.strokeCount || 1} strokes
                         </span>
                         {trait?.sourceItem?.radical && (
                           <span className="px-2 py-0.5 rounded-full text-[10px] font-jp bg-surface-inset border border-border-subtle text-text-muted">
-                            {isKana ? 'Kategori: ' : '部首: '}{trait.sourceItem.radical}
+                            {'Shape: '}{trait.sourceItem.radical}
                           </span>
                         )}
                       </div>
@@ -264,7 +264,7 @@ export const DeckWritingRunner: React.FC<DeckWritingRunnerProps> = ({
                     nextButtonLabel={
                       currentIndex + 1 === writableItems.length
                         ? 'Selesaikan Drill'
-                        : 'Lanjut ke Materi Berikutnya'
+                        : 'Next item'
                     }
                     onFinish={(_score, reward) => {
                       handleNextItem(reward?.expGained, reward?.goldGained);

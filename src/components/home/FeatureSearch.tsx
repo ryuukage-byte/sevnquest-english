@@ -16,20 +16,20 @@ interface FeatureEntry {
 }
 
 const FEATURES: FeatureEntry[] = [
-  { id: 'flashcard', title: 'Flashcard', hint: 'Buku Saku → pilih deck → Mulai Flashcard', keywords: 'flashcard kartu hafalan kosakata kotoba kanji deck', target: { type: 'tab', tab: 'deck' } },
-  { id: 'menulis', title: 'Latihan Menulis', hint: 'Buku Saku → pilih deck → Latihan Menulis', keywords: 'menulis tulis writing stroke goresan kanji kana hiragana katakana', target: { type: 'tab', tab: 'deck' } },
-  { id: 'buku-saku', title: 'Buku Saku & Deck', hint: 'Kumpulan deck kata, kanji, dan pola milikmu', keywords: 'buku saku deck bookmark simpan koleksi bikin buat', target: { type: 'tab', tab: 'deck' } },
-  { id: 'kotoba', title: 'Kamus Kotoba', hint: 'Library → Kotoba: cari kata, arti, dan contoh kalimat', keywords: 'kotoba kosakata kata vocab kamus arti', target: { type: 'tab', tab: 'library' } },
-  { id: 'kanji', title: 'Kamus Kanji', hint: 'Library → Kanji: bacaan, arti, urutan goresan', keywords: 'kanji onyomi kunyomi goresan huruf', target: { type: 'tab', tab: 'library' } },
-  { id: 'bunpou', title: 'Pola Kalimat (Bunpou)', hint: 'Library → Pola Kalimat: rumus, arti, contoh', keywords: 'bunpou pola kalimat tata bahasa grammar rumus konjugasi', target: { type: 'tab', tab: 'library' } },
-  { id: 'world', title: 'World', hint: 'Arena Arcade, Mode Dungeon, dan Menara Nihongo', keywords: 'world arcade dungeon tower menara game latihan speed rush', target: { type: 'tab', tab: 'maps' } },
-  { id: 'recall', title: 'Recall Memori', hint: 'Ulang item yang mulai terlupa (SRS)', keywords: 'recall ulang ulangan srs review memori lupa', target: { type: 'recall' } },
-  { id: 'misi-harian', title: 'Misi Harian', hint: 'Selesaikan misi, klaim EXP & Koin', keywords: 'misi harian daily hadiah klaim koin exp streak', target: { type: 'tab', tab: 'daily' } },
-  { id: 'misi-mingguan', title: 'Misi Mingguan', hint: 'Target mingguan dengan hadiah lebih besar', keywords: 'misi mingguan weekly hadiah target', target: { type: 'tab', tab: 'weekly' } },
-  { id: 'rank', title: 'Peringkat', hint: 'Leaderboard pemain', keywords: 'rank peringkat leaderboard skor papan', target: { type: 'tab', tab: 'leaderboard' } },
-  { id: 'status', title: 'Lembar Status & Profil', hint: 'Level, tier, mastery, dan titik lemah', keywords: 'status profil karakter mastery tutor kelemahan lemah level tier nama avatar', target: { type: 'status' } },
-  { id: 'pengaturan', title: 'Pengaturan', hint: 'Menu → suara, furigana, akun, reset data', keywords: 'pengaturan setting menu suara sfx furigana akun login google reset hapus data tema', target: { type: 'tab', tab: 'settings' } },
-  { id: 'panduan', title: 'Panduan SevnQuest', hint: 'Cara belajar & jalur untuk pemula', keywords: 'panduan bantuan tutorial cara mulai pemula help', target: { type: 'guide' } },
+  { id: 'flashcard', title: 'Flashcards', hint: 'Notebook → choose a deck → Start flashcards', keywords: 'flashcard kartu hafalan kosakata kotoba kanji deck', target: { type: 'tab', tab: 'deck' } },
+  { id: 'menulis', title: 'Writing practice', hint: 'Notebook → choose a deck → Writing practice', keywords: 'menulis tulis writing stroke goresan kanji kana hiragana katakana', target: { type: 'tab', tab: 'deck' } },
+  { id: 'buku-saku', title: 'Notebook & decks', hint: 'Your collection of word, letter and grammar decks', keywords: 'buku saku deck bookmark simpan koleksi bikin buat', target: { type: 'tab', tab: 'deck' } },
+  { id: 'kotoba', title: 'Vocabulary dictionary', hint: 'Library → Vocabulary: search words, meanings and examples', keywords: 'kotoba kosakata kata vocab kamus arti', target: { type: 'tab', tab: 'library' } },
+  { id: 'kanji', title: 'Letter library', hint: 'Library → Letters: sounds, meanings and stroke order', keywords: 'kanji onyomi kunyomi goresan huruf', target: { type: 'tab', tab: 'library' } },
+  { id: 'bunpou', title: 'Grammar (Bunpou)', hint: 'Library → Grammar: formulas, meanings and examples', keywords: 'bunpou pola kalimat tata bahasa grammar rumus konjugasi', target: { type: 'tab', tab: 'library' } },
+  { id: 'world', title: 'World', hint: 'Arena Arcade games', keywords: 'world arcade dungeon tower menara game latihan speed rush', target: { type: 'tab', tab: 'maps' } },
+  { id: 'recall', title: 'Memory recall', hint: 'Review items you are starting to forget (SRS)', keywords: 'recall ulang ulangan srs review memori lupa', target: { type: 'recall' } },
+  { id: 'misi-harian', title: 'Daily quests', hint: 'Finish quests and claim EXP & Coin', keywords: 'misi harian daily hadiah klaim koin exp streak', target: { type: 'tab', tab: 'daily' } },
+  { id: 'misi-mingguan', title: 'Weekly quests', hint: 'Weekly goals with bigger rewards', keywords: 'misi mingguan weekly hadiah target', target: { type: 'tab', tab: 'weekly' } },
+  { id: 'rank', title: 'Leaderboard', hint: 'Player rankings', keywords: 'rank peringkat leaderboard skor papan', target: { type: 'tab', tab: 'leaderboard' } },
+  { id: 'status', title: 'Status sheet & profile', hint: 'Level, tier, mastery and weak spots', keywords: 'status profil karakter mastery tutor kelemahan lemah level tier nama avatar', target: { type: 'status' } },
+  { id: 'pengaturan', title: 'Settings', hint: 'Menu → sound, pronunciation, account, reset data', keywords: 'pengaturan setting menu suara sfx furigana akun login google reset hapus data tema', target: { type: 'tab', tab: 'settings' } },
+  { id: 'panduan', title: 'SevnQuest guide', hint: 'How to study & a path for beginners', keywords: 'panduan bantuan tutorial cara mulai pemula help', target: { type: 'guide' } },
 ];
 
 const norm = (s: string) => s.normalize('NFKC').toLowerCase().trim();
@@ -68,8 +68,8 @@ export const FeatureSearch: React.FC<FeatureSearchProps> = ({ onSelect }) => {
             if (e.key === 'Enter' && results[0]) pick(results[0]);
             if (e.key === 'Escape') setQuery('');
           }}
-          placeholder="Cari fitur, flashcard, menulis…"
-          aria-label="Cari fitur"
+          placeholder="Search features, flashcards, writing…"
+          aria-label="Search features"
           className="w-full pl-10 pr-10 py-3 bg-surface-inset border border-border-subtle rounded-2xl text-sm text-text-primary placeholder:text-text-muted focus:outline-hidden focus:border-border-primary transition-all shadow-inner font-medium"
         />
         {query && (
@@ -77,8 +77,8 @@ export const FeatureSearch: React.FC<FeatureSearchProps> = ({ onSelect }) => {
             type="button"
             onClick={() => setQuery('')}
             className="absolute right-3 top-1/2 -translate-y-1/2 w-6 h-6 rounded-lg text-text-muted hover:text-text-primary flex items-center justify-center cursor-pointer"
-            title="Hapus pencarian"
-            aria-label="Hapus pencarian"
+            title="Clear search"
+            aria-label="Clear search"
           >
             <X className="w-3.5 h-3.5" />
           </button>
@@ -105,7 +105,7 @@ export const FeatureSearch: React.FC<FeatureSearchProps> = ({ onSelect }) => {
             ))}
           </ul>
         ) : (
-          <p className="text-xs text-text-secondary font-body px-1">Fitur tidak ditemukan. Coba kata lain, mis. “flashcard”, “menulis”, “misi”.</p>
+          <p className="text-xs text-text-secondary font-body px-1">No features found. Try another word, e.g. “flashcard”, “writing”, “misi”.</p>
         )
       )}
     </div>

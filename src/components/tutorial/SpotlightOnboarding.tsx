@@ -39,57 +39,57 @@ interface TourStep {
 const TOUR_STEPS: TourStep[] = [
   {
     id: 'hero',
-    title: 'Karakter & Status Petualang',
-    subtitle: 'Sanctuary Pahlawan',
-    description: 'Ini adalah pusat status pahlawanmu! Total EXP, level, HP, dan MP akan terus berkembang seiring kamu belajar dan menuntaskan materi bahasa Jepang.',
+    title: 'Your character & status',
+    subtitle: 'Your hero sanctuary',
+    description: 'This is your hero status panel! Your total EXP, level, HP and MP grow as you study and finish English lessons.',
     targetSelector: '[data-tour="hero-card"]',
     icon: Swords,
     accentColor: 'text-gold',
     highlightPadding: 10,
     highlightRadius: 20,
-    tip: 'Ketuk karakter kapan saja untuk mengalokasikan stat (STR, AGI, INT, VIT)!'
+    tip: 'Tap your character at any time to spend stat points (STR, AGI, INT, VIT)!'
   },
   {
     id: 'maps',
-    title: 'The Learning World',
-    subtitle: 'Arcade, Dungeon & Menara',
-    description: 'Masuk ke World untuk bermain Arena Arcade, Mode Dungeon, dan mendaki Menara Nihongo dengan latihan seru berbasis materi belajarmu.',
+    title: 'World',
+    subtitle: 'Arena Arcade games',
+    description: 'Enter World to play the Arena Arcade games. Test your spelling, vocabulary and reflexes, and chase your best records.',
     targetSelector: '[data-tour="nav-maps"]',
     icon: Compass,
     accentColor: 'text-emerald-400',
     highlightPadding: 8,
     highlightRadius: 16,
-    tip: 'Pilih mode permainan sesuai suasana belajarmu!'
+    tip: 'Pick the game that suits your mood!'
   },
   {
     id: 'library',
-    title: 'Grimoire / Perpustakaan Ilmu',
-    subtitle: 'Kamus & Ensiklopedia',
-    description: 'Pusat kamus lengkap berisi 8.300+ kosakata (termasuk 366 istilah Kaigo!), Kanji N5-N1, Pola Tata Bahasa (Bunpou), serta Dojo Konjugasi Kata Kerja.',
+    title: 'Library',
+    subtitle: 'Dictionary & grammar',
+    description: 'A full dictionary of vocabulary (A1–B2), a letter library, grammar points and the question bank, with search and level filters.',
     targetSelector: '[data-tour="nav-library"]',
     icon: BookOpen,
     accentColor: 'text-sky-400',
     highlightPadding: 8,
     highlightRadius: 16,
-    tip: 'Gunakan fitur pencarian Kanji & Romaji untuk mencari kata dengan cepat.'
+    tip: 'Search by word, meaning or example to find things quickly.'
   },
   {
     id: 'deck',
-    title: 'Rak Buku (Kurikulum & Buku Saku)',
-    subtitle: 'Buku Kurikulum & Deck Hafalan',
-    description: 'Buka tab Buku Saku untuk Rak Buku Kurikulum Resmi (Soumatome, Minna no Nihongo, dsb) atau kelola Buku Saku pribadimu dengan Flashcard dan Latihan Menulis!',
+    title: 'Bookshelf (Curriculum & Notebook)',
+    subtitle: 'Curriculum books & study decks',
+    description: 'Open the Notebook to browse the official level books (A1–B2) or manage your own decks for flashcards and writing practice.',
     targetSelector: '[data-tour="nav-deck"]',
     icon: Bookmark,
     accentColor: 'text-amber-400',
     highlightPadding: 8,
     highlightRadius: 16,
-    tip: 'Buat deck khusus seperti "Persiapan Ujian N3" atau "Kaigo Shift Pagi".'
+    tip: 'Make custom decks such as "B1 exam prep" or "Travel phrases".'
   },
   {
     id: 'daily',
-    title: 'Misi Petualang & Streak',
-    subtitle: 'Quest Harian & Mingguan',
-    description: 'Selesaikan misi setiap hari untuk mengumpulkan Gold, EXP ekstra, dan menjaga rentetan hari belajar (Streak) agar semangat belajarmu tidak padam!',
+    title: 'Quests & streaks',
+    subtitle: 'Daily & weekly quests',
+    description: 'Finish quests every day to earn Gold and extra EXP, and keep your study streak going.',
     targetSelector: '[data-tour="nav-daily"]',
     icon: Scroll,
     accentColor: 'text-indigo-400',
@@ -99,27 +99,27 @@ const TOUR_STEPS: TourStep[] = [
   },
   {
     id: 'leaderboard',
-    title: 'Papan Peringkat (Rank)',
+    title: 'Leaderboard (Rank)',
     subtitle: 'Kompetisi Global Petualang',
-    description: 'Bandingkan pencapaian EXP dengan seluruh petualang Nihongo Quest di papan peringkat mingguan dan all-time!',
+    description: 'Compare your EXP with other learners on the weekly and all-time leaderboards!',
     targetSelector: '[data-tour="nav-leaderboard"]',
     icon: Trophy,
     accentColor: 'text-amber-300',
     highlightPadding: 8,
     highlightRadius: 16,
-    tip: 'Naikkan rank dengan rajin belajar dan menaklukkan dungeon.'
+    tip: 'Climb the ranks by studying every day and beating the arcade games.'
   },
   {
     id: 'cloud_cta',
-    title: 'Amankan Progres Petualanganmu!',
-    subtitle: 'Cloud Save & Sinkronisasi',
-    description: 'Perjalanan belajarmu sangat berharga. Masuk atau daftarkan akun sekarang agar EXP, level karakter, koleksi kartu Buku Saku, dan catatan hafalanmu tersimpan aman di Cloud!',
+    title: 'Save your adventure',
+    subtitle: 'Cloud save',
+    description: 'Your learning journey is valuable. Log in or create an account now, so your EXP, character level and progress are kept safe.',
     targetSelector: null, // Modal Center
     icon: Cloud,
     accentColor: 'text-gold',
     highlightPadding: 0,
     highlightRadius: 24,
-    tip: 'Bisa login lewat akun Google atau email. Progres tidak akan hilang saat ganti perangkat!'
+    tip: 'You can log in with Google or email. Your progress is kept when you switch devices!'
   }
 ];
 
@@ -467,7 +467,7 @@ export const SpotlightOnboarding: React.FC<SpotlightOnboardingProps> = ({
                   className="btn-physical-primary w-full py-3 px-4 rounded-xl font-heading font-bold text-sm tracking-wide transition-all flex items-center justify-center gap-2"
                 >
                   <Swords className="w-4 h-4 fill-current" />
-                  <span>Masuk / Daftar Akun Sekarang</span>
+                  <span>Log in / sign up now</span>
                 </button>
 
                 <button
@@ -475,7 +475,7 @@ export const SpotlightOnboarding: React.FC<SpotlightOnboardingProps> = ({
                   onClick={handleFinish}
                   className="w-full py-2 px-4 rounded-xl text-xs font-semibold text-text-secondary hover:text-text-primary hover:bg-surface-inset transition-colors"
                 >
-                  Nanti Saja, Saya Ingin Langsung Menjelajah
+                  Later, I want to explore now
                 </button>
               </div>
             </motion.div>
@@ -571,7 +571,7 @@ export const SpotlightOnboarding: React.FC<SpotlightOnboardingProps> = ({
                         type="button"
                         onClick={handlePrev}
                         className="btn-physical-secondary p-1.5 sm:p-2 rounded-xl transition-all text-xs flex items-center justify-center"
-                        title="Kembali"
+                        title="Back"
                       >
                         <ChevronLeft className="w-4 h-4" />
                       </button>
@@ -582,7 +582,7 @@ export const SpotlightOnboarding: React.FC<SpotlightOnboardingProps> = ({
                       onClick={handleNext}
                       className="btn-physical-primary py-1.5 sm:py-2 px-3 sm:px-3.5 rounded-xl font-heading font-bold text-xs tracking-wide transition-all flex items-center gap-1.5"
                     >
-                      <span>Lanjut</span>
+                      <span>Next</span>
                       <ChevronRight className="w-3.5 h-3.5" />
                     </button>
                   </div>

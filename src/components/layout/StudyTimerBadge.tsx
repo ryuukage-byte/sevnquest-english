@@ -40,7 +40,7 @@ export const StudyTimerBadge = memo(function StudyTimerBadge({
           : 'border-border-subtle text-text-secondary'
       }`}
       title={`Waktu Belajar Hari Ini: ${formatDetailedStudyTime(todaySeconds)}${
-        isTimerActive ? ' • Sesi belajar sedang aktif' : ' • Jeda'
+        isTimerActive ? ' • Study session active' : ' • Paused'
       }`}
     >
       <Clock className={`w-3.5 h-3.5 shrink-0 ${isTimerActive ? 'text-gold animate-pulse' : 'text-text-muted'}`} />

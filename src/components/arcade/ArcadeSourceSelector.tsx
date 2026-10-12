@@ -44,10 +44,10 @@ export const ArcadeSourceSelector = <T extends string>({
   // Filtered official template books
   const filteredBooks = useMemo(() => {
     if (bookCategoryFilter === 'CURRICULUM') {
-      return OFFICIAL_BOOKS.filter(b => b.category !== 'thematic' && b.level !== 'TEMATIK');
+      return OFFICIAL_BOOKS.filter(b => b.category !== 'thematic');
     }
     if (bookCategoryFilter === 'THEMATIC') {
-      return OFFICIAL_BOOKS.filter(b => b.category === 'thematic' || b.level === 'TEMATIK');
+      return OFFICIAL_BOOKS.filter(b => b.category === 'thematic');
     }
     return OFFICIAL_BOOKS;
   }, [bookCategoryFilter]);
@@ -65,17 +65,17 @@ export const ArcadeSourceSelector = <T extends string>({
     const stats = statsMap[activeBook.id];
     if (!stats) return 0;
     if (mode === 'kanji') return stats.kanjiCount;
-    if (mode === 'conjugation') return stats.verbCount || stats.kotobaCount;
+    if (mode === 'conjugation') return stats.kotobaCount;
     return stats.kotobaCount;
   }, [activeBook, statsMap, mode]);
 
   return (
     <div className="space-y-3.5">
-      {/* 1. TOP SEGMENTED CONTROL: Tingkatan JLPT vs Rak Buku Template */}
+      {/* 1. TOP SEGMENTED CONTROL: Tingkatan JLPT vs Curriculum books */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
         <label className="text-xs font-bold text-text-primary font-heading flex items-center gap-1.5">
           <Layers className="w-3.5 h-3.5 text-text-muted" />
-          <span>Pilih Sumber Soal Tantangan:</span>
+          <span>Choose the challenge source:</span>
         </label>
 
         <div className="flex items-center p-1 bg-surface-inset border border-border-subtle rounded-2xl text-xs font-heading shrink-0 shadow-inner">
@@ -107,7 +107,7 @@ export const ArcadeSourceSelector = <T extends string>({
             }`}
           >
             <BookOpen className={`w-3.5 h-3.5 ${sourceType === 'TEMPLATE_BOOK' ? 'text-gold' : 'text-text-muted'}`} />
-            <span>Rak Buku Template</span>
+            <span>Curriculum books</span>
             <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-gold/15 text-gold border border-border-subtle font-mono">
               {OFFICIAL_BOOKS.length}
             </span>
@@ -168,7 +168,7 @@ export const ArcadeSourceSelector = <T extends string>({
                   : 'bg-surface-inset text-text-muted border border-border-subtle hover:text-text-primary'
               }`}
             >
-              Semua Rak ({OFFICIAL_BOOKS.length})
+              All books ({OFFICIAL_BOOKS.length})
             </button>
             <button
               type="button"
@@ -182,7 +182,7 @@ export const ArcadeSourceSelector = <T extends string>({
                   : 'bg-surface-inset text-text-muted border border-border-subtle hover:text-text-primary'
               }`}
             >
-              Kurikulum JLPT ({OFFICIAL_BOOKS.filter(b => b.category !== 'thematic' && b.level !== 'TEMATIK').length})
+              Kurikulum JLPT ({OFFICIAL_BOOKS.filter(b => b.category !== 'thematic').length})
             </button>
             <button
               type="button"
@@ -196,7 +196,7 @@ export const ArcadeSourceSelector = <T extends string>({
                   : 'bg-surface-inset text-text-muted border border-border-subtle hover:text-text-primary'
               }`}
             >
-              Tematik Kehidupan ({OFFICIAL_BOOKS.filter(b => b.category === 'thematic' || b.level === 'TEMATIK').length})
+              Tematik Kehidupan ({OFFICIAL_BOOKS.filter(b => b.category === 'thematic').length})
             </button>
           </div>
 
@@ -208,7 +208,7 @@ export const ArcadeSourceSelector = <T extends string>({
               const count = mode === 'kanji' 
                 ? stats?.kanjiCount 
                 : mode === 'conjugation' 
-                ? (stats?.verbCount || stats?.kotobaCount) 
+                ? stats?.kotobaCount 
                 : stats?.kotobaCount;
 
               return (
@@ -237,7 +237,7 @@ export const ArcadeSourceSelector = <T extends string>({
                         {book.level}
                       </span>
                       <span className="text-[10px] font-mono text-text-muted">
-                        {count || 0} {mode === 'kanji' ? 'kanji' : mode === 'conjugation' ? 'kata kerja' : 'kata'}
+                        {count || 0} {mode === 'kanji' ? 'letters' : 'words'}
                       </span>
                     </div>
 
@@ -274,21 +274,21 @@ export const ArcadeSourceSelector = <T extends string>({
           </div>
           <div className="min-w-0">
             <span className="text-[10px] font-mono uppercase text-text-muted block">
-              {sourceType === 'LEVEL' ? 'Tingkatan JLPT Dipilih' : 'Rak Buku Template Dipilih'}
+              {sourceType === 'LEVEL' ? 'Level selected' : 'Book selected'}
             </span>
             <span className="text-xs font-bold text-text-primary font-heading truncate block">
               {sourceType === 'LEVEL' ? activeLevelOption.label : activeBook?.title}
             </span>
             {sourceType === 'TEMPLATE_BOOK' && (
               <span className="text-[10px] text-text-muted font-mono block">
-                {activeBookItemCount} {mode === 'kanji' ? 'kanji' : mode === 'conjugation' ? 'kata kerja' : 'kosakata'} siap dilatih
+                {activeBookItemCount} {mode === 'kanji' ? 'letters' : 'words'} ready to practise
               </span>
             )}
           </div>
         </div>
 
         <div className="text-right shrink-0 pl-2">
-          <span className="text-[10px] font-mono text-text-muted block">Format Mode</span>
+          <span className="text-[10px] font-mono text-text-muted block">Game mode</span>
           <span className="text-xs font-bold text-text-primary font-mono">{challengeDurationText}</span>
         </div>
       </div>

@@ -7,7 +7,6 @@ import { getLocalIsoWeekId } from '../utils/time';
 import { safeSetItem } from '../utils/storage';
 import { mergeStatsCollections, mergeStageProgress } from '../utils/cloudMerge';
 import { supabase, getSession, saveGameToCloud, loadGameFromCloud, upsertLeaderboard, type CloudSavePayload } from '../lib/supabase';
-import { collectTowerState, applyTowerState, mergeTowerState } from '../engine/tower/world/towerCloudState';
 import { DEFAULT_STATS } from '../state/defaultStats';
 import { stripDerivedStats, withDerivedStats } from '../state/derivedState';
 import { canonicalizeStats } from '../state/canonicalizeStats';
@@ -59,10 +58,9 @@ const [cloudSyncStatus, setCloudSyncStatus] = useState<CloudSyncStatus>('idle');
 
   const failureToastShownRef = useRef(false);
 
-  // Selalu sertakan progres Tower saat menyimpan ke cloud.
   const saveToCloud = useCallback(
     (payload: CloudSavePayload) =>
-      saveGameToCloud({ ...payload, stats: stripDerivedStats(payload.stats), towerState: collectTowerState() }),
+      saveGameToCloud({ ...payload, stats: stripDerivedStats(payload.stats) }),
     []
   );
 
@@ -117,8 +115,6 @@ const [cloudSyncStatus, setCloudSyncStatus] = useState<CloudSyncStatus>('idle');
       // Koleksi (itemMastery, userDecks, stageProgress) selalu di-union supaya progres yang hanya
       // ada di satu sisi tidak hilang. Skalar (level/EXP/gold, dst.) mengikuti sisi yang lebih maju.
       const mergedStages = mergeStageProgress(currentStages, cloudData.stageProgress);
-      // Progres Tower: lantai tertinggi menang, union skill tree & achievement.
-      applyTowerState(mergeTowerState(collectTowerState(), cloudData.towerState));
 
       let mergedStats: PlayerStats;
       if (cloudWins) {

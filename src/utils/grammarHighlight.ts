@@ -127,7 +127,7 @@ function findGrammarSpan(japanese: string, item: BunpouItem): GrammarSpan | null
     }
   }
 
-  // 4. Match N5/N4 suffix titles starting with 〜 or ～ (e.g. 〜方, 〜やすい, 〜にくい, 〜すぎる)
+  // 4. Match A1/A2 suffix titles starting with 〜 or ～ (e.g. 〜方, 〜やすい, 〜にくい, 〜すぎる)
   const suffixMatch = t.match(/^[〜～]([ぁ-ん一-龠々]+)/);
   if (suffixMatch) {
     const sfx = suffixMatch[1];

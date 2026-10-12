@@ -133,7 +133,7 @@ export const KotobaDetailModal: React.FC<KotobaDetailModalProps> = ({
       meaningEn: `Related word ${wordStr}`,
       meaningJa: wordStr,
       wordType: 'noun',
-      jlpt: effectiveItem.jlpt || 'N5',
+      jlpt: effectiveItem.jlpt || 'A1',
       kanjiComponents: Array.from(wordStr).filter(c => /[\u4e00-\u9faf]/.test(c)),
     };
 
@@ -157,7 +157,7 @@ export const KotobaDetailModal: React.FC<KotobaDetailModalProps> = ({
       strokeCount: 1,
       radical: '',
       radicalName: '',
-      jlpt: 'N5',
+      jlpt: 'A1',
       relatedWords: effectiveItem ? [{ word: effectiveItem.word, reading: effectiveItem.reading, meaningId: effectiveItem.meaningId }] : [],
       questions: []
     };
@@ -255,15 +255,15 @@ export const KotobaDetailModal: React.FC<KotobaDetailModalProps> = ({
                   type="button"
                   onClick={handleBackInHistory}
                   className="btn-physical-secondary p-1.5 -ml-1 rounded-xl hover:text-wine-accent transition-all flex items-center gap-1 text-xs font-bold mr-1 cursor-pointer"
-                  title="Kembali ke kata sebelumnya"
+                  title="Back to the previous word"
                 >
                   <ArrowLeft className="w-4 h-4" />
-                  <span className="hidden sm:inline">Kembali</span>
+                  <span className="hidden sm:inline">Back</span>
                 </button>
               )}
               <h3 className="text-sm font-bold text-text-primary flex items-center gap-2 font-heading">
                 <BookIcon className="w-4 h-4 text-gold" />
-                Detail Kosakata
+                Word details
               </h3>
             </div>
             <div className="flex items-center gap-1.5">
@@ -327,7 +327,7 @@ export const KotobaDetailModal: React.FC<KotobaDetailModalProps> = ({
                 key={`writing-${effectiveItem.id}`}
                 kotoba={effectiveItem}
                 soundEnabled={soundEnabled}
-                nextButtonLabel={hasNext ? 'Lanjut ke Kata Berikutnya' : 'Selesai Menulis'}
+                nextButtonLabel={hasNext ? 'Next word' : 'Finish writing'}
                 onCompleteWord={(score, reward) => {
                   handleWritingWordCompleted(score, reward);
                 }}
@@ -372,7 +372,7 @@ export const KotobaDetailModal: React.FC<KotobaDetailModalProps> = ({
                 {hasMultipleReadings && (
                   <span className="px-2.5 py-1 rounded-lg text-xs font-mono font-bold border border-border-subtle text-red-700 dark:text-amber-400 bg-surface-inset shadow-sm flex items-center gap-1.5">
                     <Zap className="w-3.5 h-3.5 text-red-700 dark:text-amber-400 fill-red-700/20 dark:fill-amber-400/25 shrink-0" />
-                    <span>{readingVariations.length} Cara Baca Alternatif</span>
+                    <span>{readingVariations.length} alternative readings</span>
                   </span>
                 )}
               </div>
@@ -381,7 +381,7 @@ export const KotobaDetailModal: React.FC<KotobaDetailModalProps> = ({
                 <div className="flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-bold bg-surface-inset border border-border-subtle text-text-secondary shadow-xs">
                   <span title="Berapa kali dipelajari via flashcard">Flashcard: {masteryRecord.flashcardCount || 0}x</span>
                   <span className="opacity-40">|</span>
-                  <span title="Berapa kali latihan menulis kata ini">Ditulis: {masteryRecord.writingCount || 0}x</span>
+                  <span title="How many times you practised writing this word">Written: {masteryRecord.writingCount || 0}x</span>
                   <span className="opacity-40">|</span>
                   <span className="text-gold" title="Mastery">Lv.{masteryRecord.masteryLevel || 1} ({masteryRecord.masteryPercentage || 0}%)</span>
                 </div>
@@ -474,7 +474,7 @@ export const KotobaDetailModal: React.FC<KotobaDetailModalProps> = ({
                 )}
                 {effectiveItem.meaningJa && effectiveItem.meaningJa !== effectiveItem.word && (
                   <p className="text-xs text-text-muted italic">
-                    {effectiveItem.tags?.includes('Kaigo') ? 'Penjelasan JP (やさしい日本語): ' : 'Makna JP: '}
+                    {'Definition: '}
                     <span className="font-jp not-italic font-semibold text-text-secondary">{effectiveItem.meaningJa}</span>
                   </p>
                 )}
@@ -488,7 +488,7 @@ export const KotobaDetailModal: React.FC<KotobaDetailModalProps> = ({
                 className="btn-cta mt-2 w-full max-w-xs mx-auto py-3 rounded-2xl font-bold text-sm transition-all flex items-center justify-center gap-2 font-heading cursor-pointer"
               >
                 <Edit3 className="w-4 h-4" />
-                <span>Latih dengan Menulis (Active Recall)</span>
+                <span>Practise with writing (active recall)</span>
               </button>
             </div>
 
@@ -496,7 +496,7 @@ export const KotobaDetailModal: React.FC<KotobaDetailModalProps> = ({
             {effectiveItem.kanjiComponents && effectiveItem.kanjiComponents.length > 0 && (
               <div className="space-y-2">
                 <h4 className="text-xs font-bold text-text-muted uppercase tracking-wider flex items-center gap-1.5">
-                  <Layers className="w-3.5 h-3.5" /> Komponen Kanji
+                  <Layers className="w-3.5 h-3.5" /> Letters
                 </h4>
                 <div className="flex flex-wrap gap-2">
                   {effectiveItem.kanjiComponents.map((k, i) => (
@@ -519,7 +519,7 @@ export const KotobaDetailModal: React.FC<KotobaDetailModalProps> = ({
 
             {/* Example Sentences */}
             <div className="space-y-3">
-              <h4 className="text-xs font-bold text-text-muted uppercase tracking-wider">Contoh Kalimat</h4>
+              <h4 className="text-xs font-bold text-text-muted uppercase tracking-wider">Example sentence</h4>
               {effectiveItem.exampleSentence ? (
                 <div className="p-3.5 rounded-2xl bg-surface-inset border border-border-subtle space-y-2">
                   <p className="text-sm font-jp text-text-primary leading-relaxed font-bold">
@@ -540,7 +540,7 @@ export const KotobaDetailModal: React.FC<KotobaDetailModalProps> = ({
                   </button>
                 </div>
               ) : (
-                <p className="text-xs text-text-muted italic">Belum ada contoh kalimat.</p>
+                <p className="text-xs text-text-muted italic">No example sentence yet.</p>
               )}
             </div>
 
@@ -580,7 +580,7 @@ export const KotobaDetailModal: React.FC<KotobaDetailModalProps> = ({
                     })}
                   </ul>
                 ) : (
-                  <p className="text-xs text-text-muted italic">Tidak ada referensi kata terkait.</p>
+                  <p className="text-xs text-text-muted italic">No related words.</p>
                 )}
               </div>
 
@@ -599,7 +599,7 @@ export const KotobaDetailModal: React.FC<KotobaDetailModalProps> = ({
                           playSound('click', soundEnabled);
                         }}
                         className="text-sm text-text-primary font-jp bg-surface-inset hover:bg-surface-elevated px-2.5 py-1.5 rounded-lg border border-border-subtle hover:border-border-primary transition-all cursor-pointer flex items-center justify-between group active:scale-98"
-                        title="Klik untuk mendengarkan lafal frasa"
+                        title="Tap to hear the phrase"
                       >
                         <span>{colloc}</span>
                         <Volume2 className="w-3.5 h-3.5 text-text-muted group-hover:text-gold transition-colors shrink-0" />
@@ -609,7 +609,7 @@ export const KotobaDetailModal: React.FC<KotobaDetailModalProps> = ({
                 ) : (
                   <div className="p-3 rounded-xl border border-dashed border-border-subtle bg-surface-inset">
                     <p className="text-[10px] text-text-muted text-center leading-relaxed">
-                      Kolokasi (penggabungan kata lazim) belum tersedia untuk kosakata ini.
+                      Collocations (common word combinations) are not available for this word yet.
                     </p>
                   </div>
                 )}

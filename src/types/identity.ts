@@ -29,7 +29,7 @@ export interface BaseIdentity {
 export interface KanjiEntity extends BaseIdentity {
   character: string;                         // e.g. '学'
   unicode?: string;                          // e.g. 'U+5B66'
-  jlptLevel?: 'N5' | 'N4' | 'N3' | 'N2' | 'N1';
+  jlptLevel?: 'A1' | 'A2' | 'B1' | 'B2' | 'C1';
   grade?: number;
   joyo?: boolean;
   jinmeiyo?: boolean;
@@ -78,7 +78,7 @@ export interface VocabularyEntity extends BaseIdentity {
   meaningEn?: string;
   meaningJa?: string;
   partOfSpeech: string[];                    // e.g. ['noun', 'suru_verb']
-  jlptLevel?: 'N5' | 'N4' | 'N3' | 'N2' | 'N1';
+  jlptLevel?: 'A1' | 'A2' | 'B1' | 'B2' | 'C1';
   frequency?: number;
   commonness?: number;
   kanjiIds: string[];                        // References to KanjiEntity(id)
@@ -152,7 +152,7 @@ export interface GrammarEntity extends BaseIdentity {
   meaningId: string;
   meaningEn: string;
   explanationNote?: string;
-  jlptLevel: 'N5' | 'N4' | 'N3' | 'N2' | 'N1';
+  jlptLevel: 'A1' | 'A2' | 'B1' | 'B2' | 'C1';
   category?: string;
   functions?: string[];
   nuance?: string;

@@ -36,7 +36,7 @@ export interface ParsedAiDeck {
  * Explicitly instructs the AI to return clean, valid JSON formatted for Nihongo Quest.
  */
 export function buildGeminiDeckPrompt(options: AiDeckPromptOptions): string {
-  const { topic, level = 'N5', type = 'mixed', count = 10, customNotes } = options;
+  const { topic, level = 'A1', type = 'mixed', count = 10, customNotes } = options;
 
   const typeDescMap: Record<DeckType, string> = {
     mixed: 'Campuran kosakata, kanji, dan tata bahasa situasional',
@@ -52,7 +52,7 @@ Tugas: Buatlah materi pembelajaran bahasa Jepang bertema khusus dalam format JSO
 
 SPESIFIKASI DECK:
 - Tema / Topik: "${topic}"
-- Target Level: ${level === 'ALL' || level === 'Semua Level' ? 'Semua Level (N5 sampai N3 disesuaikan konteks)' : level}
+- Target Level: ${level === 'ALL' || level === 'Semua Level' ? 'Semua Level (A1 sampai B1 disesuaikan konteks)' : level}
 - Fokus Materi: ${typeDescMap[type] || 'Campuran'}
 - Jumlah Materi: ${count} kartu
 ${customNotes && customNotes.trim() ? `- Instruksi Tambahan: "${customNotes.trim()}"\n` : ''}
@@ -166,7 +166,7 @@ export function parseGeminiDeckJson(rawText: string): {
         exampleJp: rawItem.exampleJp || rawItem.example || undefined,
         exampleReading: rawItem.exampleReading || undefined,
         exampleId: rawItem.exampleId || rawItem.exampleMeaning || undefined,
-        level: rawItem.level || parsed.level || 'N5',
+        level: rawItem.level || parsed.level || 'A1',
       });
     }
 
@@ -182,7 +182,7 @@ export function parseGeminiDeckJson(rawText: string): {
       description: typeof parsed.description === 'string' ? parsed.description.trim() : '',
       type: (parsed.type as DeckType) || 'mixed',
       coverIcon: typeof parsed.coverIcon === 'string' && parsed.coverIcon.trim() ? parsed.coverIcon.trim() : '📖',
-      level: typeof parsed.level === 'string' ? parsed.level.trim() : 'N5',
+      level: typeof parsed.level === 'string' ? parsed.level.trim() : 'A1',
       items: validItems,
     };
 
@@ -246,7 +246,7 @@ export function convertAiDeckToUserDeck(parsed: ParsedAiDeck): UserDeck {
         exampleJp: item.exampleJp,
         exampleReading: item.exampleReading,
         exampleId: item.exampleId,
-        level: item.level || parsed.level || 'N5',
+        level: item.level || parsed.level || 'A1',
       },
     };
   });

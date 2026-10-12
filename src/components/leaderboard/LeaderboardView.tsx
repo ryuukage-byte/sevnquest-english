@@ -307,17 +307,17 @@ export const LeaderboardView: React.FC<LeaderboardViewProps> = ({
       <div className="px-3.5 py-2.5 text-xs text-center text-text-secondary bg-surface-inset rounded-xl border border-border-subtle flex flex-col sm:flex-row items-center justify-between gap-1.5 shadow-inner">
         <span className="font-medium">
           {activeTab === 'all-time' 
-            ? `Total EXP seumur hidup • Menampilkan ${displayLimit === 100 ? 'Top 100' : 'Semua'} (${currentEntries.length} dari ${totalDbCount} petualang).`
-            : "Peringkat mingguan dari skor Quiz dan Kanji. Direset setiap hari Senin!"}
+            ? `Lifetime total EXP • Showing ${displayLimit === 100 ? 'Top 100' : 'all'} (${currentEntries.length} dari ${totalDbCount} petualang).`
+            : "Weekly ranking from quiz and letter scores. Resets every Monday!"}
         </span>
         {hasError ? (
           <button
             onClick={() => fetchLeaderboard(true)}
             className="text-[10px] text-amber-400 hover:text-amber-300 font-bold font-mono flex items-center gap-1 cursor-pointer transition-colors"
-            title="Klik untuk mencoba menghubungkan kembali"
+            title="Tap to try reconnecting"
           >
             <WifiOff className="w-3 h-3 text-amber-400" />
-            Mode Offline • Coba Lagi
+            Offline mode • Try again
           </button>
         ) : isRefreshing ? (
           <span className="text-[10px] text-gold font-bold font-mono flex items-center gap-1">
@@ -349,9 +349,9 @@ export const LeaderboardView: React.FC<LeaderboardViewProps> = ({
                 <div className="w-14 h-14 rounded-2xl bg-amber-500/10 border border-border-subtle flex items-center justify-center mb-3">
                   <WifiOff className="w-7 h-7 text-amber-400" />
                 </div>
-                <p className="font-bold font-heading text-text-primary text-base">Gagal Memuat Arena</p>
+                <p className="font-bold font-heading text-text-primary text-base">Could not load the arena</p>
                 <p className="text-xs mt-1.5 text-text-muted max-w-xs">
-                  Koneksi internet tidak stabil. Ketuk tombol di bawah untuk menyegarkan data.
+                  Your connection is unstable. Tap the button below to refresh.
                 </p>
                 <button
                   type="button"
@@ -367,16 +367,16 @@ export const LeaderboardView: React.FC<LeaderboardViewProps> = ({
                 <div className="w-14 h-14 rounded-2xl bg-rose-500/10 border border-border-subtle flex items-center justify-center mb-3">
                   <Flame className="w-7 h-7 text-rose-400" />
                 </div>
-                <p className="font-bold font-heading text-text-primary text-base">Arena Mingguan Baru Dimulai!</p>
+                <p className="font-bold font-heading text-text-primary text-base">A new weekly arena has started!</p>
                 <p className="text-xs mt-1.5 text-text-muted max-w-xs leading-relaxed">
-                  Peringkat direset setiap hari Senin. Kerjakan Quiz atau Kanji hari ini untuk menjadi petualang pertama di papan peringkat mingguan!
+                  Rankings reset every Monday. Finish a quiz or letter practice today to become the first on the weekly board!
                 </p>
               </div>
             ) : (
               <div className="py-20 flex flex-col items-center justify-center text-text-secondary text-sm">
                 <Trophy className="w-12 h-12 mb-3 opacity-30 text-gold" />
-                <p className="font-bold font-heading">Belum ada yang menaklukkan arena ini.</p>
-                <p className="text-xs mt-1 text-text-muted">Jadilah yang pertama untuk meraih kemenangan!</p>
+                <p className="font-bold font-heading">Nobody has conquered this arena yet.</p>
+                <p className="text-xs mt-1 text-text-muted">Be the first to claim victory!</p>
               </div>
             )
           ) : (
@@ -405,7 +405,7 @@ export const LeaderboardView: React.FC<LeaderboardViewProps> = ({
                     key={entry.user_id}
                     onClick={() => handleSelectPlayer(entry, index)}
                     className={`flex items-center gap-3 p-3 sm:px-4 rounded-2xl transition-all border shadow-sm cursor-pointer hover:scale-[1.01] active:scale-[0.99] ${getRankStyle(index)} ${isMe ? 'border-border-subtle shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_4px_12px_rgba(0,0,0,0.35)] scale-[1.01]' : ''}`}
-                    title="Klik untuk melihat profil karakter petualang"
+                    title="Tap to see this adventurer's profile"
                   >
                     {/* Rank */}
                     <div className="flex items-center justify-center min-w-[2.25rem] sm:min-w-[2.5rem] w-auto shrink-0 px-0.5 text-center">
@@ -485,12 +485,12 @@ export const LeaderboardView: React.FC<LeaderboardViewProps> = ({
                     {displayLimit === 100 ? (
                       <>
                         <ChevronDown className="w-4 h-4 text-gold" />
-                        <span>Tampilkan Seluruh Petualang ({totalDbCount} Pemain)</span>
+                        <span>Show all adventurers ({totalDbCount} players)</span>
                       </>
                     ) : (
                       <>
                         <ChevronUp className="w-4 h-4 text-gold" />
-                        <span>Kembali ke Top 100 Hall of Fame</span>
+                        <span>Back to the Top 100 Hall of Fame</span>
                       </>
                     )}
                   </button>
@@ -509,7 +509,7 @@ export const LeaderboardView: React.FC<LeaderboardViewProps> = ({
               handleSelectPlayer(myRankInfo.entry, myRankInfo.rank - 1);
             }}
             className="p-3 sm:px-4 rounded-2xl bg-surface-elevated/95 border border-border-subtle shadow-[inset_0_1px_0_rgba(255,255,255,0.1),0_8px_24px_rgba(0,0,0,0.45)] flex items-center justify-between gap-3 cursor-pointer hover:border-border-primary transition-all hover:scale-[1.01] active:scale-[0.99]"
-            title="Klik untuk melihat detail profil petualang kamu"
+            title="Tap to see your profile"
           >
             {/* Rank badge */}
             <div className="flex items-center gap-2.5 min-w-0">
@@ -529,7 +529,7 @@ export const LeaderboardView: React.FC<LeaderboardViewProps> = ({
                   {myRankInfo.rank <= 100 ? (
                     <span className="text-emerald-400 font-semibold flex items-center gap-1">
                       <Trophy className="w-3 h-3 text-emerald-400" />
-                      Masuk Top 100 Dunia!
+                      In the world Top 100!
                     </span>
                   ) : (
                     <span className="text-amber-300 font-medium">
@@ -546,7 +546,7 @@ export const LeaderboardView: React.FC<LeaderboardViewProps> = ({
                 {myRankInfo.entry.total_exp.toLocaleString()}
               </div>
               <div className="text-[9px] uppercase tracking-wider text-text-muted">
-                Peringkat #{myRankInfo.rank} / {myRankInfo.totalPlayers}
+                Rank #{myRankInfo.rank} / {myRankInfo.totalPlayers}
               </div>
             </div>
           </div>

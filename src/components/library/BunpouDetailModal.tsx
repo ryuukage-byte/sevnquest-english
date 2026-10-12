@@ -22,7 +22,7 @@ import { speakJapanese, playSound } from '../../utils/audio';
 import { getCanonicalGrammarTitle, getGrammarTitleInfo } from '../../utils/bunpouTitleUtils';
 import { UserDeck } from '../../types/rpg';
 import { DeckBookmarkPicker } from '../deck/DeckBookmarkPicker';
-import { getGrammarSkillNodes } from '../../utils/bunpouSkillAdapter';
+import { getGrammarSkillNodes } from '../../utils/grammarSkillNodes';
 import { useBackButton } from '../../hooks/useBackButton';
 
 interface BunpouDetailModalProps {
@@ -84,18 +84,18 @@ const SCRAPBOOK_TABS: ScrapbookTabMeta[] = [
     tabColorInactive:
       'bg-[#e2d8c5] text-[#63553f] border-[#c8bba3] hover:bg-[#ede5d5] dark:bg-[#1f1b16] dark:text-[#a89b88] dark:border-[#383025] hover:dark:bg-[#28221b]',
     sheetAccentBg: 'border-l-4 border-l-[#bfa06d]',
-    tagline: 'Esensi & pola pikir dasar pola ini',
+    tagline: 'The essence and basic thinking behind this pattern',
   },
   {
     id: 'rumus',
-    label: 'Rumus & Pola',
+    label: 'Formula & pattern',
     tabNumber: '②',
     tabColorActive:
       'bg-[#4a6d8c] text-white border-[#3b5974] dark:bg-[#274057] dark:text-white dark:border-[#3d5e7d]',
     tabColorInactive:
       'bg-[#405f7c] text-white/80 border-[#324b61] hover:bg-[#4a6d8c] dark:bg-[#182937] dark:text-[#8cb3d9] dark:border-[#243a4e] hover:dark:bg-[#203445]',
     sheetAccentBg: 'border-l-4 border-l-[#4a6d8c]',
-    tagline: 'Koneksi kata kerja, sifat & kata benda',
+    tagline: 'How it connects verbs, adjectives and nouns',
   },
   {
     id: 'fungsi',
@@ -117,11 +117,11 @@ const SCRAPBOOK_TABS: ScrapbookTabMeta[] = [
     tabColorInactive:
       'bg-[#a3472d] text-white/80 border-[#853721] hover:bg-[#b85338] dark:bg-[#2c130d] dark:text-[#df8c7c] dark:border-[#421b13] hover:dark:bg-[#3d1a12]',
     sheetAccentBg: 'border-l-4 border-l-[#b85338]',
-    tagline: 'Kalimat percakapan bertingkat & audio',
+    tagline: 'Levelled conversation sentences & audio',
   },
   {
     id: 'kuis',
-    label: 'Latihan Kuis',
+    label: 'Quiz practice',
     tabNumber: '⑤',
     tabColorActive:
       'bg-[#e59e93] text-[#3d1a15] border-[#c98378] dark:bg-[#482426] dark:text-[#ffe4e2] dark:border-[#683437]',
@@ -157,7 +157,7 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
   // Extract human-centered learning flow
   const skillNodes = getGrammarSkillNodes(item);
   const titleInfo = getGrammarTitleInfo(item);
-  const cleanLevel = (item.baseLevel || item.level || 'N3').replace(/^Level\s*/i, '');
+  const cleanLevel = (item.baseLevel || item.level || 'B1').replace(/^Level\s*/i, '');
 
   const currentTabIdx = SCRAPBOOK_TABS.findIndex((t) => t.id === activeTab);
   const activeTabMeta = SCRAPBOOK_TABS[currentTabIdx] || SCRAPBOOK_TABS[0];
@@ -464,7 +464,7 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
               type="button"
               onClick={onClose}
               className="btn-physical-secondary p-1.5 rounded-xl transition-colors cursor-pointer"
-              title="Tutup Scrapbook"
+              title="Close"
             >
               <X className="w-4 h-4" />
             </button>
@@ -961,7 +961,7 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
                     >
                       <div className="flex items-center justify-between gap-2">
                         <span className="text-[11px] font-mono font-medium text-text-muted select-none tracking-wide">
-                          例 {exIdx + 1}
+                          Example {exIdx + 1}
                         </span>
 
                         <button

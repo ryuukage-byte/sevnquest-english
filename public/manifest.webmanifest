@@ -1,7 +1,7 @@
 {
-  "name": "SevnQuest - Petualangan Bahasa Jepang",
+  "name": "SevnQuest - The English Learning World",
   "short_name": "SevnQuest",
-  "description": "Aplikasi RPG belajar bahasa Jepang komprehensif (Kana, JLPT N5 - N1, Kaigo, Kanji, Bunpou, Kotoba).",
+  "description": "An RPG for learning English: vocabulary, grammar, reading, listening, and letter writing (CEFR A1–B2).",
   "start_url": "./",
   "id": "./",
   "display": "standalone",
@@ -9,7 +9,10 @@
   "theme_color": "#12151d",
   "orientation": "any",
   "scope": "./",
-  "categories": ["education", "games"],
+  "categories": [
+    "education",
+    "games"
+  ],
   "icons": [
     {
       "src": "./favicon-32x32.png",

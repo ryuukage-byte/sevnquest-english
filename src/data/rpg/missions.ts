@@ -4,7 +4,7 @@ export const INITIAL_DAILY_MISSIONS: Mission[] = [
   {
     id: 'dm_01',
     title: 'Penguasaan Bunpou',
-    description: 'Selesaikan 1 sesi latihan tata bahasa Bunpou hari ini.',
+    description: 'Finish 1 grammar practice session today.',
     progress: 0,
     target: 1,
     rewardExp: 80,
@@ -16,8 +16,8 @@ export const INITIAL_DAILY_MISSIONS: Mission[] = [
   },
   {
     id: 'dm_02',
-    title: 'Pemburu Kosakata',
-    description: 'Buka atau hafalkan 5 kartu Kotoba baru di Flashcard.',
+    title: 'Vocabulary hunter',
+    description: 'Open or memorise 5 new vocabulary cards in Flashcards.',
     progress: 0,
     target: 5,
     rewardExp: 75,
@@ -29,7 +29,7 @@ export const INITIAL_DAILY_MISSIONS: Mission[] = [
   },
   {
     id: 'dm_03',
-    title: 'Goresan Kanji Suci',
+    title: 'Perfect strokes',
     description: 'Latih menulis 3 lembar kanji pada kanvas penulisan.',
     progress: 0,
     target: 3,
@@ -43,7 +43,7 @@ export const INITIAL_DAILY_MISSIONS: Mission[] = [
   {
     id: 'dm_04',
     title: 'Telinga Emas Choukai',
-    description: 'Dengarkan 1 audio dialog listening dan jawab pertanyaannya.',
+    description: 'Listen to 1 dialogue and answer its questions.',
     progress: 0,
     target: 1,
     rewardExp: 90,
@@ -55,8 +55,8 @@ export const INITIAL_DAILY_MISSIONS: Mission[] = [
   },
   {
     id: 'dm_05',
-    title: 'Kuis Cepat Tanpa Salah',
-    description: 'Jawab 5 soal kuis dengan benar berturut-turut.',
+    title: 'Quick quiz, no mistakes',
+    description: 'Answer 5 quiz questions correctly in a row.',
     progress: 0,
     target: 5,
     rewardExp: 120,
@@ -85,7 +85,7 @@ export const INITIAL_WEEKLY_MISSIONS: Mission[] = [
   {
     id: 'wm_02',
     title: 'Disiplin Samurai 5 Hari',
-    description: 'Pertahankan streak belajar harian selama 5 hari berturut-turut.',
+    description: 'Keep your daily study streak going for 5 days in a row.',
     progress: 1,
     target: 5,
     rewardExp: 500,
@@ -98,7 +98,7 @@ export const INITIAL_WEEKLY_MISSIONS: Mission[] = [
   {
     id: 'wm_03',
     title: 'Master Pembaca Dokkai',
-    description: 'Selesaikan 3 teks membaca Dokkai dengan skor sempurna.',
+    description: 'Finish 3 reading passages with a perfect score.',
     progress: 0,
     target: 3,
     rewardExp: 450,

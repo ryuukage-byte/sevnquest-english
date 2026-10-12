@@ -202,7 +202,7 @@ export interface BunpouItem {
   reading: string; // Romaji/Hiragana
   meaningId: string; // Indonesian meaning
   meaningEn: string; // English meaning
-  level: string; // N5, N4, N3, N2
+  level: string; // A1, A2, B1, B2
   explanation: string;
   formula: string;
   examples: ExampleSentence[];
@@ -211,7 +211,7 @@ export interface BunpouItem {
   functions?: string[]; // e.g. ["推測 (dugaan)", "比喩 (perumpamaan)", "類似 (kemiripan)"]
   nuance?: string; // e.g. "Berdasarkan apa yang terlihat/dirasakan langsung"
   relatedKeywords?: string[]; // e.g. ["推測", "似ている", "まるで"]
-  baseLevel?: 'N5' | 'N4' | 'N3' | 'N2';
+  baseLevel?: 'A1' | 'A2' | 'B1' | 'B2';
   comparisonNotes?: GrammarComparison[];
   tags?: string[];
   categoryType?: string; // e.g. "Change Pattern", "Desire Pattern", "Passive Pattern"
@@ -226,7 +226,7 @@ export interface BunpouMixedSet {
   title: string;
   description: string;
   questions: Question[]; // 7 mixed questions
-  baseLevel?: 'N5' | 'N4' | 'N3' | 'N2';
+  baseLevel?: 'A1' | 'A2' | 'B1' | 'B2';
   level?: string;
 }
 
@@ -387,10 +387,10 @@ export interface Stage {
   rewardItem?: string;
 }
 
-export type JlptLevel = 'N5' | 'N4' | 'N3' | 'N2' | 'N1' | 'KANA';
+export type JlptLevel = 'A1' | 'A2' | 'B1' | 'B2' | 'C1' | 'ALPHABET';
 
 export interface WorldInfo {
-  id: string; // e.g. 'world_n5', 'world_n4', 'world_n3', 'world_n2', 'world_n1'
+  id: string; // e.g. 'world_a1', 'world_a2', 'world_b1', 'world_b2', 'world_c1'
   jlptLevel: JlptLevel;
   name: string;
   japaneseName: string;
@@ -447,7 +447,7 @@ export interface TryOutSection {
 export interface TryOutData {
   id: string;
   title: string;
-  level?: 'N1' | 'N2' | 'N3' | 'N4' | 'N5' | 'JFT';
+  level?: 'C1' | 'B2' | 'B1' | 'A2' | 'A1' | 'JFT';
   code?: string;
   year?: number;
   month?: number;

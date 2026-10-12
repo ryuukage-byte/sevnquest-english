@@ -11,11 +11,11 @@ import { KOTOBA_DATABASE } from './kotoba';
 import { BUNPOU_DATABASE } from './bunpou';
 import { resolveLegacyId } from './entityIds';
 
-type Jlpt = 'N5' | 'N4' | 'N3' | 'N2' | 'N1';
+type Jlpt = 'A1' | 'A2' | 'B1' | 'B2' | 'C1';
 
 function toJlpt(level: string | undefined): Jlpt | undefined {
   const l = (level || '').toUpperCase();
-  return l === 'N5' || l === 'N4' || l === 'N3' || l === 'N2' || l === 'N1' ? l : undefined;
+  return l === 'A1' || l === 'A2' || l === 'B1' || l === 'B2' || l === 'C1' ? l : undefined;
 }
 
 const KANJI_RE = /[一-鿿㐀-䶿]/;
@@ -72,7 +72,7 @@ export function toGrammarEntity(item: BunpouItem): GrammarEntity {
     meaningId: item.meaningId,
     meaningEn: item.meaningEn,
     explanationNote: item.explanation,
-    jlptLevel: toJlpt(item.level) ?? 'N5',
+    jlptLevel: toJlpt(item.level) ?? 'A1',
     functions: item.functions,
     nuance: item.nuance,
     relatedKeywords: item.relatedKeywords,

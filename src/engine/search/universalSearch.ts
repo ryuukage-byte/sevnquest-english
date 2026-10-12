@@ -121,7 +121,7 @@ export interface UniversalSearchIndex {
   bunpou: BunpouDoc[];
 }
 
-const JLPT_RANK: Record<string, number> = { N5: 0, N4: 1, N3: 2, N2: 3, N1: 4 };
+const JLPT_RANK: Record<string, number> = { A1: 0, A2: 1, B1: 2, B2: 3, C1: 4 };
 const rankOf = (level?: string) => (level && level in JLPT_RANK ? JLPT_RANK[level] : 5);
 
 /** Alias → kanonik dibalik sekali: kanonik → daftar ID lama. */

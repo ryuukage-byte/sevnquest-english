@@ -42,7 +42,7 @@ interface KotobaGuessModalProps {
   ) => void;
 }
 
-type LevelFilter = 'ALL' | 'N5' | 'N4' | 'N3' | 'N2' | 'N1';
+type LevelFilter = 'ALL' | 'A1' | 'A2' | 'B1' | 'B2' | 'C1';
 
 interface GuessWord {
   id: string;
@@ -54,12 +54,12 @@ interface GuessWord {
 }
 
 const LEVEL_OPTIONS: { id: LevelFilter; label: string; desc: string }[] = [
-  { id: 'ALL', label: 'Semua Level', desc: 'Campuran N5 hingga N1' },
-  { id: 'N5', label: 'JLPT N5', desc: 'Kosakata dasar' },
-  { id: 'N4', label: 'JLPT N4', desc: 'Kosakata pra-menengah' },
-  { id: 'N3', label: 'JLPT N3', desc: 'Kosakata menengah' },
-  { id: 'N2', label: 'JLPT N2', desc: 'Kosakata mahir' },
-  { id: 'N1', label: 'JLPT N1', desc: 'Kosakata ahli' }
+  { id: 'ALL', label: 'All levels', desc: 'Mixed A1 to B2' },
+  { id: 'A1', label: 'A1', desc: 'Basic words' },
+  { id: 'A2', label: 'A2', desc: 'Elementary words' },
+  { id: 'B1', label: 'B1', desc: 'Intermediate words' },
+  { id: 'B2', label: 'B2', desc: 'Upper-intermediate words' },
+  { id: 'C1', label: 'C1', desc: 'Advanced words' }
 ];
 
 const rawKotobaList = Object.values(kotobaDb as Record<string, any>);
@@ -75,7 +75,7 @@ export const KotobaGuessModal: React.FC<KotobaGuessModalProps> = ({
   onCompleteStudyItem,
 }) => {
   const [sourceType, setSourceType] = useState<'LEVEL' | 'TEMPLATE_BOOK'>('LEVEL');
-  const [selectedLevel, setSelectedLevel] = useState<LevelFilter>('N5');
+  const [selectedLevel, setSelectedLevel] = useState<LevelFilter>('A1');
   const [selectedBookId, setSelectedBookId] = useState<string>('book_theme_body');
   const [gameState, setGameState] = useState<'ready' | 'playing' | 'finished'>('ready');
   
@@ -109,7 +109,7 @@ export const KotobaGuessModal: React.FC<KotobaGuessModalProps> = ({
   const activeSourceLabel = useMemo(() => {
     if (sourceType === 'TEMPLATE_BOOK') {
       const b = OFFICIAL_BOOKS.find(book => book.id === selectedBookId);
-      return b ? b.title : 'Rak Buku Template';
+      return b ? b.title : 'Curriculum books';
     }
     return currentLevelOption.label;
   }, [sourceType, selectedBookId, currentLevelOption]);
@@ -118,7 +118,7 @@ export const KotobaGuessModal: React.FC<KotobaGuessModalProps> = ({
   const filteredPool = useMemo(() => {
     if (sourceType === 'TEMPLATE_BOOK') {
       const pool = getKotobaPoolForBook(selectedBookId);
-      return pool.length > 0 ? pool : rawKotobaList.filter(k => k.jlpt === 'N5');
+      return pool.length > 0 ? pool : rawKotobaList.filter(k => k.jlpt === 'A1');
     }
     if (selectedLevel === 'ALL') {
       return rawKotobaList;
@@ -328,7 +328,7 @@ export const KotobaGuessModal: React.FC<KotobaGuessModalProps> = ({
   const rankInfo = useMemo(() => {
     if (score >= 2500) return { rank: 'SSS', title: 'Radar Vocab Dewa', color: 'text-amber-800 dark:text-amber-300 border-border-subtle bg-amber-500/10' };
     if (score >= 1800) return { rank: 'SS', title: 'Sprint Master', color: 'text-red-700 dark:text-rose-400 border-red-700/40 dark:border-rose-500 bg-red-700/10 dark:bg-rose-500/10' };
-    if (score >= 1200) return { rank: 'S', title: 'Jawara Kosakata', color: 'text-purple-700 dark:text-purple-400 border-border-subtle bg-purple-500/10' };
+    if (score >= 1200) return { rank: 'S', title: 'Vocabulary champion', color: 'text-purple-700 dark:text-purple-400 border-border-subtle bg-purple-500/10' };
     if (score >= 700) return { rank: 'A', title: 'Kilat Tanggap', color: 'text-emerald-800 dark:text-emerald-400 border-emerald-800/40 dark:border-emerald-500 bg-emerald-500/10' };
     if (score >= 350) return { rank: 'B', title: 'Pelari Rajin', color: 'text-blue-700 dark:text-blue-400 border-border-subtle bg-blue-500/10' };
     return { rank: 'C', title: 'Pemanasan', color: 'text-text-muted border-border-subtle bg-surface-inset' };
@@ -388,7 +388,7 @@ export const KotobaGuessModal: React.FC<KotobaGuessModalProps> = ({
                   Tebak Arti Sebanyak Mungkin Dalam 45 Detik!
                 </h3>
                 <p className="text-xs sm:text-sm text-text-secondary max-w-md mx-auto leading-relaxed">
-                  Tebak arti kata bahasa Jepang secepat mungkin. Benar beruntun melipatgandakan poin combo (hingga 3.5x), tetapi hati-hati: salah beruntun melipatgandakan pinalti pengurangan poin (hingga -3.0x)!
+                  Guess the meaning of each English word as fast as you can. Correct answers in a row multiply your combo points (up to 3.5x), but be careful: wrong answers in a row melipatgandakan pinalti pengurangan poin (hingga -3.0x)!
                 </p>
 
                 {/* Combo & Penalty Multiplier Rules Badges */}
@@ -400,7 +400,7 @@ export const KotobaGuessModal: React.FC<KotobaGuessModalProps> = ({
                         Benar Beruntun (+Combo)
                       </span>
                       <span className="text-[10px] text-text-secondary leading-tight block">
-                        Multiplier plus bertambah (+100 s.d. +350 PTS/kata)
+                        Multiplier bonus grows (+100 to +350 PTS per word)
                       </span>
                     </div>
                   </div>
@@ -411,7 +411,7 @@ export const KotobaGuessModal: React.FC<KotobaGuessModalProps> = ({
                         Salah Beruntun (-Pinalti)
                       </span>
                       <span className="text-[10px] text-text-secondary leading-tight block">
-                        Multiplier minus bertambah (-50 s.d. -150 PTS/salah)
+                        Multiplier penalty grows (-50 to -150 PTS per mistake)
                       </span>
                     </div>
                   </div>
@@ -441,7 +441,7 @@ export const KotobaGuessModal: React.FC<KotobaGuessModalProps> = ({
                 className="w-full btn-physical-primary py-3.5 rounded-2xl text-sm font-bold font-heading flex items-center justify-center gap-2 cursor-pointer"
               >
                 <Zap className="w-4 h-4 fill-current" />
-                <span>Mulai Sprint (45 Detik)</span>
+                <span>Start sprint (45 seconds)</span>
                 <ChevronRight className="w-4 h-4" />
               </button>
             </div>
@@ -459,7 +459,7 @@ export const KotobaGuessModal: React.FC<KotobaGuessModalProps> = ({
                   {correctCount}
                 </div>
                 <div>
-                  <span className="text-[10px] font-mono text-text-muted uppercase block">Skor Poin</span>
+                  <span className="text-[10px] font-mono text-text-muted uppercase block">Score</span>
                   <span className="text-xs font-bold text-gold font-mono">{score}</span>
                 </div>
               </div>
@@ -621,7 +621,7 @@ export const KotobaGuessModal: React.FC<KotobaGuessModalProps> = ({
               {/* Score Display */}
               <div className="flex flex-col sm:flex-row items-center justify-between gap-4 py-2">
                 <div className="text-center sm:text-left space-y-1">
-                  <span className="text-xs text-text-secondary font-mono">Total Skor Poin:</span>
+                  <span className="text-xs text-text-secondary font-mono">Total score:</span>
                   <div className="flex items-baseline justify-center sm:justify-start gap-2">
                     <span className="text-4xl sm:text-5xl font-black font-mono text-teal drop-shadow-sm">
                       {score}
@@ -654,7 +654,7 @@ export const KotobaGuessModal: React.FC<KotobaGuessModalProps> = ({
 
               {/* Difficulty / Source Display */}
               <div className="p-3 rounded-2xl bg-surface-inset border border-border-subtle flex items-center justify-between text-xs font-mono">
-                <span className="text-text-muted">Sumber / Tingkat:</span>
+                <span className="text-text-muted">Source / level:</span>
                 <span className="text-text-primary font-bold font-mono text-sm">
                   {activeSourceLabel}
                 </span>
@@ -687,7 +687,7 @@ export const KotobaGuessModal: React.FC<KotobaGuessModalProps> = ({
                   className="flex-1 btn-physical-secondary py-3 rounded-2xl text-xs sm:text-sm font-bold font-heading flex items-center justify-center gap-2 cursor-pointer"
                 >
                   <Layers className="w-4 h-4" />
-                  <span>Pilih Level Lain</span>
+                  <span>Choose another level</span>
                 </button>
               </div>
 
@@ -696,7 +696,7 @@ export const KotobaGuessModal: React.FC<KotobaGuessModalProps> = ({
                 onClick={handleClose}
                 className="w-full btn btn-secondary py-2.5 rounded-xl text-xs font-heading cursor-pointer text-text-secondary hover:text-text-primary"
               >
-                Kembali ke Arena
+                Back to the arena
               </button>
             </div>
 

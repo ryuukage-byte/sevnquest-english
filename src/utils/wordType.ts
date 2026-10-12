@@ -4,22 +4,22 @@ export type WordType = KotobaItem['wordType'];
 
 /** Label tampilan (Indonesia + istilah Jepang) untuk tiap jenis kata hasil klasifikasi JMdict. */
 const WORD_TYPE_LABELS: Record<WordType, { id: string; jp: string }> = {
-  noun: { id: 'Kata Benda', jp: '名詞' },
-  verb: { id: 'Kata Kerja', jp: '動詞' },
-  'adjective-i': { id: 'Kata Sifat -i', jp: 'い形容詞' },
-  'adjective-na': { id: 'Kata Sifat -na', jp: 'な形容詞' },
-  'adjective-pn': { id: 'Kata Penjelas Benda', jp: '連体詞' },
-  adverb: { id: 'Kata Keterangan', jp: '副詞' },
-  conjunction: { id: 'Kata Sambung', jp: '接続詞' },
-  particle: { id: 'Partikel', jp: '助詞' },
-  pronoun: { id: 'Kata Ganti', jp: '代名詞' },
-  counter: { id: 'Kata Bantu Bilangan', jp: '助数詞' },
-  numeral: { id: 'Angka', jp: '数詞' },
-  interjection: { id: 'Kata Seru', jp: '感動詞' },
-  expression: { id: 'Ungkapan', jp: '表現' },
-  prefix: { id: 'Awalan', jp: '接頭辞' },
-  suffix: { id: 'Akhiran', jp: '接尾辞' },
-  auxiliary: { id: 'Kata Bantu', jp: '助動詞' },
+  noun: { id: 'Noun', jp: 'Noun' },
+  verb: { id: 'Verb', jp: 'Verb' },
+  'adjective-i': { id: 'Adjective', jp: 'Adjective' },
+  'adjective-na': { id: 'Adjective', jp: 'Adjective' },
+  'adjective-pn': { id: 'Determiner', jp: 'Determiner' },
+  adverb: { id: 'Adverb', jp: 'Adverb' },
+  conjunction: { id: 'Conjunction', jp: 'Conjunction' },
+  particle: { id: 'Preposition', jp: 'Preposition' },
+  pronoun: { id: 'Pronoun', jp: 'Pronoun' },
+  counter: { id: 'Determiner', jp: 'Determiner' },
+  numeral: { id: 'Number', jp: 'Number' },
+  interjection: { id: 'Interjection', jp: 'Interjection' },
+  expression: { id: 'Expression', jp: 'Expression' },
+  prefix: { id: 'Prefix', jp: 'Prefix' },
+  suffix: { id: 'Suffix', jp: 'Suffix' },
+  auxiliary: { id: 'Auxiliary verb', jp: 'Auxiliary verb' },
 };
 
 export function getWordTypeLabel(type?: string | null): string {

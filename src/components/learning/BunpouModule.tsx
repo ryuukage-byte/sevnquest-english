@@ -2,13 +2,12 @@ import React, { useState } from 'react';
 import { BookOpen, Swords, Volume2, HelpCircle, GitBranch, MapPin, Settings2, Edit3 } from 'lucide-react';
 import { BunpouItem, BunpouMixedSet, Question } from '../../types/content';
 import { BUNPOU_DATABASE, BUNPOU_MIXED_DATABASE } from '../../data/bunpou';
-import { getSubBranchesForBunpou } from '../../data/bunpouSubKnowledge';
+import type { SubFormulaBranch } from '../../types/content';
+const getSubBranchesForBunpou = (_item: BunpouItem): SubFormulaBranch[] => [];
 import { QuizEngine } from './QuizEngine';
 import { FormulaDisplay } from './FormulaDisplay';
 import { GrammarChecklist } from './GrammarChecklist';
-import { GrammarFormulaBox } from './GrammarFormulaBox';
 import { RubyText } from './RubyText';
-import { SakubunStudio } from './SakubunStudio';
 import { speakJapanese, playSound } from '../../utils/audio';
 import { splitSentenceForHighlight } from '../../utils/grammarHighlight';
 import { fisherYatesShuffle } from '../../utils/smartRandomizer';
@@ -98,9 +97,9 @@ export const BunpouModule: React.FC<BunpouModuleProps> = ({
 
       const options = [
         correct,
-        shuffledDistractors[(i*3)%shuffledDistractors.length] || 'は',
-        shuffledDistractors[(i*3+1)%shuffledDistractors.length] || 'が',
-        shuffledDistractors[(i*3+2)%shuffledDistractors.length] || 'を'
+        shuffledDistractors[(i*3)%shuffledDistractors.length] || 'the',
+        shuffledDistractors[(i*3+1)%shuffledDistractors.length] || 'a',
+        shuffledDistractors[(i*3+2)%shuffledDistractors.length] || 'an'
       ];
       
       const shuffledOptions = fisherYatesShuffle(options);
@@ -108,15 +107,15 @@ export const BunpouModule: React.FC<BunpouModuleProps> = ({
 
       questions.push({
         id: `${item.id}_fib_${i}`,
-        instruction: '次の文の（　）に入れるのに最もよいものを、1・2・3・4から一つ選びなさい。',
-        instructionId: 'Pilihlah pola tata bahasa yang paling tepat untuk melengkapi kalimat.',
+        instruction: 'Choose the best option to fill the blank in the sentence.',
+        instructionId: 'Choose the grammar pattern that best completes the sentence.',
         prompt,
         ruby,
         translation: ex.meaningId,
         options: shuffledOptions,
         correctIndex,
         explanation: `${ex.japanese}\n\n=> ${item.title}: ${item.meaningId}`,
-        level: item.baseLevel || item.level || 'N3',
+        level: item.baseLevel || item.level || 'B1',
       });
     }
 
@@ -129,7 +128,7 @@ export const BunpouModule: React.FC<BunpouModuleProps> = ({
         <QuizEngine
           title={activeQuizSet.title}
           questions={activeQuestions}
-          level={activeQuizSet.baseLevel || activeQuizSet.level || 'N3'}
+          level={activeQuizSet.baseLevel || activeQuizSet.level || 'B1'}
           playerMp={playerMp}
           playerInt={playerInt}
           onUseMp={onUseMp}
@@ -157,7 +156,7 @@ export const BunpouModule: React.FC<BunpouModuleProps> = ({
             </span>
             <div>
               <h2 className="text-base sm:text-lg font-bold text-text-primary font-heading flex items-center gap-2">
-                <span className="text-gold">文</span> BUNPOU (Tata Bahasa N3)
+                <span className="text-gold">G</span> GRAMMAR
               </h2>
               <p className="text-xs text-text-secondary">
                 Pahami pola kalimat, rumus pembentukan, contoh & drill 7 soal
@@ -180,20 +179,6 @@ export const BunpouModule: React.FC<BunpouModuleProps> = ({
             }`}
           >
             Materi ({bunpouIds.length})
-          </button>
-          <button
-            onClick={() => {
-              setActiveTab('sakubun');
-              playSound('click', soundEnabled);
-            }}
-            className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1 font-heading ${
-              activeTab === 'sakubun'
-                ? 'bg-amber-500/20 text-amber-400 border border-border-subtle shadow-sm'
-                : 'text-text-muted hover:text-text-primary'
-            }`}
-          >
-            <Edit3 className="w-3.5 h-3.5" />
-            <span>Susun Kalimat</span>
           </button>
           <button
             onClick={() => {
@@ -244,14 +229,14 @@ export const BunpouModule: React.FC<BunpouModuleProps> = ({
           {/* Action Row inside selected Materi */}
           <div className="flex items-center justify-between panel p-2.5 shadow-sm">
             <span className="text-xs text-text-primary font-medium px-2">
-              📜 Tata Bahasa: <strong className="text-gold font-jp">{currentBunpou.title}</strong>
+              📜 Grammar: <strong className="text-gold font-jp">{currentBunpou.title}</strong>
             </span>
 
             <button
               onClick={() => startSingleQuiz(currentBunpou)}
               className="btn-cta px-4 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 font-heading"
             >
-              <span>Latihan 7 Soal</span>
+              <span>7-question practice</span>
             </button>
           </div>
 
@@ -273,13 +258,13 @@ export const BunpouModule: React.FC<BunpouModuleProps> = ({
               <div className="space-y-1">
                 {currentBunpou.formula && (
                   <div className="text-xs text-text-secondary font-mono font-medium">
-                    Rumus: <span className="font-jp text-text-primary font-bold">{currentBunpou.formula}</span>
+                    Pattern: <span className="font-jp text-text-primary font-bold">{currentBunpou.formula}</span>
                   </div>
                 )}
                 <h3 className="text-2xl sm:text-3xl font-black text-text-primary font-jp flex items-center gap-2">
                   <RubyText
                     japanese={currentBunpou.title}
-                    reading={currentBunpou.reading?.includes('かた') ? currentBunpou.reading : (currentBunpou.title === '〜方' ? '〜かた' : currentBunpou.reading)}
+                    reading={currentBunpou.reading}
                     showFurigana={true}
                   />
                 </h3>
@@ -297,10 +282,10 @@ export const BunpouModule: React.FC<BunpouModuleProps> = ({
             {/* 2. BRACKETED FORMULA BOX (Matching slide green bracket grouping) */}
             <div className="space-y-1.5">
               <h4 className="text-xs font-black uppercase tracking-wider text-text-primary font-heading flex items-center justify-between">
-                <span>📐 Rumus Sambungan Kata (接続)</span>
+                <span>📐 Pattern formula</span>
                 <span className="text-[11px] text-emerald-800 dark:text-emerald-300 font-mono font-black tracking-wide">K. Kerja / Sifat / Benda</span>
               </h4>
-              <GrammarFormulaBox item={currentBunpou} />
+              <FormulaDisplay formula={currentBunpou.formula} item={currentBunpou} />
             </div>
 
             {/* Explanation Detail */}
@@ -320,7 +305,7 @@ export const BunpouModule: React.FC<BunpouModuleProps> = ({
                 {currentBunpou.nuance && (
                   <div className="space-y-1">
                     <span className="text-[11px] font-bold uppercase tracking-wider text-gold font-heading">
-                      Nuansa Pemakaian (ニュアンス)
+                      Nuance
                     </span>
                     <p className="text-xs sm:text-sm text-text-primary leading-relaxed">
                       {currentBunpou.nuance}
@@ -342,7 +327,7 @@ export const BunpouModule: React.FC<BunpouModuleProps> = ({
               </div>
             )}
 
-            {/* Cabang Rumus & Kondisi Penggunaan (Sub-Rumus) */}
+            {/* Pattern variants & conditions (Sub-Rumus) */}
             {subBranches && subBranches.length > 0 && (
               <div className="p-4 sm:p-5 rounded-2xl bg-surface-inset border border-border-subtle space-y-4 shadow-md">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 pb-2.5 border-b border-border-subtle">
@@ -352,7 +337,7 @@ export const BunpouModule: React.FC<BunpouModuleProps> = ({
                     </span>
                     <div>
                       <h4 className="text-xs sm:text-sm font-bold text-gold font-heading">
-                        Cabang Rumus & Kondisi Penggunaan
+                        Pattern variants & conditions
                       </h4>
                       <p className="text-[11px] text-text-secondary">
                         1 rumus tata bahasa memiliki beberapa variasi cabang & aturan sambung
@@ -418,7 +403,7 @@ export const BunpouModule: React.FC<BunpouModuleProps> = ({
                       <div className="space-y-1.5">
                         <span className="text-[10px] font-bold uppercase tracking-wider text-text-secondary flex items-center gap-1 font-heading">
                           <Settings2 className="w-3.5 h-3.5 text-gold" />
-                          Kondisi Sambungan (接続):
+                          Connection rules:
                         </span>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                           {currentSubBranch.connectionConditions.map((cond, cIdx) => (
@@ -449,7 +434,7 @@ export const BunpouModule: React.FC<BunpouModuleProps> = ({
                     {currentSubBranch.examples && currentSubBranch.examples.length > 0 && (
                       <div className="space-y-2 pt-1 border-t border-border-subtle">
                         <span className="text-[10px] font-bold uppercase tracking-wider text-text-secondary font-heading">
-                          Contoh Penggunaan untuk Cabang Ini:
+                          Examples for this variant:
                         </span>
                         <div className="space-y-2">
                           {currentSubBranch.examples.map((ex, exIdx) => (
@@ -472,7 +457,7 @@ export const BunpouModule: React.FC<BunpouModuleProps> = ({
                               <button
                                 onClick={() => handlePlaySentenceAudio(ex.japanese)}
                                 className="btn-physical-secondary p-1.5 rounded-lg text-gold transition-colors shrink-0"
-                                title="Dengarkan Suara"
+                                title="Listen"
                               >
                                 <Volume2 className="w-3.5 h-3.5" />
                               </button>
@@ -495,10 +480,10 @@ export const BunpouModule: React.FC<BunpouModuleProps> = ({
                   </span>
                   <div>
                     <h4 className="text-xs sm:text-sm font-bold text-indigo font-heading">
-                      Perbedaan dengan Pola Mirip (使い分け)
+                      Difference from similar patterns
                     </h4>
                     <p className="text-[11px] text-text-secondary">
-                      Pahami perbedaannya agar tidak terkecoh oleh pilihan jebakan di ujian JLPT
+                      Understand the difference so you do not fall for the trap options in exams
                     </p>
                   </div>
                 </div>
@@ -521,7 +506,7 @@ export const BunpouModule: React.FC<BunpouModuleProps> = ({
             {/* Examples List with Furigana & Audio Play */}
             <div className="space-y-3">
               <h4 className="text-xs font-bold uppercase tracking-wider text-text-secondary font-heading">
-                💬 Contoh Kalimat (例文)
+                💬 Example sentences
               </h4>
               <div className="space-y-2.5">
                 {currentBunpou.examples.map((example, i) => (
@@ -538,7 +523,7 @@ export const BunpouModule: React.FC<BunpouModuleProps> = ({
                               <span
                                 key={segIdx}
                                 className="formula-highlight text-emerald-400 dark:text-emerald-300 font-black px-1.5 py-0.5 rounded-md bg-emerald-500/15 border border-emerald-500/30 shadow-xs"
-                                title="Pola Rumus Tata Bahasa"
+                                title="Grammar pattern"
                               >
                                 <RubyText
                                   japanese={seg.text}
@@ -564,7 +549,7 @@ export const BunpouModule: React.FC<BunpouModuleProps> = ({
                     <button
                       onClick={() => handlePlaySentenceAudio(example.japanese)}
                       className="btn-physical-secondary p-2 rounded-xl text-gold transition-colors shrink-0"
-                      title="Dengarkan Suara Bahasa Jepang"
+                      title="Listen to the English audio"
                     >
                       <Volume2 className="w-4 h-4" />
                     </button>
@@ -577,37 +562,14 @@ export const BunpouModule: React.FC<BunpouModuleProps> = ({
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
               <button
                 type="button"
-                onClick={() => {
-                  setActiveTab('sakubun');
-                  playSound('click', soundEnabled);
-                }}
-                className="btn-physical-secondary py-3 px-4 rounded-2xl text-amber-400 font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all font-heading cursor-pointer"
-              >
-                <Edit3 className="w-4 h-4" />
-                <span>Susun Kalimat Pola Ini</span>
-              </button>
-
-              <button
-                type="button"
                 onClick={() => startSingleQuiz(currentBunpou)}
                 className="py-3 px-4 rounded-2xl btn-cta font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all font-heading cursor-pointer"
               >
-                <span>Mulai Ujian 7 Soal</span>
+                <span>Start the 7-question test</span>
               </button>
             </div>
           </div>
         </div>
-      ) : activeTab === 'sakubun' ? (
-        <SakubunStudio
-          initialPatternId={currentBunpou.id}
-          playerMp={playerMp}
-          playerInt={playerInt}
-          onUseMp={onUseMp}
-          soundEnabled={soundEnabled}
-          furiganaEnabled={furiganaEnabled}
-          onReward={onReward}
-          onClose={() => setActiveTab('materi')}
-        />
       ) : (
         /* Mixed Set View */
         <div className="panel panel-stitched p-6 text-center space-y-4 shadow-xl border border-border-subtle">
@@ -625,15 +587,15 @@ export const BunpouModule: React.FC<BunpouModuleProps> = ({
 
           <div className="p-4 rounded-2xl bg-surface-inset border border-border-subtle text-xs text-text-secondary max-w-xs mx-auto space-y-1 font-mono">
             <div className="flex justify-between">
-              <span>Jumlah Soal:</span>
-              <strong className="text-text-primary">7 Soal Campuran</strong>
+              <span>Questions:</span>
+              <strong className="text-text-primary">7 mixed questions</strong>
             </div>
             <div className="flex justify-between">
               <span>Target Kelulusan:</span>
               <strong className="text-gold">Minimal 5 Benar</strong>
             </div>
             <div className="flex justify-between">
-              <span>Hadiah EXP:</span>
+              <span>EXP reward:</span>
               <strong className="text-state-success">+120 EXP</strong>
             </div>
           </div>
@@ -643,7 +605,7 @@ export const BunpouModule: React.FC<BunpouModuleProps> = ({
             className="w-full max-w-sm mx-auto py-3 px-6 rounded-2xl btn-cta font-bold text-xs sm:text-sm transition-all flex items-center justify-center gap-2 font-heading"
           >
             <Swords className="w-4 h-4" />
-            <span>Mulai Tantangan Drill Campuran</span>
+            <span>Start the mixed drill</span>
           </button>
         </div>
       )}

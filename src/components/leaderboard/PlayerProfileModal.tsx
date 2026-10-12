@@ -106,7 +106,7 @@ export const PlayerProfileModal: React.FC<PlayerProfileModalProps> = ({
 
   const targetJlpt = isCurrentUser && currentUserStats?.targetJlpt
     ? currentUserStats.targetJlpt
-    : (currentTier.tier >= 9 ? 'N1' : currentTier.tier >= 7 ? 'N2' : currentTier.tier >= 5 ? 'N3' : currentTier.tier >= 3 ? 'N4' : 'N5');
+    : (currentTier.tier >= 9 ? 'C1' : currentTier.tier >= 7 ? 'B2' : currentTier.tier >= 5 ? 'B1' : currentTier.tier >= 3 ? 'A2' : 'A1');
 
   // 6 Pillars of Japanese Learning
   const kanjiCount = isCurrentUser && currentUserStats?.studyStats?.kanjiWriting?.total
@@ -135,78 +135,78 @@ export const PlayerProfileModal: React.FC<PlayerProfileModalProps> = ({
 
   const learningPillars = [
     {
-      label: 'Aksara & Kanji',
+      label: 'Letters',
       value: kanjiCount,
-      unit: 'Goresan Kanji',
+      unit: 'Strokes written',
       icon: RpgBrushIcon,
       textCol: 'text-wine dark:text-rose-400',
     },
     {
-      label: 'Kosakata',
+      label: 'Vocabulary',
       value: vocabCount,
       unit: 'Kata Dihafal',
       icon: RpgBookIcon,
       textCol: 'text-text-primary',
     },
     {
-      label: 'Tata Bahasa',
+      label: 'Grammar',
       value: bunpouCount,
-      unit: 'Pola Dikuasai',
+      unit: 'Patterns mastered',
       icon: RpgScrollIcon,
       textCol: 'text-amber-800 dark:text-amber-400',
     },
     {
       label: 'Tryout JLPT',
       value: tryoutCount,
-      unit: 'Sesi Ujian Selesai',
+      unit: 'Exams finished',
       icon: RpgTargetIcon,
       textCol: 'text-emerald-800 dark:text-emerald-400',
     },
     {
-      label: 'Latihan Kuis',
+      label: 'Quiz practice',
       value: quizCount,
-      unit: 'Soal Terjawab',
+      unit: 'Questions answered',
       icon: RpgRuneIcon,
       textCol: 'text-teal',
     },
     {
-      label: 'Duel Boss & Arena',
+      label: 'Boss & arena duels',
       value: bossCount,
-      unit: 'Tantangan Takluk',
+      unit: 'Challenges won',
       icon: RpgBossIcon,
       textCol: 'text-wine dark:text-rose-400',
     },
   ];
 
   // JLPT Level status progression
-  const isMasteredLevel = (lvl: 'N5' | 'N4' | 'N3' | 'N2' | 'N1') => {
+  const isMasteredLevel = (lvl: 'A1' | 'A2' | 'B1' | 'B2' | 'C1') => {
     if (isCurrentUser && currentUserStats?.ascendedLevels?.includes(lvl)) return true;
-    if (lvl === 'N5') return currentTier.tier >= 3;
-    if (lvl === 'N4') return currentTier.tier >= 5;
-    if (lvl === 'N3') return currentTier.tier >= 7;
-    if (lvl === 'N2') return currentTier.tier >= 9;
-    if (lvl === 'N1') return currentTier.tier >= 10;
+    if (lvl === 'A1') return currentTier.tier >= 3;
+    if (lvl === 'A2') return currentTier.tier >= 5;
+    if (lvl === 'B1') return currentTier.tier >= 7;
+    if (lvl === 'B2') return currentTier.tier >= 9;
+    if (lvl === 'C1') return currentTier.tier >= 10;
     return false;
   };
 
-  const isActiveLevel = (lvl: 'N5' | 'N4' | 'N3' | 'N2' | 'N1') => {
+  const isActiveLevel = (lvl: 'A1' | 'A2' | 'B1' | 'B2' | 'C1') => {
     if (isMasteredLevel(lvl)) return false;
-    if (lvl === 'N5') return currentTier.tier <= 2;
-    if (lvl === 'N4') return currentTier.tier === 3 || currentTier.tier === 4;
-    if (lvl === 'N3') return currentTier.tier === 5 || currentTier.tier === 6;
-    if (lvl === 'N2') return currentTier.tier === 7 || currentTier.tier === 8;
-    if (lvl === 'N1') return currentTier.tier === 9;
+    if (lvl === 'A1') return currentTier.tier <= 2;
+    if (lvl === 'A2') return currentTier.tier === 3 || currentTier.tier === 4;
+    if (lvl === 'B1') return currentTier.tier === 5 || currentTier.tier === 6;
+    if (lvl === 'B2') return currentTier.tier === 7 || currentTier.tier === 8;
+    if (lvl === 'C1') return currentTier.tier === 9;
     return false;
   };
 
   const jlptLevels: Array<{
-    level: 'N5' | 'N4' | 'N3' | 'N2' | 'N1';
+    level: 'A1' | 'A2' | 'B1' | 'B2' | 'C1';
   }> = [
-    { level: 'N5' },
-    { level: 'N4' },
-    { level: 'N3' },
-    { level: 'N2' },
-    { level: 'N1' },
+    { level: 'A1' },
+    { level: 'A2' },
+    { level: 'B1' },
+    { level: 'B2' },
+    { level: 'C1' },
   ];
 
   const getRankBadge = (rank?: number) => {
@@ -221,20 +221,20 @@ export const PlayerProfileModal: React.FC<PlayerProfileModalProps> = ({
     if (rank === 2) {
       return (
         <span className="px-2.5 py-0.5 rounded-full text-[11px] font-mono font-bold bg-surface-card border border-border-subtle text-text-secondary flex items-center gap-1.5 shadow-xs">
-          <RpgMedalIcon className="w-3.5 h-3.5 stroke-[2]" /> Peringkat 2 Global
+          <RpgMedalIcon className="w-3.5 h-3.5 stroke-[2]" /> Global rank 2
         </span>
       );
     }
     if (rank === 3) {
       return (
         <span className="px-2.5 py-0.5 rounded-full text-[11px] font-mono font-bold bg-surface-card border border-border-subtle text-amber-800 dark:text-amber-500 flex items-center gap-1.5 shadow-xs">
-          <RpgMedalIcon className="w-3.5 h-3.5 stroke-[2]" /> Peringkat 3 Global
+          <RpgMedalIcon className="w-3.5 h-3.5 stroke-[2]" /> Global rank 3
         </span>
       );
     }
     return (
       <span className="px-2.5 py-0.5 rounded-full text-[11px] font-mono font-bold bg-surface-card border border-border-subtle text-text-secondary flex items-center gap-1.5 shadow-xs">
-        <RpgMedalIcon className="w-3.5 h-3.5 text-text-muted stroke-[2]" /> Peringkat #{rank} Global
+        <RpgMedalIcon className="w-3.5 h-3.5 text-text-muted stroke-[2]" /> Global rank #{rank}
       </span>
     );
   };
@@ -267,7 +267,7 @@ export const PlayerProfileModal: React.FC<PlayerProfileModalProps> = ({
                   Profil Petualang
                 </h2>
                 <p className="text-[10px] text-text-secondary font-mono truncate">
-                  Catatan Kemajuan & Penguasaan Bahasa
+                  Progress & language mastery notes
                 </p>
               </div>
             </div>
@@ -279,7 +279,7 @@ export const PlayerProfileModal: React.FC<PlayerProfileModalProps> = ({
                 onClose();
               }}
               className="btn-physical-secondary w-8 h-8 rounded-xl transition-colors flex items-center justify-center shrink-0 p-0"
-              aria-label="Tutup"
+              aria-label="Close"
             >
               <X className="w-4 h-4" />
             </button>
@@ -373,7 +373,7 @@ export const PlayerProfileModal: React.FC<PlayerProfileModalProps> = ({
                       </span>
                       {player.weeklyScore !== undefined && (
                         <span className="px-2.5 py-0.5 rounded-xl bg-surface-card text-text-secondary font-bold font-mono text-xs border border-border-subtle shadow-xs">
-                          {player.weeklyScore.toLocaleString()} Skor Pekan
+                          {player.weeklyScore.toLocaleString()} weekly score
                         </span>
                       )}
                     </div>
@@ -428,7 +428,7 @@ export const PlayerProfileModal: React.FC<PlayerProfileModalProps> = ({
                                 maxLength={60}
                                 value={tempSignature}
                                 onChange={(e) => setTempSignature(e.target.value)}
-                                placeholder="Tulis motto petualang (maks 60 huruf)..."
+                                placeholder="Write an adventurer motto (max 60 characters)..."
                                 autoFocus
                                 className="w-full py-1.5 px-3 pr-12 rounded-xl bg-surface-inset border border-border-subtle text-xs font-heading text-text-primary placeholder:text-text-muted focus:outline-none focus:border-wine shadow-inner"
                                 onKeyDown={(e) => {
@@ -466,7 +466,7 @@ export const PlayerProfileModal: React.FC<PlayerProfileModalProps> = ({
                                 }}
                                 className="btn-physical-primary py-1 px-3 rounded-lg text-[10px] font-bold font-heading cursor-pointer"
                               >
-                                Simpan
+                                Save
                               </button>
                             </div>
                           </div>
@@ -478,7 +478,7 @@ export const PlayerProfileModal: React.FC<PlayerProfileModalProps> = ({
                               playSound('click', soundEnabled);
                             }}
                             className="group cursor-pointer p-2 rounded-2xl hover:bg-surface-card border border-dashed border-border-subtle/80 hover:border-wine/50 transition-all text-center space-y-0.5"
-                            title="Ketuk untuk mengubah motto petualang kamu"
+                            title="Tap to change your motto"
                           >
                             {currentUserStats?.signature ? (
                               <p className="text-xs text-text-secondary italic leading-relaxed group-hover:text-text-primary transition-colors flex items-center justify-center gap-1.5">
@@ -488,11 +488,11 @@ export const PlayerProfileModal: React.FC<PlayerProfileModalProps> = ({
                             ) : (
                               <p className="text-[11px] font-mono text-text-muted flex items-center justify-center gap-1.5 py-0.5">
                                 <RpgBrushIcon className="w-3.5 h-3.5 text-wine dark:text-amber-400" />
-                                <span>+ Tulis motto petualangmu...</span>
+                                <span>+ Write your motto...</span>
                               </p>
                             )}
                             <span className="text-[8px] font-mono text-text-muted opacity-0 group-hover:opacity-80 transition-opacity block">
-                              (Ketuk untuk edit motto)
+                              (Tap to edit the motto)
                             </span>
                           </div>
                         )
@@ -535,7 +535,7 @@ export const PlayerProfileModal: React.FC<PlayerProfileModalProps> = ({
                 {currentTier.perks && (
                   <div className="p-3 rounded-2xl bg-surface-inset border border-border-subtle space-y-1">
                     <span className="text-[10px] font-mono font-bold uppercase text-wine dark:text-amber-400 tracking-wider block">
-                      Keunggulan Tingkat (Perks)
+                      Tier perks
                     </span>
                     <p className="text-xs text-text-secondary leading-relaxed">
                       {currentTier.perks}
@@ -554,7 +554,7 @@ export const PlayerProfileModal: React.FC<PlayerProfileModalProps> = ({
                     }}
                     className="w-full btn-physical-primary py-2.5 px-4 rounded-xl text-xs font-bold font-heading flex items-center justify-center gap-2 cursor-pointer"
                   >
-                    <span>Buka Alokasi Stat Karakter</span>
+                    <span>Open stat allocation</span>
                     <ChevronRight className="w-4 h-4 shrink-0" />
                   </button>
                 )}
@@ -619,7 +619,7 @@ export const PlayerProfileModal: React.FC<PlayerProfileModalProps> = ({
                 <div className="space-y-2">
                   <h4 className="text-xs font-bold uppercase tracking-widest text-text-secondary flex items-center gap-1.5 font-heading">
                     <RpgBookIcon className="w-3.5 h-3.5 text-wine dark:text-amber-400 stroke-[2]" />
-                    6 Pilar Penguasaan Materi
+                    6 mastery pillars
                   </h4>
 
                   <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">

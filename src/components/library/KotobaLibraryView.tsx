@@ -12,28 +12,28 @@ import { KotobaDetailModal } from './KotobaDetailModal';
 import { UserDeck } from '../../types/rpg';
 import { isItemBookmarked } from '../../utils/decks';
 import { searchJapanese, createSubsetIndex } from '../../engine/search/universalSearch';
-import { JapaneseSearchInput } from '../common/JapaneseSearchInput';
+import { SearchInput } from '../common/SearchInput';
 import { parseReadingVariations } from '../../utils/readingHighlightUtils';
 import { DeckBookmarkPicker } from '../deck/DeckBookmarkPicker';
 
 
 const LEVEL_OPTIONS = [
   { value: 'all', label: 'Semua Level' },
-  { value: 'N5', label: 'N5' },
-  { value: 'N4', label: 'N4' },
-  { value: 'N3', label: 'N3' },
-  { value: 'N2', label: 'N2' },
-  { value: 'N1', label: 'N1' },
+  { value: 'A1', label: 'A1' },
+  { value: 'A2', label: 'A2' },
+  { value: 'B1', label: 'B1' },
+  { value: 'B2', label: 'B2' },
+  { value: 'C1', label: 'C1' },
   { value: 'Kaigo', label: 'Kaigo (Caregiver)' },
   { value: 'SSW', label: 'SSW & Istilah Kerja' },
 ];
 
 const LEVEL_BADGE_STYLE: Record<string, string> = {
-  N5: 'border-border-subtle text-text-primary bg-surface-inset shadow-sm',
-  N4: 'border-border-subtle text-text-primary bg-surface-inset shadow-sm',
-  N3: 'border-border-subtle text-text-primary bg-surface-inset shadow-sm',
-  N2: 'border-border-subtle text-text-primary bg-surface-inset shadow-sm',
-  N1: 'border-border-subtle text-text-primary bg-surface-inset shadow-sm',
+  A1: 'border-border-subtle text-text-primary bg-surface-inset shadow-sm',
+  A2: 'border-border-subtle text-text-primary bg-surface-inset shadow-sm',
+  B1: 'border-border-subtle text-text-primary bg-surface-inset shadow-sm',
+  B2: 'border-border-subtle text-text-primary bg-surface-inset shadow-sm',
+  C1: 'border-border-subtle text-text-primary bg-surface-inset shadow-sm',
   Kaigo: 'border-border-subtle text-emerald-800 dark:text-emerald-400 bg-surface-inset shadow-sm font-bold',
   SSW: 'border-border-subtle text-red-700 dark:text-amber-400 bg-surface-inset shadow-sm font-bold',
 };
@@ -136,7 +136,7 @@ export const KotobaLibraryView: React.FC<KotobaLibraryViewProps> = ({
   }, [allKotoba]);
 
   const levelCounts = useMemo(() => {
-    const counts: Record<string, number> = { all: allKotoba.length, N5: 0, N4: 0, N3: 0, N2: 0, N1: 0, Kaigo: 0, SSW: 0 };
+    const counts: Record<string, number> = { all: allKotoba.length, A1: 0, A2: 0, B1: 0, B2: 0, C1: 0, Kaigo: 0, SSW: 0 };
     for (const item of allKotoba) {
       if (item.tags?.includes('Kaigo')) {
         counts.Kaigo++;
@@ -253,10 +253,10 @@ export const KotobaLibraryView: React.FC<KotobaLibraryViewProps> = ({
             </div>
             <div>
               <h1 className="text-xl sm:text-2xl font-bold text-text-primary tracking-wide font-heading">
-                Kamus Kosakata (Kotoba)
+                Vocabulary dictionary
               </h1>
               <p className="text-xs sm:text-sm text-text-secondary font-medium">
-                Koleksi {allKotoba.length.toLocaleString()} entri kamus otentik N5〜N1 dengan tanda frekuensi ujian.
+                A collection of {allKotoba.length.toLocaleString()} words at CEFR A1–B2, with pronunciation, examples and usage notes.
               </p>
             </div>
           </div>
@@ -269,11 +269,11 @@ export const KotobaLibraryView: React.FC<KotobaLibraryViewProps> = ({
 
       {/* Filters and Search */}
       <div className="flex flex-col sm:flex-row gap-3">
-        <JapaneseSearchInput
+        <SearchInput
           value={searchQuery}
           onChange={(v) => { setSearchQuery(v); setVisibleCount(50); }}
           placeholderIme="Cari kata (romaji → kana)..."
-          placeholderLatin="Cari kata, romaji, arti..."
+          placeholderLatin="Search words, meanings, examples..."
           soundEnabled={soundEnabled}
         />
 
@@ -380,7 +380,7 @@ export const KotobaLibraryView: React.FC<KotobaLibraryViewProps> = ({
               <span>🩺</span> Unit Bidang Keperawatan ({kaigoUnits.length} Unit)
             </span>
             <span className="text-[11px] font-mono text-text-muted">
-              {filteredKotoba.length} Kosakata Ditampilkan
+              {filteredKotoba.length} words shown
             </span>
           </div>
           <div className="flex flex-wrap items-center gap-1.5 pb-1">
@@ -482,7 +482,7 @@ export const KotobaLibraryView: React.FC<KotobaLibraryViewProps> = ({
                           playSound('click', soundEnabled);
                         }}
                         className="btn-physical-secondary p-2.5 rounded-xl hover:text-wine-accent transition-colors"
-                        title="Hapus dari deck ini"
+                        title="Remove from this deck"
                       >
                         <Trash2 className="w-4 h-4" />
                       </button>
@@ -520,8 +520,8 @@ export const KotobaLibraryView: React.FC<KotobaLibraryViewProps> = ({
         
         {filteredKotoba.length === 0 && (
           <div className="col-span-1 md:col-span-2 py-12 text-center panel panel-stitched rounded-3xl space-y-2">
-            <p className="font-bold text-text-primary text-sm font-heading">Kosakata tidak ditemukan di dalam grimoire.</p>
-            <p className="text-xs text-text-muted">Coba ubah kata kunci pencarian atau filter prioritas level.</p>
+            <p className="font-bold text-text-primary text-sm font-heading">No words match in the library.</p>
+            <p className="text-xs text-text-muted">Try another search or change the level filter.</p>
           </div>
         )}
       </div>

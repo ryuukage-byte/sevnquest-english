@@ -160,7 +160,7 @@ export const DeckDetailView: React.FC<DeckDetailViewProps> = ({
           className="btn-physical-secondary px-3.5 py-2 rounded-xl text-xs font-bold font-heading flex items-center gap-2 transition-all cursor-pointer"
         >
           <ArrowLeft className="w-4 h-4" />
-          <span>{isTemplate ? 'Kembali ke Daftar Deck Template' : 'Kembali ke Daftar Buku Saku'}</span>
+          <span>{isTemplate ? 'Back to template decks' : 'Back to your Notebook'}</span>
         </button>
 
         {/* User Deck Actions: Edit Info & Delete Deck */}
@@ -186,7 +186,7 @@ export const DeckDetailView: React.FC<DeckDetailViewProps> = ({
                 className="btn-physical-secondary px-3 py-1.5 rounded-xl text-xs font-bold text-wine-accent flex items-center gap-1.5 transition-colors cursor-pointer"
               >
                 <Trash2 className="w-3.5 h-3.5" />
-                <span>Hapus</span>
+                <span>Delete</span>
               </button>
             )}
           </div>
@@ -230,7 +230,7 @@ export const DeckDetailView: React.FC<DeckDetailViewProps> = ({
                 {deck.title}
               </h2>
               <p className="text-xs sm:text-sm text-text-secondary max-w-2xl leading-relaxed">
-                {deck.description || (isTemplate ? 'Deck kurikulum resmi terstruktur buatan tim pengajar.' : 'Koleksi catatan materi pilihan untuk dipelajari intensif.')}
+                {deck.description || (isTemplate ? 'An official curriculum deck.' : 'A collection of items you picked to study intensively.')}
               </p>
             </div>
           </div>
@@ -248,7 +248,7 @@ export const DeckDetailView: React.FC<DeckDetailViewProps> = ({
               className="btn-physical-secondary px-4 py-2.5 rounded-2xl font-heading font-bold text-xs flex items-center gap-2 transition-all cursor-pointer"
             >
               <Play className="w-3.5 h-3.5 text-gold fill-gold" />
-              <span>Mulai Flashcard</span>
+              <span>Start flashcards</span>
             </button>
 
             {/* Writing Button */}
@@ -266,7 +266,7 @@ export const DeckDetailView: React.FC<DeckDetailViewProps> = ({
               }`}
             >
               <PenTool className="w-3.5 h-3.5 text-indigo" />
-              <span>Latihan Menulis ({writableCount})</span>
+              <span>Writing practice ({writableCount})</span>
             </button>
 
             {/* If Template: Salin ke Buku Saku */}
@@ -279,7 +279,7 @@ export const DeckDetailView: React.FC<DeckDetailViewProps> = ({
                     ? 'bg-emerald-500/15 text-emerald-700 border-border-subtle'
                     : 'bg-surface-inset hover:bg-surface-elevated text-text-primary border-border-subtle hover:border-border-primary'
                 }`}
-                title="Salin deck template ini ke koleksi Buku Saku kamu"
+                title="Copy this template deck to your Notebook"
               >
                 {isCloned ? (
                   <>
@@ -289,7 +289,7 @@ export const DeckDetailView: React.FC<DeckDetailViewProps> = ({
                 ) : (
                   <>
                     <Copy className="w-3.5 h-3.5 text-gold" />
-                    <span>Salin ke Buku Saku</span>
+                    <span>Copy to Notebook</span>
                   </>
                 )}
               </button>
@@ -303,7 +303,7 @@ export const DeckDetailView: React.FC<DeckDetailViewProps> = ({
                 className="btn-physical-secondary px-4 py-2.5 rounded-2xl font-heading font-bold text-xs flex items-center gap-2 transition-all cursor-pointer"
               >
                 <Plus className="w-3.5 h-3.5 text-gold" />
-                <span>Cari Materi</span>
+                <span>Search items</span>
               </button>
             )}
           </div>
@@ -329,10 +329,10 @@ export const DeckDetailView: React.FC<DeckDetailViewProps> = ({
                   type="button"
                   onClick={onImportBookmarks}
                   className="btn-physical-secondary px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-colors cursor-pointer"
-                  title="Salin materi dari Bookmark ke deck ini"
+                  title="Copy bookmarked items into this deck"
                 >
                   <Bookmark className="w-3.5 h-3.5 text-gold" />
-                  <span>Impor Bookmark</span>
+                  <span>Import bookmarks</span>
                 </button>
               )}
 
@@ -341,7 +341,7 @@ export const DeckDetailView: React.FC<DeckDetailViewProps> = ({
                   type="button"
                   onClick={onClearDeck}
                   className="btn-physical-secondary px-2.5 py-1.5 rounded-xl text-xs hover:text-wine-accent transition-colors cursor-pointer flex items-center gap-1"
-                  title="Kosongkan semua materi dari deck ini"
+                  title="Remove all items from this deck"
                 >
                   <Trash2 className="w-3.5 h-3.5" />
                   <span>Kosongkan</span>
@@ -370,11 +370,11 @@ export const DeckDetailView: React.FC<DeckDetailViewProps> = ({
               }`}
             >
               <div className="w-6 h-6 rounded-lg bg-surface-inset border border-border-subtle flex items-center justify-center text-xs font-jp font-bold text-text-primary">
-                語
+                V
               </div>
               <div className="text-left">
-                <span className="block text-xs leading-none font-bold">Kosakata</span>
-                <span className="text-[10px] opacity-70 font-mono">{deckKotoba.length} Entri</span>
+                <span className="block text-xs leading-none font-bold">Vocabulary</span>
+                <span className="text-[10px] opacity-70 font-mono">{deckKotoba.length} words</span>
               </div>
             </button>
 
@@ -390,10 +390,10 @@ export const DeckDetailView: React.FC<DeckDetailViewProps> = ({
               }`}
             >
               <div className="w-6 h-6 rounded-lg bg-surface-inset border border-border-subtle flex items-center justify-center text-xs font-jp font-bold text-text-primary">
-                字
+                L
               </div>
               <div className="text-left">
-                <span className="block text-xs leading-none font-bold">Kanji</span>
+                <span className="block text-xs leading-none font-bold">Letters</span>
                 <span className="text-[10px] opacity-70 font-mono">{deckKanji.length} Aksara</span>
               </div>
             </button>
@@ -410,11 +410,11 @@ export const DeckDetailView: React.FC<DeckDetailViewProps> = ({
               }`}
             >
               <div className="w-6 h-6 rounded-lg bg-surface-inset border border-border-subtle flex items-center justify-center text-xs font-jp font-bold text-text-primary">
-                文
+                G
               </div>
               <div className="text-left">
-                <span className="block text-xs leading-none font-bold">Tata Bahasa</span>
-                <span className="text-[10px] opacity-70 font-mono">{deckBunpou.length} Pola</span>
+                <span className="block text-xs leading-none font-bold">Grammar</span>
+                <span className="text-[10px] opacity-70 font-mono">{deckBunpou.length} patterns</span>
               </div>
             </button>
           </div>
@@ -447,12 +447,12 @@ export const DeckDetailView: React.FC<DeckDetailViewProps> = ({
               </div>
               <div className="space-y-1">
                 <h3 className="text-base sm:text-lg font-heading font-bold text-text-primary">
-                  Belum Ada Kosakata di Deck Ini
+                  No vocabulary in this deck yet
                 </h3>
                 <p className="text-xs text-text-secondary max-w-md mx-auto">
                   {isTemplate
-                    ? 'Deck template ini tidak memuat entri kosakata.'
-                    : 'Pilih cari materi atau gunakan preset untuk menambahkan kosakata baru ke dalam deck ini.'}
+                    ? 'This template deck has no vocabulary entries.'
+                    : 'Search for items or use a preset to add vocabulary to this deck.'}
                 </p>
               </div>
               {!isTemplate && onOpenAddItemModal && (
@@ -463,7 +463,7 @@ export const DeckDetailView: React.FC<DeckDetailViewProps> = ({
                     className="btn-physical-secondary px-4 py-2.5 rounded-2xl font-heading font-bold text-xs inline-flex items-center gap-2 transition-all cursor-pointer"
                   >
                     <Plus className="w-3.5 h-3.5 text-gold" />
-                    <span>Cari & Tambah Kosakata</span>
+                    <span>Search & add vocabulary</span>
                   </button>
                 </div>
               )}
@@ -491,12 +491,12 @@ export const DeckDetailView: React.FC<DeckDetailViewProps> = ({
               </div>
               <div className="space-y-1">
                 <h3 className="text-base sm:text-lg font-heading font-bold text-text-primary">
-                  Belum Ada Kanji di Deck Ini
+                  No letters in this deck yet
                 </h3>
                 <p className="text-xs text-text-secondary max-w-md mx-auto">
                   {isTemplate
-                    ? 'Deck template ini tidak memuat entri kanji.'
-                    : 'Pilih cari materi atau gunakan preset untuk menambahkan aksara kanji ke dalam deck ini.'}
+                    ? 'This template deck has no letter entries.'
+                    : 'Search for items or use a preset to add letters to this deck.'}
                 </p>
               </div>
               {!isTemplate && onOpenAddItemModal && (
@@ -507,7 +507,7 @@ export const DeckDetailView: React.FC<DeckDetailViewProps> = ({
                     className="btn-physical-secondary px-4 py-2.5 rounded-2xl font-heading font-bold text-xs inline-flex items-center gap-2 transition-all cursor-pointer"
                   >
                     <Plus className="w-3.5 h-3.5 text-gold" />
-                    <span>Cari & Tambah Kanji</span>
+                    <span>Search & add letters</span>
                   </button>
                 </div>
               )}
@@ -535,12 +535,12 @@ export const DeckDetailView: React.FC<DeckDetailViewProps> = ({
               </div>
               <div className="space-y-1">
                 <h3 className="text-base sm:text-lg font-heading font-bold text-text-primary">
-                  Belum Ada Tata Bahasa di Deck Ini
+                  No grammar in this deck yet
                 </h3>
                 <p className="text-xs text-text-secondary max-w-md mx-auto">
                   {isTemplate
-                    ? 'Deck template ini tidak memuat entri tata bahasa.'
-                    : 'Pilih cari materi atau gunakan preset untuk menambahkan pola kalimat ke dalam deck ini.'}
+                    ? 'This template deck has no grammar entries.'
+                    : 'Search for items or use a preset to add grammar patterns to this deck.'}
                 </p>
               </div>
               {!isTemplate && onOpenAddItemModal && (
@@ -551,7 +551,7 @@ export const DeckDetailView: React.FC<DeckDetailViewProps> = ({
                     className="btn-physical-secondary px-4 py-2.5 rounded-2xl font-heading font-bold text-xs inline-flex items-center gap-2 transition-all cursor-pointer"
                   >
                     <Plus className="w-3.5 h-3.5 text-gold" />
-                    <span>Cari & Tambah Tata Bahasa</span>
+                    <span>Search & add grammar</span>
                   </button>
                 </div>
               )}
@@ -570,8 +570,8 @@ export const DeckDetailView: React.FC<DeckDetailViewProps> = ({
               </h3>
               <p className="text-xs text-text-secondary max-w-md mx-auto">
                 {isTemplate
-                  ? 'Belum ada materi pembelajaran yang terdaftar di dalam deck kurikulum ini.'
-                  : 'Pilih salah satu opsi di bawah untuk mengisi deck ini secara instan atau cari materi pilihanmu.'}
+                  ? 'No study items are listed in this curriculum deck yet.'
+                  : 'Choose an option below to fill this deck instantly, or search for the items you want.'}
               </p>
             </div>
 
@@ -594,7 +594,7 @@ export const DeckDetailView: React.FC<DeckDetailViewProps> = ({
                     className="btn-physical-secondary px-4 py-2.5 rounded-2xl font-heading font-bold text-xs inline-flex items-center gap-2 transition-all cursor-pointer"
                   >
                     <Plus className="w-4 h-4 text-gold" />
-                    <span>Cari Materi di Perpustakaan</span>
+                    <span>Search the library</span>
                   </button>
                 )}
 
@@ -605,7 +605,7 @@ export const DeckDetailView: React.FC<DeckDetailViewProps> = ({
                     className="btn-physical-secondary px-4 py-2.5 rounded-2xl font-heading font-bold text-xs inline-flex items-center gap-2 transition-all cursor-pointer"
                   >
                     <Bookmark className="w-4 h-4 text-gold" />
-                    <span>Impor dari Bookmark</span>
+                    <span>Import from bookmarks</span>
                   </button>
                 )}
               </div>

@@ -5,7 +5,7 @@ interface Props {
   fallback?: ReactNode;
   /** Nama modul untuk judul fallback & log (mis. "Perpustakaan"). */
   label?: string;
-  /** Dipanggil setelah pemain menekan "Coba Pulihkan" (mis. untuk menutup modul). */
+  /** Dipanggil setelah pemain menekan "Try to recover" (mis. untuk menutup modul). */
   onReset?: () => void;
 }
 
@@ -69,7 +69,7 @@ export class ErrorBoundary extends React.Component<Props, State> {
           {label ? `Modul ${label} sedang bermasalah` : 'Terjadi kendala tak terduga'}
         </h2>
         <p className="text-sm mb-5 text-text-secondary max-w-md">
-          Progres kamu tetap tersimpan. Coba pulihkan modul ini; bila masih gagal, bersihkan cache lalu muat ulang.
+          Your progress is still saved. Try to recover this module; if it still fails, clear the cache and reload.
         </p>
 
         <div className="flex flex-wrap items-center justify-center gap-3 mb-5">
@@ -78,19 +78,19 @@ export class ErrorBoundary extends React.Component<Props, State> {
             className="btn-physical-primary min-h-[44px] py-2.5 px-5 rounded-xl text-xs sm:text-sm font-bold font-heading cursor-pointer"
             onClick={this.reset}
           >
-            Coba Pulihkan
+            Try to recover
           </button>
           <button
             type="button"
             className="btn-physical-secondary min-h-[44px] py-2.5 px-5 rounded-xl text-xs sm:text-sm font-bold font-heading cursor-pointer"
             onClick={forceReload}
           >
-            Bersihkan Cache &amp; Muat Ulang
+            Clear Cache &amp; Reload
           </button>
         </div>
 
         <details className="w-full max-w-2xl text-left">
-          <summary className="cursor-pointer text-xs font-mono text-text-muted select-none">Detail teknis (untuk laporan bug)</summary>
+          <summary className="cursor-pointer text-xs font-mono text-text-muted select-none">Technical details (for bug reports)</summary>
           <div className="mt-2 bg-surface-inset border border-border-subtle shadow-inner p-3 rounded-xl overflow-auto max-h-72">
             <pre className="text-[11px] font-mono text-text-secondary break-all whitespace-pre-wrap">{this.state.error?.toString()}</pre>
             {this.state.error?.stack && (

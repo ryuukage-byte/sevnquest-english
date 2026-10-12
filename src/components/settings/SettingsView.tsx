@@ -158,7 +158,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
   };
 
   const handleTestJapaneseVoice = () => {
-    speakJapanese('こんにちは！日本語クエストRPGへようこそ。今日も一緒に日本語を勉強しましょう！');
+    speakJapanese('Hello! Welcome to SevnQuest. Let us practise English together today!');
   };
 
   return (
@@ -171,10 +171,10 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
           </span>
           <div>
             <h2 className="text-base sm:text-lg font-bold font-heading text-text-primary flex items-center gap-2">
-              Pengaturan & Akun
+              Settings & Account
             </h2>
             <p className="text-xs text-text-secondary">
-              Kelola akun, pengaturan audio, dan preferensi belajar
+              Manage your account, audio settings and study preferences
             </p>
           </div>
         </div>
@@ -183,7 +183,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
       {/* Account Section */}
       <div className="panel panel-stitched p-4 sm:p-5 space-y-4 shadow-md">
         <h3 className="text-xs font-bold uppercase tracking-wider text-text-secondary flex items-center gap-1.5 font-heading">
-          <User className="w-4 h-4 text-indigo" /> Akun SevnQuest
+          <User className="w-4 h-4 text-indigo" /> SevnQuest account
         </h3>
 
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -210,7 +210,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                 <button
                   onClick={async () => {
                     playSound('click', true);
-                    if (window.confirm('Keluar dari akun? Progres lokal akan disetel ulang (progres cloud aman).')) {
+                    if (window.confirm('Log out? Local progress will be reset (cloud progress is safe).')) {
                       if (onSaveBeforeLogout) {
                         await onSaveBeforeLogout();
                       }
@@ -235,14 +235,14 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
               <div>
                 <div className="flex items-center gap-2">
                   <span className="badge-wine text-[10px] gap-1.5">
-                    Mode Tamu (Guest)
+                    Guest mode
                   </span>
                 </div>
                 <h4 className="text-xs sm:text-sm font-bold text-text-primary font-heading mt-1.5">
-                  Progres hanya tersimpan di perangkat ini
+                  Progress is only saved on this device
                 </h4>
                 <p className="text-xs text-text-secondary mt-1 max-w-sm">
-                  Login dengan email untuk mengaktifkan Cloud Save otomatis agar level dan misimu tersinkronisasi di 2 HP atau perangkat lain!
+                  Log in with email to turn on automatic cloud save, so your level and quests sync across your phones and devices!
                 </p>
               </div>
 
@@ -254,7 +254,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                 className="btn btn-pill text-xs gap-2 shrink-0 text-indigo"
               >
                 <User className="w-4 h-4" />
-                Login / Daftar
+                Log in / Sign up
               </button>
             </>
           )}
@@ -264,13 +264,13 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
       {/* Profile & Avatar Section */}
       <div className="panel panel-stitched p-4 sm:p-5 space-y-5 shadow-md">
         <h3 className="text-xs font-bold uppercase tracking-wider text-text-secondary flex items-center gap-1.5 font-heading">
-          <User className="w-4 h-4 text-indigo" /> Profil Pemain
+          <User className="w-4 h-4 text-indigo" /> Player profile
         </h3>
         
         {/* 1. Nama Pemain / Panggilan */}
         <div className="space-y-2">
           <label className="text-xs sm:text-sm font-bold text-text-primary font-heading flex items-center justify-between">
-            <span>Nama Petualang</span>
+            <span>Adventurer name</span>
             <span className="text-[11px] text-text-secondary font-mono font-medium">
               {playerNameInput.length}/20 Karakter
             </span>
@@ -301,7 +301,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
               }`}
             >
               <Check className="w-3.5 h-3.5" />
-              <span>{isNameSaved ? 'Tersimpan' : 'Simpan'}</span>
+              <span>{isNameSaved ? 'Saved' : 'Save'}</span>
             </button>
           </div>
           <p className="text-[10px] text-text-secondary">
@@ -379,7 +379,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
         {/* 3. Avatar Picker */}
         <div className="border-t border-border-subtle pt-4 space-y-3">
           <label className="text-xs sm:text-sm font-bold text-text-primary font-heading block">
-            Pilih Avatar (Tampil di Leaderboard)
+            Choose an avatar (shown on the Leaderboard)
           </label>
           <div className="flex flex-wrap gap-2">
             {['🦊', '🐉', '⛩️', '👹', '🥷', '🌸', '⚔️', '👺', '🐼'].map((emoji) => (
@@ -414,18 +414,18 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
       {/* Audio & Sound Effects Section */}
       <div className="panel panel-stitched p-4 sm:p-5 space-y-4 shadow-md">
         <h3 className="text-xs font-bold uppercase tracking-wider text-text-secondary flex items-center gap-1.5 font-heading">
-          <Volume2 className="w-4 h-4 text-indigo" /> Audio & Mantra Suara
+          <Volume2 className="w-4 h-4 text-indigo" /> Audio & voice
         </h3>
 
         {/* Sound FX Toggle */}
         <div className="flex items-center justify-between">
           <div>
-            <h4 className="text-xs sm:text-sm font-bold text-text-primary font-heading">Efek Suara Game (SFX)</h4>
-            <p className="text-xs text-text-secondary">Suara ketuk kayu, tebasan bambu, genta zen, tetesan air & lonceng angin</p>
+            <h4 className="text-xs sm:text-sm font-bold text-text-primary font-heading">Game sound effects (SFX)</h4>
+            <p className="text-xs text-text-secondary">Wood tap, bamboo slash, zen bell, water drop & wind chime sounds</p>
           </div>
           <SettingSwitch
             checked={!!stats.soundEnabled}
-            label="Efek Suara Game (SFX)"
+            label="Game sound effects (SFX)"
             onChange={(newSetting) => {
               onUpdateSettings({ soundEnabled: newSetting });
               if (newSetting) playSound('click', true);
@@ -437,7 +437,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
         {stats.soundEnabled && (
           <div className="pt-2 border-t border-border-subtle">
             <span className="text-[11px] font-bold text-text-secondary uppercase tracking-wider block mb-2 font-mono">
-              Pratinjau Efek Suara — ketuk untuk memutar:
+              Preview sound effects — tap to play:
             </span>
             <div className="flex flex-wrap gap-2">
               <button
@@ -495,7 +495,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
         {/* Japanese TTS Voice Tester */}
         <div className="pt-3 border-t border-border-subtle flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div>
-            <h4 className="text-xs sm:text-sm font-bold text-text-primary font-heading">Uji Resonansi Suara Jepang (TTS)</h4>
+            <h4 className="text-xs sm:text-sm font-bold text-text-primary font-heading">Test English voice (TTS)</h4>
             <p className="text-xs text-text-secondary">Menggunakan Web Speech Synthesis Native Browser</p>
           </div>
           <button
@@ -503,7 +503,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
             className="btn btn-pill text-xs gap-2 self-start sm:self-auto text-indigo"
           >
             <Volume2 className="w-4 h-4" />
-            <span>Uji Suara 「こんにちは」</span>
+            <span>Test voice "Hello"</span>
           </button>
         </div>
       </div>
@@ -512,19 +512,19 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
       <div className="panel panel-stitched p-4 sm:p-5 space-y-4 shadow-md">
         <h3 className="text-xs font-bold uppercase tracking-wider text-text-secondary flex items-center gap-2 font-mono">
           <BookOpen className="w-4 h-4 text-indigo" />
-          <span>Pengaturan Belajar</span>
+          <span>Study settings</span>
         </h3>
 
         <div className="divide-y divide-border-subtle">
-          {/* 1. Tema Visual */}
+          {/* 1. Visual theme */}
           <div className="py-3.5 first:pt-1 last:pb-0 flex items-center justify-between gap-3">
             <div className="min-w-0 flex-1 pr-3">
               <h4 className="text-sm font-bold text-text-primary font-heading flex items-center gap-2 tracking-normal">
                 <Sun className="w-4 h-4 text-indigo shrink-0" />
-                <span>Tema Visual</span>
+                <span>Visual theme</span>
               </h4>
               <p className="text-xs text-text-secondary mt-0.5 leading-relaxed">
-                Pilih Mode Gelap (Indigo Malam) atau Terang (Washi Hangat)
+                Choose dark (night indigo) or light (warm paper)
               </p>
             </div>
             <div className="shrink-0 inline-flex items-center p-1 rounded-xl bg-surface-inset border border-border-subtle shadow-inner">
@@ -561,20 +561,20 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
             </div>
           </div>
 
-          {/* 2. Bantuan Furigana & Kanji */}
+          {/* 2. Pronunciation help (IPA) */}
           <div className="py-3.5 first:pt-1 last:pb-0 flex items-center justify-between gap-3">
             <div className="min-w-0 flex-1 pr-3">
               <h4 className="text-sm font-bold text-text-primary font-heading flex items-center gap-2 tracking-normal">
                 <BookOpen className="w-4 h-4 text-indigo shrink-0" />
-                <span>Bantuan Furigana & Kanji</span>
+                <span>Pronunciation help (IPA)</span>
               </h4>
               <p className="text-xs text-text-secondary mt-0.5 leading-relaxed">
-                Tampilkan cara baca Hiragana di atas huruf Kanji
+                Show the IPA pronunciation above words
               </p>
             </div>
             <SettingSwitch
               checked={stats.furiganaEnabled ?? true}
-              label="Bantuan Furigana & Kanji"
+              label="Pronunciation help (IPA)"
               onChange={(next) => {
                 onUpdateSettings({ furiganaEnabled: next });
                 playSound('click', stats.soundEnabled);
@@ -680,7 +680,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
           <span>Zona Riset Data</span>
         </div>
         <p className="text-xs text-text-secondary">
-          Mereset EXP, level, gold, dan kemajuan stage kembali ke Tier 1 (Villager).
+          Resets EXP, level, gold and stage progress back to Tier 1 (Villager).
         </p>
         <button
           onClick={() => {

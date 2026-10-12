@@ -186,13 +186,13 @@ export const DeckFlashcardRunner: React.FC<DeckFlashcardRunnerProps> = ({
         <div className="panel panel-stitched p-6 rounded-3xl max-w-md w-full border border-border-subtle text-center space-y-4">
           <h3 className="text-lg font-heading font-bold text-text-primary">Deck Masih Kosong</h3>
           <p className="text-xs text-text-secondary">
-            Tambahkan materi ke dalam deck ini terlebih dahulu sebelum memulai latihan flashcard.
+            Add items to this deck before starting flashcards.
           </p>
           <button
             onClick={onClose}
             className="btn-physical-secondary px-5 py-2 rounded-xl text-xs font-bold"
           >
-            Kembali
+            Back
           </button>
         </div>
       </div>
@@ -214,7 +214,7 @@ export const DeckFlashcardRunner: React.FC<DeckFlashcardRunnerProps> = ({
               Flashcard: {deck.title}
             </h3>
             <p className="text-[11px] font-mono text-text-muted">
-              {isCompleted ? 'Selesai' : `Kartu ${currentIndex + 1} dari ${queue.length}`}
+              {isCompleted ? 'Done' : `Card ${currentIndex + 1} of ${queue.length}`}
             </p>
           </div>
         </div>
@@ -237,8 +237,8 @@ export const DeckFlashcardRunner: React.FC<DeckFlashcardRunnerProps> = ({
           {(['kotoba', 'kanji', 'bunpou'] as const).map(cat => {
             if (!availableCategories.includes(cat)) return null;
             const isChecked = selectedCategories.includes(cat);
-            const label = cat === 'kotoba' ? 'Kotoba' : cat === 'kanji' ? 'Kanji' : 'Pola';
-            const seal = cat === 'kotoba' ? '語' : cat === 'kanji' ? '字' : '文';
+            const label = cat === 'kotoba' ? 'Vocabulary' : cat === 'kanji' ? 'Letter' : 'Grammar';
+            const seal = cat === 'kotoba' ? 'V' : cat === 'kanji' ? 'L' : 'G';
             return (
               <button
                 key={cat}
@@ -274,20 +274,20 @@ export const DeckFlashcardRunner: React.FC<DeckFlashcardRunnerProps> = ({
 
             <div>
               <span className="text-xs font-mono font-bold uppercase tracking-wider text-gold">
-                Sesi Flashcard Selesai
+                Flashcard session complete
               </span>
               <h2 className="text-xl sm:text-2xl font-black font-heading text-text-primary mt-1">
-                Latihan Terfokus Selesai!
+                Focused practice complete!
               </h2>
               <p className="text-xs text-text-secondary mt-1">
-                Kamu telah meninjau seluruh materi di dalam deck ini.
+                You have reviewed every item in this deck.
               </p>
             </div>
 
             {/* Completion Stats */}
             <div className="p-4 rounded-2xl bg-surface-inset border border-border-subtle text-center">
               <span className="text-xs font-mono text-text-muted uppercase">Total Kartu Dipelajari</span>
-              <p className="text-2xl font-black font-heading text-text-primary mt-1">{queue.length} Materi</p>
+              <p className="text-2xl font-black font-heading text-text-primary mt-1">{queue.length} items</p>
             </div>
 
             {/* Dynamic EXP & Gold Reward Banner */}
@@ -317,7 +317,7 @@ export const DeckFlashcardRunner: React.FC<DeckFlashcardRunnerProps> = ({
                 onClick={onClose}
                 className="btn-physical-secondary px-6 py-2.5 rounded-xl text-xs font-heading font-bold transition-all"
               >
-                Kembali ke Buku Saku
+                Back to your Notebook
               </button>
             </div>
           </motion.div>
@@ -376,14 +376,14 @@ export const DeckFlashcardRunner: React.FC<DeckFlashcardRunnerProps> = ({
                   className="btn-physical-secondary flex-1 py-3 px-3 sm:px-4 rounded-2xl font-heading font-bold text-xs flex items-center justify-center gap-1.5 sm:gap-2 transition-all"
                 >
                   <RotateCw className="w-3.5 h-3.5 text-gold" />
-                  <span>{isFlipped ? 'Tutup Arti' : 'Balik Kartu'}</span>
+                  <span>{isFlipped ? 'Hide meaning' : 'Flip card'}</span>
                 </button>
 
                 <button
                   onClick={handleNext}
                   className="flex-1 py-3 px-3 sm:px-4 rounded-2xl btn-cta text-text-primary font-heading font-bold text-xs flex items-center justify-center gap-1.5 sm:gap-2 transition-all"
                 >
-                  <span>{currentIndex + 1 === queue.length ? 'Selesai' : 'Berikutnya'}</span>
+                  <span>{currentIndex + 1 === queue.length ? 'Done' : 'Next'}</span>
                   <ArrowRight className="w-4 h-4" />
                 </button>
               </div>

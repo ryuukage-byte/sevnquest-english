@@ -58,7 +58,7 @@ function normalizeItem(raw: UniversalFlashcardItem): NormalizedCardData {
       displayTitle: (raw as any)?.displayTitle || (raw as any)?.word || (raw as any)?.character || '—',
       displayReading: (raw as any)?.displayReading || (raw as any)?.reading || '',
       displayMeaning: (raw as any)?.displayMeaning || (raw as any)?.meaningId || '',
-      level: (raw as any)?.level || 'N5',
+      level: (raw as any)?.level || 'A1',
     };
   }
 
@@ -134,7 +134,7 @@ export const UniversalFlashcard: React.FC<UniversalFlashcardProps> = ({
                   )}
                   {norm.kanji?.radical && (
                     <span className="px-2 py-0.5 rounded-full bg-surface-inset text-text-muted border border-border-subtle text-[10px] font-jp">
-                      部首: {norm.kanji.radical}
+                      Shape: {norm.kanji.radical}
                     </span>
                   )}
                 </div>
@@ -152,7 +152,7 @@ export const UniversalFlashcard: React.FC<UniversalFlashcardProps> = ({
                       speakJapanese(readingToSpeak);
                     }}
                     className="btn-physical-secondary p-2 rounded-xl text-wine-accent transition-colors"
-                    title="Dengar pelafalan"
+                    title="Hear the pronunciation"
                   >
                     <Volume2 className="w-4 h-4" />
                   </button>
@@ -168,13 +168,13 @@ export const UniversalFlashcard: React.FC<UniversalFlashcardProps> = ({
                   {norm.kanji?.onyomi?.[0] || norm.kanji?.kunyomi?.[0] || norm.displayReading}
                 </p>
                 <p className="text-xs text-text-muted pt-1 font-mono">
-                  (Klik untuk membalik kartu & melihat arti & yomikata)
+                  (Tap to flip the card and see the meaning)
                 </p>
               </div>
 
               {/* Bottom Radical Info */}
               <div className="text-[11px] text-text-muted font-mono">
-                {norm.kanji?.radicalName ? `Radikal: ${norm.kanji.radicalName}` : 'Karakter Kanji'}
+                {norm.kanji?.radicalName ? `Shape: ${norm.kanji.radicalName}` : 'Letter'}
               </div>
             </>
           ) : norm.category === 'bunpou' ? (
@@ -193,7 +193,7 @@ export const UniversalFlashcard: React.FC<UniversalFlashcardProps> = ({
                       speakJapanese(norm.bunpou?.title || norm.displayTitle);
                     }}
                     className="btn-physical-secondary p-2 rounded-xl text-purple-400 transition-colors"
-                    title="Dengar pelafalan"
+                    title="Hear the pronunciation"
                   >
                     <Volume2 className="w-4 h-4" />
                   </button>
@@ -209,13 +209,13 @@ export const UniversalFlashcard: React.FC<UniversalFlashcardProps> = ({
                   {norm.bunpou?.formula || norm.displayReading}
                 </div>
                 <p className="text-xs text-text-muted pt-2 font-mono">
-                  (Klik untuk membalik kartu & melihat aturan & contoh)
+                  (Tap to flip the card and see the rule & examples)
                 </p>
               </div>
 
               {/* Bottom Function Tag */}
               <div className="text-[11px] text-text-muted font-mono">
-                {norm.bunpou?.functions?.[0] || 'Kaidah Tata Bahasa'}
+                {norm.bunpou?.functions?.[0] || 'Grammar rule'}
               </div>
             </>
           ) : (
@@ -225,7 +225,7 @@ export const UniversalFlashcard: React.FC<UniversalFlashcardProps> = ({
               <div className="w-full flex justify-between items-center text-xs">
                 <div className="flex items-center gap-1.5 flex-wrap">
                   <span className="px-2.5 py-1 rounded-full bg-surface-inset text-indigo border border-border-subtle text-[11px] font-mono font-bold">
-                    {norm.kotoba?.jlpt || norm.level} • {getWordTypeLabel(norm.kotoba?.wordType) || 'Kosakata'}
+                    {norm.kotoba?.jlpt || norm.level} • {getWordTypeLabel(norm.kotoba?.wordType) || 'Word'}
                   </span>
                   {hasMultipleKotobaReadings && (
                     <span className="px-2 py-0.5 rounded-full bg-surface-inset text-red-700 dark:text-amber-400 border border-border-subtle text-[10px] font-mono font-bold flex items-center gap-1">
@@ -242,7 +242,7 @@ export const UniversalFlashcard: React.FC<UniversalFlashcardProps> = ({
                       speakJapanese(norm.kotoba?.word || norm.displayTitle);
                     }}
                     className="btn-physical-secondary p-2 rounded-xl text-gold transition-colors"
-                    title="Dengar pelafalan"
+                    title="Hear the pronunciation"
                   >
                     <Volume2 className="w-4 h-4" />
                   </button>
@@ -259,7 +259,7 @@ export const UniversalFlashcard: React.FC<UniversalFlashcardProps> = ({
                   />
                 </h3>
                 <p className="text-xs text-text-muted pt-2 font-mono">
-                  (Klik untuk membalik kartu & melihat arti)
+                  (Tap to flip the card and see the meaning)
                 </p>
               </div>
 
@@ -294,7 +294,7 @@ export const UniversalFlashcard: React.FC<UniversalFlashcardProps> = ({
               {/* Kanji Top Header */}
               <div className="w-full flex justify-between items-center text-xs">
                 <span className="text-wine-accent font-bold tracking-wider uppercase font-mono">
-                  Detail & Makna Kanji
+                  Letter details
                 </span>
                 <button
                   type="button"
@@ -308,7 +308,7 @@ export const UniversalFlashcard: React.FC<UniversalFlashcardProps> = ({
                     speakJapanese(readingToSpeak);
                   }}
                   className="btn-physical-secondary p-2 rounded-xl text-wine-accent transition-colors"
-                  title="Dengar pelafalan"
+                  title="Hear the pronunciation"
                 >
                   <Volume2 className="w-4 h-4" />
                 </button>
@@ -329,7 +329,7 @@ export const UniversalFlashcard: React.FC<UniversalFlashcardProps> = ({
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 w-full pt-1 text-xs">
                   <div className="p-2.5 rounded-xl bg-surface-inset border border-border-subtle text-left">
                     <span className="text-[10px] font-bold text-wine-accent uppercase font-mono block mb-1">
-                      音読み (Onyomi)
+                      Sound
                     </span>
                     <div className="flex flex-wrap gap-1 font-jp font-bold text-text-primary">
                       {(norm.kanji?.onyomi || []).length > 0 ? (
@@ -342,7 +342,7 @@ export const UniversalFlashcard: React.FC<UniversalFlashcardProps> = ({
                               speakJapanese(on.split(' ')[0]);
                             }}
                             className="px-1.5 py-0.5 rounded bg-surface-card border border-border-subtle hover:border-border-primary text-wine-accent flex items-center gap-1 text-xs transition-colors"
-                            title="Dengar bacaan Onyomi"
+                            title="Hear the sound"
                           >
                             <span>{on}</span>
                             <Volume2 className="w-2.5 h-2.5 opacity-60" />
@@ -356,7 +356,7 @@ export const UniversalFlashcard: React.FC<UniversalFlashcardProps> = ({
 
                   <div className="p-2.5 rounded-xl bg-surface-inset border border-border-subtle text-left">
                     <span className="text-[10px] font-bold text-state-success uppercase font-mono block mb-1">
-                      訓読み (Kunyomi)
+                      Example words
                     </span>
                     <div className="flex flex-wrap gap-1 font-jp font-bold text-text-primary">
                       {(norm.kanji?.kunyomi || []).length > 0 ? (
@@ -369,7 +369,7 @@ export const UniversalFlashcard: React.FC<UniversalFlashcardProps> = ({
                               speakJapanese(kun.replace(/[.-]/g, '').split(' ')[0]);
                             }}
                             className="px-1.5 py-0.5 rounded bg-surface-card border border-state-success/20 hover:border-state-success text-state-success flex items-center gap-1 text-xs transition-colors"
-                            title="Dengar bacaan Kunyomi"
+                            title="Hear the example words"
                           >
                             <span>{kun}</span>
                             <Volume2 className="w-2.5 h-2.5 opacity-60" />
@@ -397,7 +397,7 @@ export const UniversalFlashcard: React.FC<UniversalFlashcardProps> = ({
                   return (
                     <div className="w-full p-2.5 rounded-xl bg-surface-inset border border-border-subtle text-left space-y-1 mt-1">
                       <span className="text-[10px] font-bold text-text-muted uppercase font-mono">
-                        Contoh Kosakata Terkait:
+                        Example words:
                       </span>
                       <div className="flex flex-wrap gap-1.5 text-xs">
                         {words.map((rw, i) => (
@@ -422,7 +422,7 @@ export const UniversalFlashcard: React.FC<UniversalFlashcardProps> = ({
               </div>
 
               <p className="text-[11px] text-text-muted font-mono">
-                (Klik untuk kembali ke tampilan depan)
+                (Tap to go back to the front)
               </p>
             </>
           ) : norm.category === 'bunpou' ? (
@@ -430,7 +430,7 @@ export const UniversalFlashcard: React.FC<UniversalFlashcardProps> = ({
               {/* Bunpou Top Header */}
               <div className="w-full flex justify-between items-center text-xs">
                 <span className="text-purple-400 font-bold tracking-wider uppercase font-mono">
-                  Makna & Aturan Tata Bahasa
+                  Meaning & grammar rule
                 </span>
                 <button
                   type="button"
@@ -439,7 +439,7 @@ export const UniversalFlashcard: React.FC<UniversalFlashcardProps> = ({
                     speakJapanese(norm.bunpou?.title || norm.displayTitle);
                   }}
                   className="btn-physical-secondary p-2 rounded-xl text-purple-400 transition-colors"
-                  title="Dengar pelafalan"
+                  title="Hear the pronunciation"
                 >
                   <Volume2 className="w-4 h-4" />
                 </button>
@@ -454,7 +454,7 @@ export const UniversalFlashcard: React.FC<UniversalFlashcardProps> = ({
                 {/* Formula Box */}
                 <div className="p-3 rounded-xl bg-surface-inset border border-border-subtle text-left space-y-1">
                   <span className="text-[10px] font-bold text-purple-400 uppercase font-mono block">
-                    Rumus & Pembentukan:
+                    Formula:
                   </span>
                   <p className="font-mono text-xs text-text-primary font-bold">
                     {norm.bunpou?.formula || norm.displayReading}
@@ -499,7 +499,7 @@ export const UniversalFlashcard: React.FC<UniversalFlashcardProps> = ({
               </div>
 
               <p className="text-[11px] text-text-muted font-mono">
-                (Klik untuk kembali ke tampilan depan)
+                (Tap to go back to the front)
               </p>
             </>
           ) : (
@@ -508,7 +508,7 @@ export const UniversalFlashcard: React.FC<UniversalFlashcardProps> = ({
               {/* Kotoba Top Header */}
               <div className="w-full flex justify-between items-center text-xs">
                 <span className="text-indigo font-bold tracking-wider uppercase font-mono">
-                  Terjemahan & Arti Kosakata
+                  Translation & meaning
                 </span>
                 <button
                   type="button"
@@ -517,7 +517,7 @@ export const UniversalFlashcard: React.FC<UniversalFlashcardProps> = ({
                     speakJapanese(norm.kotoba?.word || norm.displayTitle);
                   }}
                   className="btn-physical-secondary p-2 rounded-xl text-gold transition-colors"
-                  title="Dengar pelafalan"
+                  title="Hear the pronunciation"
                 >
                   <Volume2 className="w-4 h-4" />
                 </button>
@@ -606,7 +606,7 @@ export const UniversalFlashcard: React.FC<UniversalFlashcardProps> = ({
               </div>
 
               <p className="text-[11px] text-text-muted font-mono">
-                (Klik untuk kembali ke tampilan depan)
+                (Tap to go back to the front)
               </p>
             </>
           )}

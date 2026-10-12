@@ -4,26 +4,25 @@ import { AnimatePresence } from 'motion/react';
 import { Search, Filter, ChevronDown, Bookmark, LayoutGrid, List, BookOpen, Zap, Trash2, ChevronRight } from 'lucide-react';
 import { ScrollIcon } from '../ui/EngravingIcons';
 import { BUNPOU_DATABASE } from '../../data/bunpou';
-import { ALL_GRAMMAR_FUNCTION_CATEGORIES } from '../../data/bunpouMetadata';
+const ALL_GRAMMAR_FUNCTION_CATEGORIES: string[] = [];
 import { BunpouItem, ItemMasteryRecord } from '../../types/content';
 import { BunpouDetailModal } from './BunpouDetailModal';
-import { ConjugationDojoView } from './ConjugationDojoView';
 import { playSound } from '../../utils/audio';
 import { UserDeck } from '../../types/rpg';
 import { isItemBookmarked } from '../../utils/decks';
 import { getCanonicalGrammarTitle, getGrammarTitleInfo } from '../../utils/bunpouTitleUtils';
 import { searchJapanese, createSubsetIndex } from '../../engine/search/universalSearch';
-import { JapaneseSearchInput } from '../common/JapaneseSearchInput';
+import { SearchInput } from '../common/SearchInput';
 import { DeckBookmarkPicker } from '../deck/DeckBookmarkPicker';
-import { getBunpouCategoryTags } from '../../utils/bunpouSkillAdapter';
+import { getBunpouCategoryTags } from '../../utils/grammarSkillNodes';
 
 const LEVEL_OPTIONS = [
   { value: 'all', label: 'Semua Level' },
-  { value: 'N5', label: 'N5' },
-  { value: 'N4', label: 'N4' },
-  { value: 'N3', label: 'N3' },
-  { value: 'N2', label: 'N2' },
-  { value: 'N1', label: 'N1' },
+  { value: 'A1', label: 'A1' },
+  { value: 'A2', label: 'A2' },
+  { value: 'B1', label: 'B1' },
+  { value: 'B2', label: 'B2' },
+  { value: 'C1', label: 'C1' },
 ];
 
 interface BunpouLibraryViewProps {
@@ -97,7 +96,7 @@ export const BunpouLibraryView: React.FC<BunpouLibraryViewProps> = ({
   }, [items]);
 
   const levelCounts = useMemo(() => {
-    const counts: Record<string, number> = { all: allBunpou.length, N5: 0, N4: 0, N3: 0, N2: 0, N1: 0 };
+    const counts: Record<string, number> = { all: allBunpou.length, A1: 0, A2: 0, B1: 0, B2: 0, C1: 0 };
     for (const item of allBunpou) {
       if (counts[item.level] !== undefined) {
         counts[item.level]++;
@@ -154,16 +153,16 @@ export const BunpouLibraryView: React.FC<BunpouLibraryViewProps> = ({
             </div>
             <div>
               <h1 className="text-xl sm:text-2xl font-bold text-text-primary tracking-wide font-heading">
-                Kamus Tata Bahasa (Bunpou)
+                Grammar dictionary
               </h1>
               <p className="text-xs sm:text-sm text-text-secondary font-medium">
-                Kamus {allBunpou.length.toLocaleString()} pola tata bahasa JLPT (N5〜N1) terstruktur berdasarkan fungsi, rumus, dan nuansa.
+                A dictionary of {allBunpou.length.toLocaleString()} grammar points (A1–B2), with formulas, examples and usage notes.
               </p>
             </div>
           </div>
 
           <div className="hidden md:flex items-center gap-2 pr-3 text-xs font-mono text-text-secondary bg-surface-inset px-3 py-1.5 rounded-xl border border-border-subtle">
-            <span>{allBunpou.length.toLocaleString()} Pola</span>
+            <span>{allBunpou.length.toLocaleString()} patterns</span>
           </div>
         </div>
       )}
@@ -183,40 +182,19 @@ export const BunpouLibraryView: React.FC<BunpouLibraryViewProps> = ({
           }`}
         >
           <BookOpen className="w-4 h-4 text-indigo" />
-          <span>Kamus Pola Kalimat ({allBunpou.length.toLocaleString()})</span>
+          <span>Grammar dictionary ({allBunpou.length.toLocaleString()})</span>
         </button>
 
-        <button
-          type="button"
-          onClick={() => {
-            setSubSection('conjugation');
-            playSound('click', soundEnabled);
-          }}
-          className={`flex-1 flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl text-xs sm:text-sm font-bold font-heading transition-all ${
-            subSection === 'conjugation'
-              ? 'bg-surface-elevated text-indigo shadow-sm border border-border-primary'
-              : 'text-text-secondary hover:text-text-primary hover:bg-surface-inset'
-          }`}
-        >
-          <Zap className="w-4 h-4 text-red-700 dark:text-amber-400" />
-          <span>Perubahan Bentuk Kata (Konjugasi)</span>
-          <span className="hidden sm:inline-block text-[10px] uppercase tracking-wider bg-surface-inset text-red-700 dark:text-amber-400 border border-border-subtle px-1.5 py-0.5 rounded font-mono font-bold">
-            Dojo & Latihan
-          </span>
-        </button>
       </div>
 
-      {subSection === 'conjugation' ? (
-        <ConjugationDojoView soundEnabled={soundEnabled} onRewardPlayer={onRewardPlayer} />
-      ) : (
-        <>
+      <>
           {/* Search & Level Filter */}
           <div className="flex flex-col sm:flex-row gap-3">
-        <JapaneseSearchInput
+        <SearchInput
           value={searchQuery}
           onChange={(v) => { setSearchQuery(v); setVisibleCount(40); }}
           placeholderIme="Cari rumus (romaji → kana)..."
-          placeholderLatin="Cari rumus, arti, fungsi..."
+          placeholderLatin="Search patterns, meanings, examples..."
           soundEnabled={soundEnabled}
         />
 
@@ -232,7 +210,7 @@ export const BunpouLibraryView: React.FC<BunpouLibraryViewProps> = ({
             <Filter className="w-4 h-4 text-text-secondary" />
             <span>{levelFilter === 'all' ? 'Semua Level' : `Level ${levelFilter}`}</span>
             <span className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-surface-inset border border-border-subtle text-text-secondary">
-              {levelFilter === 'all' ? `${allBunpou.length} Rumus` : `${(levelCounts[levelFilter] || 0).toLocaleString()} Rumus`}
+              {levelFilter === 'all' ? `${allBunpou.length} patterns` : `${(levelCounts[levelFilter] || 0).toLocaleString()} patterns`}
             </span>
             <ChevronDown className={`w-3.5 h-3.5 text-text-muted transition-transform ${isDropdownOpen ? 'rotate-180' : ''}`} />
           </button>
@@ -247,7 +225,7 @@ export const BunpouLibraryView: React.FC<BunpouLibraryViewProps> = ({
                 {LEVEL_OPTIONS.map((opt) => {
                   const isSelected = levelFilter === opt.value;
                   const count = levelCounts[opt.value] || 0;
-                  const badgeText = opt.value === 'all' ? `${count.toLocaleString()} Rumus` : count.toLocaleString();
+                  const badgeText = opt.value === 'all' ? `${count.toLocaleString()} patterns` : count.toLocaleString();
 
                   return (
                     <button
@@ -285,7 +263,7 @@ export const BunpouLibraryView: React.FC<BunpouLibraryViewProps> = ({
       {/* Function Categories Filter (Pills) */}
       <div className="space-y-1.5">
         <span className="text-[11px] font-bold text-text-secondary font-heading uppercase tracking-wider pl-1">
-          Kategori Fungsi (機能):
+          Category:
         </span>
         <div className="flex flex-wrap items-center gap-2 pb-1.5">
           {ALL_GRAMMAR_FUNCTION_CATEGORIES.map((cat) => {
@@ -342,7 +320,7 @@ export const BunpouLibraryView: React.FC<BunpouLibraryViewProps> = ({
               handleSetViewMode('compact');
               playSound('click', soundEnabled);
             }}
-            title="Tampilan Daftar Ringkas"
+            title="Compact list view"
             className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-bold transition-all ${
               viewMode === 'compact'
                 ? 'bg-surface-elevated text-text-primary shadow-sm border border-border-primary'
@@ -401,7 +379,7 @@ export const BunpouLibraryView: React.FC<BunpouLibraryViewProps> = ({
                         playSound('click', soundEnabled);
                       }}
                       className="btn-physical-secondary p-1.5 rounded-lg hover:text-wine-accent transition-all shrink-0"
-                      title="Hapus dari deck ini"
+                      title="Remove from this deck"
                     >
                       <Trash2 className="w-3.5 h-3.5" />
                     </button>
@@ -460,7 +438,7 @@ export const BunpouLibraryView: React.FC<BunpouLibraryViewProps> = ({
                           playSound('click', soundEnabled);
                         }}
                         className="btn-physical-secondary p-1.5 rounded-lg hover:text-wine-accent transition-all shrink-0 cursor-pointer"
-                        title="Hapus dari deck ini"
+                        title="Remove from this deck"
                       >
                         <Trash2 className="w-3.5 h-3.5" />
                       </button>
@@ -510,7 +488,7 @@ export const BunpouLibraryView: React.FC<BunpouLibraryViewProps> = ({
                   </div>
 
                   <div className="flex items-center gap-1 text-xs font-bold text-indigo group-hover:translate-x-0.5 transition-transform shrink-0 font-heading">
-                    <span>Pelajari Skill</span>
+                    <span>Study this pattern</span>
                     <ChevronRight className="w-3.5 h-3.5" />
                   </div>
                 </div>
@@ -524,8 +502,8 @@ export const BunpouLibraryView: React.FC<BunpouLibraryViewProps> = ({
       {/* Empty State */}
       {displayedBunpou.length === 0 && (
         <div className="panel panel-stitched p-12 text-center rounded-3xl space-y-2">
-          <p className="text-sm font-bold text-text-primary">Tidak ada tata bahasa yang cocok.</p>
-          <p className="text-xs text-text-muted">Coba ubah kata kunci pencarian atau reset filter fungsi.</p>
+          <p className="text-sm font-bold text-text-primary">No grammar points match.</p>
+          <p className="text-xs text-text-muted">Try another search or reset the category filter.</p>
         </div>
       )}
 
@@ -541,7 +519,6 @@ export const BunpouLibraryView: React.FC<BunpouLibraryViewProps> = ({
         </div>
       )}
         </>
-      )}
 
       {/* Detail Modal */}
       <AnimatePresence>

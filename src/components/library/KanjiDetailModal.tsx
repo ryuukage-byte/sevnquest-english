@@ -70,7 +70,7 @@ export const KanjiDetailModal: React.FC<KanjiDetailModalProps> = ({
       meaningEn: `Related word ${wordStr}`,
       meaningJa: wordStr,
       wordType: 'noun',
-      jlpt: item.jlpt || 'N5',
+      jlpt: item.jlpt || 'A1',
       kanjiComponents: Array.from(wordStr).filter(c => /[\u4e00-\u9faf]/.test(c)),
     };
     setSelectedKotobaItem(target);
@@ -111,7 +111,7 @@ export const KanjiDetailModal: React.FC<KanjiDetailModalProps> = ({
           <div className="flex items-center justify-between border-b border-border-subtle pb-3">
             <div className="flex items-center gap-2">
               <span className="text-xs font-bold font-heading uppercase tracking-wider text-text-secondary">
-                Ensiklopedi Aksara & Kanji (Library)
+                Letter encyclopedia (library)
               </span>
             </div>
             <div className="flex items-center gap-1.5">

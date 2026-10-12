@@ -8,7 +8,7 @@ import { KANJI_DATABASE } from '../../data/kanji';
 import { BUNPOU_DATABASE } from '../../data/bunpou';
 import { playSound } from '../../utils/audio';
 import { searchJapanese } from '../../engine/search/universalSearch';
-import { JapaneseSearchInput } from '../common/JapaneseSearchInput';
+import { SearchInput } from '../common/SearchInput';
 import { useBackButton } from '../../hooks/useBackButton';
 
 interface SearchResultItem {
@@ -66,7 +66,7 @@ export const DeckAddItemModal: React.FC<DeckAddItemModalProps> = ({
         title: item.word,
         reading: item.reading,
         meaning: item.meaningId || item.meaningEn || '',
-        level: item.jlpt || 'N5',
+        level: item.jlpt || 'A1',
       });
     }
 
@@ -85,7 +85,7 @@ export const DeckAddItemModal: React.FC<DeckAddItemModalProps> = ({
           title: item.character,
           reading,
           meaning: item.meaningId || item.meaningEn || '',
-          level: item.jlpt || 'N5',
+          level: item.jlpt || 'A1',
         });
       }
     }
@@ -98,7 +98,7 @@ export const DeckAddItemModal: React.FC<DeckAddItemModalProps> = ({
         title: item.title,
         reading: item.formula,
         meaning: item.meaningId || '',
-        level: item.level || 'N3',
+        level: item.level || 'B1',
       });
     }
 
@@ -211,10 +211,10 @@ export const DeckAddItemModal: React.FC<DeckAddItemModalProps> = ({
             <div>
               <h3 className="font-heading font-bold text-base sm:text-lg text-text-primary flex items-center gap-2">
                 <span>{targetDeck.coverIcon || '📖'}</span>
-                <span>Tambah Materi ke &quot;{targetDeck.title}&quot;</span>
+                <span>Add items to &quot;{targetDeck.title}&quot;</span>
               </h3>
               <p className="text-xs text-text-secondary">
-                Cari dan tambahkan materi satuan atau gunakan centang multi-pilih
+                Search and add single items, or tick several at once
               </p>
             </div>
 
@@ -231,11 +231,11 @@ export const DeckAddItemModal: React.FC<DeckAddItemModalProps> = ({
 
           {/* Search & Filter Bar */}
           <div className="p-4 border-b border-border-subtle space-y-3 bg-surface-card shrink-0">
-            <JapaneseSearchInput
+            <SearchInput
               value={searchQuery}
               onChange={(v) => { setSearchQuery(v); setVisibleCount(30); }}
               placeholderIme="Cari kanji, kata, pola (romaji → kana)..."
-              placeholderLatin="Cari kanji, kata, pola, arti..."
+              placeholderLatin="Search letters, words, patterns, meanings..."
               soundEnabled={soundEnabled}
               className="w-full"
               inputClassName="w-full pl-10 pr-20 py-2.5 rounded-xl bg-surface-inset border border-border-subtle focus:border-border-primary focus:outline-none text-xs sm:text-sm text-text-primary font-medium font-jp"
@@ -245,9 +245,9 @@ export const DeckAddItemModal: React.FC<DeckAddItemModalProps> = ({
               {/* Category Pills */}
               {[
                 { id: 'all', label: 'Semua Kategori' },
-                { id: 'kotoba', label: 'Kosakata' },
-                { id: 'kanji', label: 'Kanji' },
-                { id: 'bunpou', label: 'Tata Bahasa' },
+                { id: 'kotoba', label: 'Vocabulary' },
+                { id: 'kanji', label: 'Letters' },
+                { id: 'bunpou', label: 'Grammar' },
               ].map((c) => {
                 const isSelected = categoryFilter === c.id;
                 return (
@@ -272,7 +272,7 @@ export const DeckAddItemModal: React.FC<DeckAddItemModalProps> = ({
               <div className="h-4 w-px bg-border-subtle shrink-0 mx-1" />
 
               {/* Level Filter */}
-              {['all', 'N5', 'N4', 'N3', 'N2', 'N1'].map((lvl) => {
+              {['all', 'A1', 'A2', 'B1', 'B2', 'C1'].map((lvl) => {
                 const isSelected = levelFilter === lvl;
                 return (
                   <button
@@ -305,8 +305,8 @@ export const DeckAddItemModal: React.FC<DeckAddItemModalProps> = ({
                   <CheckSquare className="w-3.5 h-3.5 text-gold" />
                   <span>
                     {selectableDisplayed.every(it => selectedKeys.has(`${it.category}:${it.id}`))
-                      ? 'Batal Pilih Semua'
-                      : `Pilih Semua Ditampilkan (${selectableDisplayed.length})`}
+                      ? 'Clear selection'
+                      : `Select all shown (${selectableDisplayed.length})`}
                   </span>
                 </button>
 
@@ -327,7 +327,7 @@ export const DeckAddItemModal: React.FC<DeckAddItemModalProps> = ({
           <div className="flex-1 min-h-0 overflow-y-auto p-4 space-y-2.5 pb-20">
             {displayedItems.length === 0 ? (
               <div className="text-center py-12 text-text-muted text-xs">
-                Tidak ada materi yang cocok dengan pencarian &quot;{searchQuery}&quot;
+                No items match &quot;{searchQuery}&quot;
               </div>
             ) : (
               <>
@@ -419,12 +419,12 @@ export const DeckAddItemModal: React.FC<DeckAddItemModalProps> = ({
                           {isAlreadyInDeck ? (
                             <>
                               <Check className="w-3.5 h-3.5 text-gold" />
-                              <span>Sudah Ada</span>
+                              <span>Already added</span>
                             </>
                           ) : (
                             <>
                               <Plus className="w-3.5 h-3.5" />
-                              <span>+ Tambah</span>
+                              <span>+ Add</span>
                             </>
                           )}
                         </button>

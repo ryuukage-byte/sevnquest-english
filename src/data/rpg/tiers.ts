@@ -3,9 +3,9 @@ import { TierInfo } from '../../types/rpg';
 export const RPG_TIERS: TierInfo[] = [
   {
     tier: 1,
-    name: 'Villager (N5)',
-    titleName: 'Peasant Explorer (N5)',
-    description: 'Pakaian petualang pemula yang bersiap mengawali langkah fondasi pertama di kurikulum N5.',
+    name: 'Villager (A1)',
+    titleName: 'Peasant Explorer (A1)',
+    description: 'Beginner adventurer clothes, ready for the first steps of the A1 curriculum.',
     visualAssetDesc: 'Simple linen tunic, wooden walking stick, humble starting adventurer.',
     baseColor: 'to-stone-600',
     glowColor: 'shadow-slate-800/40',
@@ -15,33 +15,33 @@ export const RPG_TIERS: TierInfo[] = [
   },
   {
     tier: 2,
-    name: 'Novice (N5)',
-    titleName: 'Novice Adventurer (N5)',
-    description: 'Menggunakan baju kulit (leather armor) sederhana dan ikat kepala petualang lulusan N5.',
+    name: 'Novice (A1)',
+    titleName: 'Novice Adventurer (A1)',
+    description: 'Simple leather armour and a headband, worn by A1 graduates.',
     visualAssetDesc: 'Sturdy leather armor, reinforced boots, bronze buckle, small dagger.',
     baseColor: 'to-teal-800',
     glowColor: 'shadow-emerald-500/30',
     requiredExpTotal: 1200,
-    perks: '+5% Gold bonus dari kuis. Membuka Flashcard Speed Mode.',
+    perks: '+5% Gold bonus from quizzes. Unlocks Flashcard speed mode.',
     iconName: 'Shield'
   },
   {
     tier: 3,
-    name: 'Apprentice (N4)',
-    titleName: 'Iron Apprentice (N4)',
-    description: 'Membawa pedang besi dan perisai kayu kokoh, mengarungi Lembah Petualang N4.',
+    name: 'Apprentice (A2)',
+    titleName: 'Iron Apprentice (A2)',
+    description: 'Carrying an iron sword and a sturdy wooden shield, crossing the Adventurer Valley (A2).',
     visualAssetDesc: 'Hardened iron short sword, carved wooden round shield, padded gambeson.',
     baseColor: 'to-cyan-800',
     glowColor: 'shadow-blue-500/30',
     requiredExpTotal: 4000,
-    perks: '+10% EXP pada latihan Kanji. 50/50 Kuis Hint terbuka.',
+    perks: '+10% EXP on letter practice. 50/50 quiz hint unlocked.',
     iconName: 'Sword'
   },
   {
     tier: 4,
-    name: 'Squire (N4)',
-    titleName: 'Valiant Squire (N4)',
-    description: 'Armor rantai (chainmail), pedang baja yang mulai bersinar menembus ujian N4.',
+    name: 'Squire (A2)',
+    titleName: 'Valiant Squire (A2)',
+    description: 'Chainmail and a steel sword that begin to shine through the A2 exams.',
     visualAssetDesc: 'Polished steel chainmail, steel broadsword with faint glow, heraldic crest.',
     baseColor: 'to-blue-800',
     glowColor: 'shadow-blue-500/40',
@@ -51,21 +51,21 @@ export const RPG_TIERS: TierInfo[] = [
   },
   {
     tier: 5,
-    name: 'Knight (N3)',
-    titleName: 'Honorable Knight (N3)',
-    description: 'Armor besi penuh (full plate), memancarkan aura ketekunan mengarungi Kurikulum Soumatome N3.',
+    name: 'Knight (B1)',
+    titleName: 'Honorable Knight (B1)',
+    description: 'Armor besi penuh (full plate), memancarkan aura ketekunan mengarungi Kurikulum Soumatome B1.',
     visualAssetDesc: 'Full steel plate armor, visor helmet with plume, glowing knight blade.',
     baseColor: 'to-purple-900',
     glowColor: 'shadow-purple-500/40',
     requiredExpTotal: 22000,
-    perks: '+15% Serangan Boss Battle. Bonus EXP Misi Harian +20%.',
+    perks: '+15% boss battle damage. +20% EXP bonus on daily quests.',
     iconName: 'Award'
   },
   {
     tier: 6,
-    name: 'Elite Knight (N3)',
-    titleName: 'Royal Elite Knight (N3)',
-    description: 'Dilengkapi jubah bangsawan dan pedang murni, menguasai seluruh 6 Minggu Soumatome N3.',
+    name: 'Elite Knight (B1)',
+    titleName: 'Royal Elite Knight (B1)',
+    description: 'Wearing a noble cloak and a pure sword, mastering all of the B1 curriculum.',
     visualAssetDesc: 'Royal velvet cape with gold trims, engraved runic plate, luminous longsword.',
     baseColor: 'to-red-800',
     glowColor: 'shadow-rose-500/50',
@@ -75,9 +75,9 @@ export const RPG_TIERS: TierInfo[] = [
   },
   {
     tier: 7,
-    name: 'Paladin (N2)',
-    titleName: 'Grand Paladin Master (N2)',
-    description: 'Armor emas perak mewah, tameng suci penjaga ilmu wacana tinggi Ranah N2.',
+    name: 'Paladin (B2)',
+    titleName: 'Grand Paladin Master (B2)',
+    description: 'Armor emas perak mewah, tameng suci penjaga ilmu wacana tinggi Ranah B2.',
     visualAssetDesc: 'Gilded gold-and-silver heavy armor, radiant holy shield, sun-etched claymore.',
     baseColor: 'to-amber-600',
     glowColor: 'shadow-amber-400/50',
@@ -87,21 +87,21 @@ export const RPG_TIERS: TierInfo[] = [
   },
   {
     tier: 8,
-    name: 'Hero (N2)',
-    titleName: 'Legendary Hero (N2)',
-    description: 'Aura kosmik berputar di tubuh, menggenggam pusaka legendaris penguasa N2.',
+    name: 'Hero (B2)',
+    titleName: 'Legendary Hero (B2)',
+    description: 'Aura kosmik berputar di tubuh, menggenggam pusaka legendaris penguasa B2.',
     visualAssetDesc: 'Cosmic glowing energy aura, floating celestial relic, legendary glowing excalibur.',
     baseColor: 'to-indigo-900',
     glowColor: 'shadow-sky-400/60',
     requiredExpTotal: 135000,
-    perks: 'Lembar latihan kanji tanpa batas dengan evaluasi otomatis. +30% seluruh EXP.',
+    perks: 'Unlimited letter practice sheets with automatic checking. +30% all EXP.',
     iconName: 'Flame'
   },
   {
     tier: 9,
-    name: 'Champion (N1)',
-    titleName: 'Elemental Champion (N1)',
-    description: 'Melayang di udara dengan elemen petir dan api suci, menembus puncak tersulit N1.',
+    name: 'Champion (C1)',
+    titleName: 'Elemental Champion (C1)',
+    description: 'Floating in the air with lightning and holy fire, reaching the hardest peak (C1).',
     visualAssetDesc: 'Levitating avatar, elemental vortex of thunder & flames, divine twin blades.',
     baseColor: 'to-purple-800',
     glowColor: 'shadow-fuchsia-500/60',
@@ -111,14 +111,14 @@ export const RPG_TIERS: TierInfo[] = [
   },
   {
     tier: 10,
-    name: 'Mythic Deity (N1)',
-    titleName: 'Mythic Deity of Knowledge (N1)',
-    description: 'Wujud puncak pembelajar sejati, memancarkan aura kebijaksanaan dan penguasaan bahasa Jepang terlengkap (N5 ~ N1).',
+    name: 'Mythic Deity (C1)',
+    titleName: 'Mythic Deity of Knowledge (C1)',
+    description: 'The true peak of a learner, radiating wisdom and full mastery of English (A1 to C1).',
     visualAssetDesc: 'Transcendent deity form, luminous halo crown, 6 wings of pure radiant light.',
     baseColor: 'to-amber-500',
     glowColor: 'shadow-amber-300/80',
     requiredExpTotal: 320000,
-    perks: 'Penguasaan Penuh Seluruh Kurikulum Jepang (N5-N1). RPG Stats & Study Boost Maksimal.',
+    perks: 'Penguasaan Penuh Seluruh Kurikulum Jepang (A1-C1). RPG Stats & Study Boost Maksimal.',
     iconName: 'Star'
   }
 ];
@@ -175,28 +175,28 @@ interface TierGateRequirement {
 }
 
 const TIER_GATE_REQUIREMENTS: Record<number, TierGateRequirement> = {
-  2: { // Entering Tier 3 (Apprentice - N4)
-    requiredWorldId: 'world_n5',
-    requiredWorldName: 'World N5 (Dunia Permulaan)',
-    requiredJlpt: 'N5',
+  2: { // Entering Tier 3 (Apprentice - A2)
+    requiredWorldId: 'world_a1',
+    requiredWorldName: 'World A1 (Dunia Permulaan)',
+    requiredJlpt: 'A1',
     minStageCompletionPct: 77
   },
-  4: { // Entering Tier 5 (Knight - N3)
-    requiredWorldId: 'world_n4',
-    requiredWorldName: 'World N4 (Langkah Petualang)',
-    requiredJlpt: 'N4',
+  4: { // Entering Tier 5 (Knight - B1)
+    requiredWorldId: 'world_a2',
+    requiredWorldName: 'World A2 (Langkah Petualang)',
+    requiredJlpt: 'A2',
     minStageCompletionPct: 77
   },
-  6: { // Entering Tier 7 (Paladin - N2)
-    requiredWorldId: 'world_n3',
-    requiredWorldName: 'World N3 (Peta Soumatome N3)',
-    requiredJlpt: 'N3',
+  6: { // Entering Tier 7 (Paladin - B2)
+    requiredWorldId: 'world_b1',
+    requiredWorldName: 'World B1 (Peta Soumatome B1)',
+    requiredJlpt: 'B1',
     minStageCompletionPct: 77
   },
-  8: { // Entering Tier 9 (Champion - N1)
-    requiredWorldId: 'world_n2',
-    requiredWorldName: 'World N2 (Ranah Mahir)',
-    requiredJlpt: 'N2',
+  8: { // Entering Tier 9 (Champion - C1)
+    requiredWorldId: 'world_b2',
+    requiredWorldName: 'World B2 (Ranah Mahir)',
+    requiredJlpt: 'B2',
     minStageCompletionPct: 77
   }
 };

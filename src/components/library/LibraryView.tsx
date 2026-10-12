@@ -69,16 +69,16 @@ export const LibraryView: React.FC<LibraryViewProps> = ({
               Pustaka Referensi JLPT & Identity Architecture
             </span>
             <h1 className="text-xl sm:text-2xl font-bold text-text-primary font-heading tracking-wide">
-              Perpustakaan & Grimoire Bahasa Jepang
+              English Library
             </h1>
             <p className="text-xs sm:text-sm text-text-secondary font-medium">
-              Ensiklopedia terpadu: Kosakata, Kanji, Pola Kalimat, dan Bank Soal berstandar resmi JLPT (N5〜N1)
+              One encyclopedia: vocabulary, letters, grammar and the question bank, organised by CEFR level (A1–B2)
             </p>
           </div>
 
           {/* 4 Volume Tab Switcher */}
           <div className="book-tab-nav flex-wrap justify-center sm:justify-start shrink-0">
-            {/* Jilid I: Kosakata */}
+            {/* Part I: Kosakata */}
             <button
               onClick={() => handleTabChange('kotoba')}
               className={`book-tab-btn ${
@@ -86,15 +86,15 @@ export const LibraryView: React.FC<LibraryViewProps> = ({
               }`}
             >
               <div className="w-6 h-6 rounded-lg bg-surface-inset border border-border-subtle flex items-center justify-center text-xs font-jp font-bold text-text-primary">
-                語
+                V
               </div>
               <div className="text-left">
-                <span className="block text-xs leading-none font-bold">Kosakata</span>
-                <span className="text-[10px] opacity-70 font-mono">Jilid I</span>
+                <span className="block text-xs leading-none font-bold">Vocabulary</span>
+                <span className="text-[10px] opacity-70 font-mono">Part I</span>
               </div>
             </button>
 
-            {/* Jilid II: Kanji */}
+            {/* Part II: Kanji */}
             <button
               onClick={() => handleTabChange('kanji')}
               className={`book-tab-btn ${
@@ -102,15 +102,15 @@ export const LibraryView: React.FC<LibraryViewProps> = ({
               }`}
             >
               <div className="w-6 h-6 rounded-lg bg-surface-inset border border-border-subtle flex items-center justify-center text-xs font-jp font-bold text-text-primary">
-                字
+                L
               </div>
               <div className="text-left">
-                <span className="block text-xs leading-none font-bold">Kanji</span>
-                <span className="text-[10px] opacity-70 font-mono">Jilid II</span>
+                <span className="block text-xs leading-none font-bold">Letters</span>
+                <span className="text-[10px] opacity-70 font-mono">Part II</span>
               </div>
             </button>
 
-            {/* Jilid III: Tata Bahasa */}
+            {/* Part III: Tata Bahasa */}
             <button
               onClick={() => handleTabChange('bunpou')}
               className={`book-tab-btn ${
@@ -118,15 +118,15 @@ export const LibraryView: React.FC<LibraryViewProps> = ({
               }`}
             >
               <div className="w-6 h-6 rounded-lg bg-surface-inset border border-border-subtle flex items-center justify-center text-xs font-jp font-bold text-text-primary">
-                文
+                G
               </div>
               <div className="text-left">
-                <span className="block text-xs leading-none font-bold">Tata Bahasa</span>
-                <span className="text-[10px] opacity-70 font-mono">Jilid III</span>
+                <span className="block text-xs leading-none font-bold">Grammar</span>
+                <span className="text-[10px] opacity-70 font-mono">Part III</span>
               </div>
             </button>
 
-            {/* Jilid IV: Bank Soal JLPT */}
+            {/* Part IV: Bank Soal JLPT */}
             <button
               onClick={() => handleTabChange('soal')}
               className={`book-tab-btn ${
@@ -134,11 +134,11 @@ export const LibraryView: React.FC<LibraryViewProps> = ({
               }`}
             >
               <div className="w-6 h-6 rounded-lg bg-surface-inset border border-border-subtle flex items-center justify-center text-xs font-jp font-bold text-text-primary">
-                問
+                Q
               </div>
               <div className="text-left">
-                <span className="block text-xs leading-none font-bold">Bank Soal</span>
-                <span className="text-[10px] opacity-70 font-mono">Jilid IV (JLPT)</span>
+                <span className="block text-xs leading-none font-bold">Question bank</span>
+                <span className="text-[10px] opacity-70 font-mono">Part IV</span>
               </div>
             </button>
           </div>

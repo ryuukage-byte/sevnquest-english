@@ -30,53 +30,53 @@ interface Slide {
 const SLIDES: Slide[] = [
   {
     id: 'what',
-    label: 'KENALAN',
-    title: 'SevnQuest itu apa?',
-    body: 'Tempat belajar bahasa Jepang yang dibuat seperti petualangan: dari huruf kana sampai level N1. Kamu belajar materi, langsung berlatih, lalu progresmu dicatat dan diulang pada waktu yang tepat supaya benar-benar menempel.',
+    label: 'What is it?',
+    title: 'What is SevnQuest?',
+    body: 'A place to learn English, built like an adventure: from the alphabet up to CEFR level B2. You study material, answer questions, and earn EXP to level up your character. Every answer helps the app learn where you are strong and where you need practice.',
     icon: Compass,
   },
   {
-    id: 'content',
-    label: 'ISI MATERI',
-    title: 'Apa yang dipelajari?',
-    body: 'Tiga pilar utama. Semuanya saling menopang: kata butuh kanji, kalimat butuh pola.',
-    icon: Languages,
+    id: 'pillars',
+    label: 'Three pillars',
+    title: 'What do you learn?',
+    body: 'Three main pillars that support each other: words need spelling, sentences need grammar, and reading and listening bring it together.',
+    icon: Library,
     points: [
-      { icon: BookOpen, title: 'Kotoba', text: 'Kosakata: arti, bacaan, dan contoh pemakaian.' },
-      { icon: Languages, title: 'Kanji', text: 'Bentuk, bacaan, dan cara menulisnya.' },
-      { icon: Library, title: 'Pola Kalimat', text: 'Tata bahasa (Bunpou) untuk menyusun kalimat sendiri.' },
+      { icon: BookOpen, title: 'Vocabulary', text: 'Words: meaning, pronunciation (IPA), part of speech and example sentences.' },
+      { icon: Languages, title: 'Letters', text: 'The 52 capital and small letters: sound, stroke order and handwriting.' },
+      { icon: Library, title: 'Grammar', text: 'Grammar points (tenses, conditionals, passive…) for building your own sentences.' },
     ],
   },
   {
-    id: 'loop',
-    label: 'SISTEM BELAJAR',
-    title: 'Cara kerjanya',
-    body: 'EXP bukan sekadar hadiah klik. Ia mengikuti seberapa dalam kamu menguasai sesuatu.',
-    icon: Repeat,
+    id: 'exp',
+    label: 'Progress',
+    title: 'How do you progress?',
+    body: 'EXP is not just a click reward. It follows how well you know something.',
+    icon: Flame,
     points: [
-      { icon: BookOpen, title: '1. Belajar', text: 'Baca materi di Buku Saku atau Library.' },
-      { icon: Flame, title: '2. Latihan', text: 'Jawab soal. Salah pun dicatat, jadi tahu titik lemahmu.' },
-      { icon: Repeat, title: '3. Mastery', text: 'Item yang sering benar naik penguasaannya; yang lemah diulang di Recall.' },
-      { icon: Compass, title: '4. EXP & Progression', text: 'EXP menaikkan level dan tier belajarmu.' },
+      { icon: BookOpen, title: '1. Study', text: 'Read the material in the Notebook or the Library.' },
+      { icon: Flame, title: '2. Practise', text: 'Answer questions. Wrong answers are recorded too, so you know your weak spots.' },
+      { icon: Repeat, title: '3. Mastery', text: 'Items you get right often gain mastery; weak ones come back in Recall.' },
+      { icon: Compass, title: '4. EXP & level', text: 'EXP raises your level and your learning tier.' },
     ],
   },
   {
-    id: 'start',
-    label: 'MULAI DARI MANA',
-    title: 'Jalur untuk pemula',
-    body: 'Belum bisa membaca kana? Mulai dari Foundation: Hiragana, lalu Katakana, baru masuk N5. Kalau sudah, kamu bebas memilih jalurnya.',
+    id: 'path',
+    label: 'Your path',
+    title: 'Where should a beginner start?',
+    body: 'Not sure where to begin? Start with the Alphabet Academy if you are still learning letters. Otherwise, pick the level that matches your English and work through it.',
     icon: Sprout,
     points: [
-      { icon: Sprout, title: 'Belum tahu apa-apa', text: 'Buku Kana Dojo → Hiragana → Katakana → N5.' },
-      { icon: Library, title: 'Sudah bisa kana', text: 'Library untuk Kotoba, Kanji, dan Pola Kalimat sesuai levelmu.' },
+      { icon: Sprout, title: 'Brand new to English', text: 'Notebook → Alphabet Academy → Letters → A1.' },
+      { icon: Library, title: 'Already know the alphabet', text: 'Library for vocabulary, letters and grammar at your level.' },
     ],
   },
   {
     id: 'next',
-    label: 'SETELAH ITU',
-    title: 'Selesai satu materi, lalu?',
-    body: 'Kamu tidak perlu menebak. Beranda akan selalu menunjukkan satu langkah berikutnya: Recall bila ada yang perlu diulang, titik lemah bila terdeteksi, atau lanjut belajar dari Buku Saku. Misi Harian membantu menjaga ritme.',
-    icon: BookOpen,
+    label: 'Next step',
+    title: 'What happens after a lesson?',
+    body: 'You never have to guess. The home screen always shows the next step: Recall if something needs review, your next stage on the map, or your daily quests.',
+    icon: Compass,
   },
 ];
 
@@ -137,8 +137,8 @@ export const StartGuideModal: React.FC<StartGuideModalProps> = ({
             type="button"
             onClick={onClose}
             className="p-1.5 rounded-lg text-text-muted hover:text-text-primary transition-colors"
-            title="Tutup"
-            aria-label="Tutup panduan"
+            title="Close"
+            aria-label="Close guide"
           >
             <X className="w-4 h-4" />
           </button>
@@ -185,14 +185,14 @@ export const StartGuideModal: React.FC<StartGuideModalProps> = ({
             {isLast && (
               <div className="space-y-2 pt-1">
                 <p className="text-[11px] font-mono font-bold uppercase tracking-wider text-text-secondary">
-                  Pilih jalurmu
+                  Choose your path
                 </p>
                 <button type="button" onClick={() => pick('foundation')} className="btn-physical-primary w-full py-3 px-4 text-sm font-bold font-heading flex items-center justify-between">
-                  <span className="flex items-center gap-2"><Sprout className="w-4 h-4" /> Mulai dari Buku Hiragana</span>
+                  <span className="flex items-center gap-2"><Sprout className="w-4 h-4" /> Start with the Alphabet Academy</span>
                   <ChevronRight className="w-4 h-4" />
                 </button>
                 <button type="button" onClick={() => pick('library')} className="btn-physical-secondary w-full py-3 px-4 text-sm font-bold font-heading flex items-center justify-between">
-                  <span className="flex items-center gap-2"><Library className="w-4 h-4" /> Buka Kotoba, Kanji & Pola Kalimat</span>
+                  <span className="flex items-center gap-2"><Library className="w-4 h-4" /> Open Vocabulary, Letters & Grammar</span>
                   <ChevronRight className="w-4 h-4" />
                 </button>
                 <button type="button" onClick={() => pick('world')} className="btn-physical-secondary w-full py-3 px-4 text-sm font-bold font-heading flex items-center justify-between">
@@ -215,13 +215,13 @@ export const StartGuideModal: React.FC<StartGuideModalProps> = ({
           </div>
           <div className="flex items-center gap-2">
             {index > 0 && (
-              <button type="button" onClick={() => go(index - 1)} className="btn-physical-secondary p-2 rounded-xl" aria-label="Kembali">
+              <button type="button" onClick={() => go(index - 1)} className="btn-physical-secondary p-2 rounded-xl" aria-label="Back">
                 <ChevronLeft className="w-4 h-4" />
               </button>
             )}
             {!isLast && (
               <button type="button" onClick={() => go(index + 1)} className="btn-physical-primary py-2 px-4 text-xs font-bold font-heading flex items-center gap-1.5">
-                <span>Lanjut</span>
+                <span>Next</span>
                 <ChevronRight className="w-3.5 h-3.5" />
               </button>
             )}

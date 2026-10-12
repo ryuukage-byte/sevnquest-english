@@ -165,7 +165,7 @@ export const KotobaWritingPractice: React.FC<KotobaWritingPracticeProps> = ({
             <div
               className="flex flex-col items-center justify-between px-4 py-3 rounded-2xl bg-surface-inset hover:bg-surface-card border border-border-subtle hover:border-border-primary transition-all shadow-inner group cursor-pointer w-full text-center"
               onClick={() => speakJapanese(displayPracticeReading || kotoba.reading || kotoba.word)}
-              title="Klik untuk mendengar audio kata ini"
+              title="Tap to hear this word"
             >
               {/* Highlighted Yomikata Reading */}
               <div className="flex items-center justify-center gap-2 mb-1">
@@ -351,7 +351,7 @@ export const KotobaWritingPractice: React.FC<KotobaWritingPracticeProps> = ({
           {kotoba.kanjiComponents && kotoba.kanjiComponents.length > 0 && (
             <div className="space-y-2">
               <h4 className="text-xs font-bold text-text-muted uppercase tracking-wider flex items-center gap-1.5">
-                <Layers className="w-3.5 h-3.5" /> Komponen Kanji
+                <Layers className="w-3.5 h-3.5" /> Letters
               </h4>
               <div className="flex flex-wrap gap-2">
                 {kotoba.kanjiComponents.map((k, i) => (
@@ -370,7 +370,7 @@ export const KotobaWritingPractice: React.FC<KotobaWritingPracticeProps> = ({
           {kotoba.exampleSentence && (
             <div className="space-y-2">
               <h4 className="text-xs font-bold text-text-muted uppercase tracking-wider flex items-center gap-1.5">
-                <BookOpen className="w-3.5 h-3.5" /> Contoh Kalimat
+                <BookOpen className="w-3.5 h-3.5" /> Example sentence
               </h4>
               <div className="p-3.5 rounded-2xl bg-surface-inset border border-border-subtle space-y-2">
                 <p className="text-sm font-jp text-text-primary leading-relaxed font-bold">
@@ -387,7 +387,7 @@ export const KotobaWritingPractice: React.FC<KotobaWritingPracticeProps> = ({
                   onClick={() => speakJapanese(kotoba.exampleSentence!.japanese)}
                   className="flex items-center gap-1.5 text-[11px] text-gold hover:underline font-bold uppercase tracking-wider mt-1"
                 >
-                  <Volume2 className="w-3 h-3" /> Putar Audio Kalimat
+                  <Volume2 className="w-3 h-3" /> Play sentence audio
                 </button>
               </div>
             </div>
@@ -447,7 +447,7 @@ export const KotobaWritingPractice: React.FC<KotobaWritingPracticeProps> = ({
               }}
               className="flex-1 btn btn-cta py-3 px-4 rounded-2xl text-xs sm:text-sm font-bold flex items-center justify-center gap-2 transition-all"
             >
-              <span>{nextButtonLabel || 'Lanjut ke Kata Berikutnya'}</span>
+              <span>{nextButtonLabel || 'Next word'}</span>
               <ArrowRight className="w-4 h-4" />
             </button>
           </div>
@@ -463,7 +463,7 @@ export const KotobaWritingPractice: React.FC<KotobaWritingPracticeProps> = ({
               }}
               className="text-xs text-text-muted hover:text-text-primary underline underline-offset-2 font-bold transition-colors pt-1"
             >
-              Kembali ke Detail
+              Back to details
             </button>
           )}
         </motion.div>

@@ -3,7 +3,6 @@ import { PlayerStats } from '../types/rpg';
 import { getIsoWeekId } from '../utils/weekId';
 import { UserMasteryEntity, UserActivityEntity } from '../types/identity';
 import { getTierForExp, calculateLevelFromExp } from '../data/tiers';
-import type { TowerCloudState } from '../engine/tower/world/towerCloudState';
 
 /**
  * true => tulis leaderboard/skor lewat RPC aman berbasis auth.uid()
@@ -22,8 +21,10 @@ function isMissingRelation(err: { code?: string; message?: string } | null | und
   );
 }
 
-const directUrl = (import.meta as any).env?.VITE_SUPABASE_URL || 'https://iokhdhqnpslpwsxspvaj.supabase.co';
-const supabaseKey = (import.meta as any).env?.VITE_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imlva2hkaHFucHNscHdzeHNwdmFqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg0MjQyMDUsImV4cCI6MjEwNDAwMDIwNX0.8o2UFh4VXRUObjvBq_rVRxIar7yZSU7vrCgaHutYyPE';
+// English edition: no default backend. The Japanese production project is NOT used by this build.
+// Set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY (your own project) to enable cloud save & leaderboard.
+const directUrl: string = (import.meta as any).env?.VITE_SUPABASE_URL || '';
+const supabaseKey: string = (import.meta as any).env?.VITE_SUPABASE_ANON_KEY || '';
 
 /**
  * Di web yang di-host (Vercel dsb.) permintaan lewat proxy same-origin `/supabase-proxy` (lihat vercel.json)
@@ -32,6 +33,8 @@ const supabaseKey = (import.meta as any).env?.VITE_SUPABASE_ANON_KEY || 'eyJhbGc
  * Bila proxy gagal, resilientFetch otomatis jatuh ke directUrl dan mengingatnya (proxyBroken).
  */
 function canUseSameOriginProxy(): boolean {
+  // The /supabase-proxy rewrite is disabled in the English edition (it pointed at the Japanese project).
+  if (!directUrl) return false;
   if (typeof window === 'undefined' || !window.location) return false;
   const { protocol, hostname } = window.location;
   if (protocol !== 'https:' && protocol !== 'http:') return false;
@@ -560,7 +563,6 @@ export interface CloudSavePayload {
   dailyMissions: any[];
   weeklyMissions: any[];
   /** Progres Tower (lantai, skill tree, achievement). Opsional untuk kompatibilitas save lama. */
-  towerState?: TowerCloudState;
   updatedAt: string;
 }
 

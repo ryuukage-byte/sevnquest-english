@@ -208,7 +208,7 @@ export const BossBattleModule: React.FC<BossBattleModuleProps> = ({
     if (hiddenOptions.length > 0 || isAnswered) return;
     const mpCost = 15;
     if (onUseMp && !onUseMp(mpCost)) {
-      alert('MP tidak cukup untuk Bantuan Hint 50/50!');
+      alert('Not enough MP for the 50/50 hint!');
       return;
     }
     playSound('coin', soundEnabled);
@@ -223,7 +223,7 @@ export const BossBattleModule: React.FC<BossBattleModuleProps> = ({
     if (isCriticalBuffActive || isAnswered) return;
     const mpCost = 20;
     if (onUseMp && !onUseMp(mpCost)) {
-      alert('MP tidak cukup untuk Critical Strike!');
+      alert('Not enough MP for Critical Strike!');
       return;
     }
     playSound('coin', soundEnabled);
@@ -235,7 +235,7 @@ export const BossBattleModule: React.FC<BossBattleModuleProps> = ({
     if (isShieldActive || isAnswered) return;
     const mpCost = 15;
     if (onUseMp && !onUseMp(mpCost)) {
-      alert('MP tidak cukup untuk Sacred Shield!');
+      alert('Not enough MP for Sacred Shield!');
       return;
     }
     playSound('coin', soundEnabled);
@@ -267,7 +267,7 @@ export const BossBattleModule: React.FC<BossBattleModuleProps> = ({
         <div className="p-4 rounded-2xl bg-surface-inset border border-border-subtle space-y-2.5 text-left">
           <div className="flex items-center justify-between pb-1.5 border-b border-border-subtle">
             <span className="text-xs font-bold text-gold font-heading">
-              📊 Nilai Evaluasi 5 Pilar Bahasa:
+              📊 Your scores across the 5 language pillars:
             </span>
             <span className="text-xs font-mono font-bold text-text-primary">
               Akurasi: {diagnostic.overallPercentage}%
@@ -335,7 +335,7 @@ export const BossBattleModule: React.FC<BossBattleModuleProps> = ({
             }}
             className="w-full py-3 rounded-xl btn btn-pill font-bold text-xs sm:text-sm"
           >
-            Klaim Hadiah & Kembali ke Gerbang
+            Claim reward & return to the gate
           </button>
         </div>
       </div>
@@ -425,7 +425,7 @@ export const BossBattleModule: React.FC<BossBattleModuleProps> = ({
             </span>
           </div>
           <div>
-            <span className="text-[10px] text-text-muted font-bold block font-heading">Ujian:</span>
+            <span className="text-[10px] text-text-muted font-bold block font-heading">Exam:</span>
             <span className="font-mono text-xs sm:text-sm font-bold text-gold">
               {currentQIndex + 1}/{totalQuestions}
             </span>
@@ -438,7 +438,7 @@ export const BossBattleModule: React.FC<BossBattleModuleProps> = ({
             onClick={handleUseHint}
             disabled={hiddenOptions.length > 0 || isAnswered || playerMp < 15}
             className="btn btn-pill px-2.5 py-1 text-indigo text-[11px] font-bold disabled:opacity-40"
-            title="Hilangkan 2 opsi salah (15 MP)"
+            title="Remove 2 wrong options (15 MP)"
           >
             Hint 50/50
           </button>
@@ -475,7 +475,7 @@ export const BossBattleModule: React.FC<BossBattleModuleProps> = ({
       <div className="p-5 sm:p-6 panel panel-stitched shadow-xl space-y-4">
         <div className="flex items-center justify-between">
           <span className="text-xs font-bold text-indigo uppercase font-heading">
-            Tantangan {currentQIndex + 1} of {totalQuestions}
+            Challenge {currentQIndex + 1} of {totalQuestions}
           </span>
           {currentQ.audioPrompt && (
             <button
@@ -585,7 +585,7 @@ export const BossBattleModule: React.FC<BossBattleModuleProps> = ({
             onClick={handleNextTurn}
             className="w-full py-3.5 rounded-xl btn-cta font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all font-heading"
           >
-            <span>{currentQIndex < totalQuestions - 1 ? 'Giliran Pertarungan Berikutnya' : 'Selesaikan Ujian & Lihat Hasil'}</span>
+            <span>{currentQIndex < totalQuestions - 1 ? 'Next round' : 'Finish the exam & lihat Hasil'}</span>
             <ArrowRight className="w-4 h-4" />
           </motion.button>
         )}

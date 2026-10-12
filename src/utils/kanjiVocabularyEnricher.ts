@@ -8,11 +8,11 @@ export interface EnrichedRelatedWord {
 }
 
 const JLPT_RANK: Record<string, number> = {
-  'N5': 1,
-  'N4': 2,
-  'N3': 3,
-  'N2': 4,
-  'N1': 5,
+  'A1': 1,
+  'A2': 2,
+  'B1': 3,
+  'B2': 4,
+  'C1': 5,
 };
 
 // In-memory cache to avoid recomputing on repeated renders
@@ -24,7 +24,7 @@ function cleanText(str: string): string {
 
 /**
  * Returns an enriched, pedagogically ranked list of vocabulary words containing the specified Kanji.
- * High-priority words (N5/N4, common compound words like 先生, 先週, 学校, 大学) are prioritized.
+ * High-priority words (A1/A2, common compound words like 先生, 先週, 学校, 大学) are prioritized.
  *
  * @param character The kanji character to look up (e.g. "先", "学")
  * @param initialWords Any existing relatedWords already attached to the kanji
@@ -62,14 +62,14 @@ export function getEnrichedKanjiRelatedWords(
       word: cleanedWord,
       reading: cleanText(item.reading),
       meaningId: cleanText(item.meaningId),
-      jlpt: item.jlpt || 'N5',
+      jlpt: item.jlpt || 'A1',
       length: cleanedWord.length,
       startsWith: cleanedWord.startsWith(character) ? 0 : 1,
     });
   }
 
   // Sort candidate vocabulary:
-  // 1. JLPT Level (N5 first, then N4, N3, N2, N1)
+  // 1. JLPT Level (A1 first, then A2, B1, B2, C1)
   // 2. Starts with the kanji (e.g. 先生 before 勤め先)
   // 3. Shorter word length (concise 2-3 character compounds preferred)
   candidates.sort((a, b) => {

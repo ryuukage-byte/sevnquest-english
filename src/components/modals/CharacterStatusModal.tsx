@@ -181,7 +181,7 @@ export const CharacterStatusModal: React.FC<CharacterStatusModalProps> = ({
               <div>
                 <div className="flex items-center justify-center gap-2">
                   <h3 className="text-xl sm:text-2xl font-bold text-text-primary font-heading">
-                    {stats.playerName || 'Pelajar Bahasa'}
+                    {stats.playerName || 'English Learner'}
                   </h3>
                 </div>
                 <div className="flex items-center justify-center gap-2 mt-2">
@@ -218,7 +218,7 @@ export const CharacterStatusModal: React.FC<CharacterStatusModalProps> = ({
                   onClick={() => { playSound('coin', stats.soundEnabled); onRestAtDojo?.(); }}
                   className="btn-physical-primary flex-1 min-h-[44px] py-2.5 px-4 rounded-xl text-xs font-bold font-heading disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  {fullyRested ? 'Sudah Bugar' : `Istirahat di Dojo · ${restCost} Koin`}
+                  {fullyRested ? 'Fully rested' : `Rest at the Dojo · ${restCost} Coin`}
                 </button>
               </div>
             </div>
@@ -245,7 +245,7 @@ export const CharacterStatusModal: React.FC<CharacterStatusModalProps> = ({
                   </div>
                   <div className="min-w-0">
                     <h3 className="text-xs sm:text-sm font-bold text-text-primary font-heading flex items-center gap-1.5 flex-wrap">
-                      <span>Ujian Ascend Tier</span>
+                      <span>Tier Ascension Exam</span>
                       {ascensionProgress.targetJlpt && (
                         <span className="text-text-muted font-mono font-normal whitespace-nowrap">
                           ({ascensionProgress.currentJlpt} <ArrowRight className="w-3 h-3 inline text-text-muted" /> {ascensionProgress.targetJlpt})
@@ -253,7 +253,7 @@ export const CharacterStatusModal: React.FC<CharacterStatusModalProps> = ({
                       )}
                     </h3>
                     <p className="text-[10px] text-text-secondary font-mono leading-tight">
-                      Syarat Naik Tingkat: Minimal 75% di setiap kategori
+                      Requirement to advance: at least 75% in every category
                     </p>
                   </div>
                 </div>
@@ -276,7 +276,7 @@ export const CharacterStatusModal: React.FC<CharacterStatusModalProps> = ({
                     </span>
                   ) : (
                     <span className="px-2.5 py-1 rounded-full text-[10px] font-bold font-mono bg-surface-card text-text-muted border border-border-subtle whitespace-nowrap">
-                      Persiapan Ujian
+                      Exam preparation
                     </span>
                   )}
                 </div>
@@ -319,7 +319,7 @@ export const CharacterStatusModal: React.FC<CharacterStatusModalProps> = ({
                 {[
                   {
                     key: 'kanji',
-                    label: 'Kanji',
+                    label: 'Letters',
                     data: ascensionProgress.kanji,
                     icon: Edit2,
                     color: 'text-wine-accent',
@@ -434,7 +434,7 @@ export const CharacterStatusModal: React.FC<CharacterStatusModalProps> = ({
                   <div className="w-7 h-7 sm:w-8 sm:h-8 mx-auto rounded-xl bg-wine-accent/15 flex items-center justify-center mb-1.5 sm:mb-2">
                     <Edit2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-wine-accent" />
                   </div>
-                  <h4 className="text-xs font-bold text-text-primary font-heading">Kanji Writing</h4>
+                  <h4 className="text-xs font-bold text-text-primary font-heading">Letter Writing</h4>
                   <div className="flex flex-col text-[10px] sm:text-[11px]">
                     <span className="text-wine-accent font-mono font-bold">{studyStats.kanjiWriting.total} Total</span>
                     <span className="text-text-muted font-mono">{studyStats.kanjiWriting.uniqueIds.length} Unique</span>
@@ -455,11 +455,11 @@ export const CharacterStatusModal: React.FC<CharacterStatusModalProps> = ({
               </div>
             </div>
 
-            {/* 3. MASTERY VS COVERAGE (N5 - N1) */}
+            {/* 3. MASTERY VS COVERAGE (A1 - C1) */}
             <div className="space-y-2.5 sm:space-y-3">
               <h3 className="text-xs font-bold uppercase tracking-widest text-text-secondary flex items-center gap-2 font-heading">
                 <Target className="w-4 h-4 text-gold" />
-                Mastery vs Coverage (N5 - N1)
+                Mastery vs Coverage (A1 - C1)
               </h3>
               
               <div className="p-3.5 sm:p-4 rounded-3xl bg-surface-inset border border-border-subtle space-y-3.5 sm:space-y-4">
@@ -479,7 +479,7 @@ export const CharacterStatusModal: React.FC<CharacterStatusModalProps> = ({
                 <div className="space-y-2.5 sm:space-y-3">
                   {[
                     { key: 'kotoba', label: 'Kotoba', mastery: languageProfile.pillars.kotoba.percentage, cov: coverage.kotoba, color: 'bg-indigo text-indigo' },
-                    { key: 'kanji', label: 'Kanji', mastery: languageProfile.pillars.kanji.percentage, cov: coverage.kanji, color: 'bg-wine-accent text-wine-accent' },
+                    { key: 'kanji', label: 'Letters', mastery: languageProfile.pillars.kanji.percentage, cov: coverage.kanji, color: 'bg-wine-accent text-wine-accent' },
                     { key: 'bunpou', label: 'Bunpou', mastery: languageProfile.pillars.bunpou.percentage, cov: coverage.bunpou, color: 'bg-gold text-gold' },
                     { key: 'dokkai', label: 'Dokkai', mastery: languageProfile.pillars.dokkai.percentage, cov: coverage.dokkai, color: 'bg-dokkai text-dokkai' },
                     { key: 'choukai', label: 'Choukai', mastery: languageProfile.pillars.choukai.percentage, cov: coverage.choukai, color: 'bg-choukai text-choukai' },

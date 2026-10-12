@@ -32,7 +32,7 @@ export const KanjiDetailCard: React.FC<KanjiDetailCardProps> = ({
   onCompleteSheet,
   onFinish,
   onBack,
-  backButtonLabel = 'Kembali ke Daftar Kanji',
+  backButtonLabel = 'Back to the letter list',
   showQuestions = true,
   onSelectKotoba,
 }) => {
@@ -45,8 +45,8 @@ export const KanjiDetailCard: React.FC<KanjiDetailCardProps> = ({
     }
   }, [item?.character]);
 
-  const isHiragana = item.radical === 'Hiragana' || (item.jlpt === 'KANA' && item.character >= 'ぁ' && item.character <= 'ん');
-  const isKatakana = item.radical === 'Katakana' || (item.jlpt === 'KANA' && item.character >= 'ァ' && item.character <= 'ン');
+  const isHiragana = item.radical === 'Hiragana' || (item.jlpt === 'ALPHABET' && item.character >= 'ぁ' && item.character <= 'ん');
+  const isKatakana = item.radical === 'Katakana' || (item.jlpt === 'ALPHABET' && item.character >= 'ァ' && item.character <= 'ン');
   const isKana = isHiragana || isKatakana;
   const isSuuji = ['一', '二', '三', '四', '五', '六', '七', '八', '九', '十', '百', '千', '万', '零'].includes(item.character);
   const onyomiList = item.onyomi || [];
@@ -67,7 +67,7 @@ export const KanjiDetailCard: React.FC<KanjiDetailCardProps> = ({
       ? 'Katakana'
       : isSuuji
         ? 'Angka / Sūji'
-        : `${item.jlpt || 'N3'} Kanji`;
+        : `${item.jlpt || 'A1'} letter`;
 
   const levelBadgeClass = isHiragana
     ? 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-border-subtle'
@@ -98,17 +98,17 @@ export const KanjiDetailCard: React.FC<KanjiDetailCardProps> = ({
               {levelBadgeLabel}
             </span>
             <span className="px-3 py-1 rounded-full text-xs font-mono font-medium bg-surface-inset border border-border-subtle text-text-secondary">
-              {item.strokeCount} Goresan
+              {item.strokeCount} strokes
             </span>
             {hasMultipleReadings && (
               <span className="px-3 py-1 rounded-full text-xs font-mono font-bold border border-border-subtle text-red-700 dark:text-amber-400 bg-surface-inset shadow-xs flex items-center gap-1.5">
                 <Zap className="w-3.5 h-3.5 text-red-700 dark:text-amber-400 fill-red-700/20 dark:fill-amber-400/25 shrink-0" />
-                <span>{totalKanjiReadings} Cara Baca</span>
+                <span>{totalKanjiReadings} sounds &amp; words</span>
               </span>
             )}
             {masteryRecord && (
               <div className="flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-bold bg-surface-inset border border-border-subtle text-text-secondary">
-                <span title="Latihan menulis">Tulis: {masteryRecord.writingCount || 0}x</span>
+                <span title="Writing practice">Written: {masteryRecord.writingCount || 0}x</span>
                 <span className="opacity-40">|</span>
                 <span title="Dilihat di flashcard">Kartu: {masteryRecord.flashcardCount || 0}x</span>
                 <span className="opacity-40">|</span>
@@ -130,7 +130,7 @@ export const KanjiDetailCard: React.FC<KanjiDetailCardProps> = ({
                 : 'opacity-70 hover:opacity-100'
             }`}
           >
-            Detail & Arti
+            Details & meaning
           </button>
           <button
             onClick={() => {
@@ -144,7 +144,7 @@ export const KanjiDetailCard: React.FC<KanjiDetailCardProps> = ({
             }`}
           >
             <Edit3 className="w-3.5 h-3.5 text-wine-accent" />
-            <span>Latihan Menulis</span>
+            <span>Writing practice</span>
           </button>
         </div>
       </div>
@@ -164,7 +164,7 @@ export const KanjiDetailCard: React.FC<KanjiDetailCardProps> = ({
                   speakJapanese(readingToSpeak);
                 }}
                 className="btn-physical-secondary absolute -bottom-2 -right-2 p-2.5 rounded-full hover:text-wine-accent transition-all"
-                title="Dengar pelafalan"
+                title="Hear the pronunciation"
               >
                 <Volume2 className="w-4 h-4" />
               </button>
@@ -176,17 +176,17 @@ export const KanjiDetailCard: React.FC<KanjiDetailCardProps> = ({
                   {levelBadgeLabel}
                 </span>
                 <span className="px-2.5 py-0.5 rounded-full bg-surface-inset text-text-secondary border border-border-subtle text-xs font-mono">
-                  {item.strokeCount} Goresan
+                  {item.strokeCount} strokes
                 </span>
                 {item.radical && (
                   <span className="px-2.5 py-0.5 rounded-full bg-surface-inset text-text-secondary border border-border-subtle text-xs font-jp">
-                    {isKana ? 'Kategori: ' : '部首: '}{item.radical} {item.radicalName ? `(${item.radicalName})` : ''}
+                    {'Shape: '}{item.radical}
                   </span>
                 )}
                 {hasMultipleReadings && (
                   <span className="px-2.5 py-0.5 rounded-full border border-border-subtle text-red-700 dark:text-amber-400 bg-surface-inset text-xs font-mono font-bold flex items-center gap-1.5">
                     <Zap className="w-3 h-3 text-red-700 dark:text-amber-400 fill-red-700/20 dark:fill-amber-400/25 shrink-0" />
-                    <span>{totalKanjiReadings} Cara Baca ({onyomiList.length} On • {kunyomiList.length} Kun)</span>
+                    <span>{totalKanjiReadings} readings ({onyomiList.length} sound • {kunyomiList.length} example words)</span>
                   </span>
                 )}
               </div>
@@ -196,7 +196,7 @@ export const KanjiDetailCard: React.FC<KanjiDetailCardProps> = ({
               </h3>
               {item.radicalName && (
                 <p className="text-xs text-text-secondary">
-                  Radikal Asal: {item.radicalName}
+                  Shape: {item.radicalName}
                 </p>
               )}
             </div>
@@ -206,7 +206,7 @@ export const KanjiDetailCard: React.FC<KanjiDetailCardProps> = ({
           {isKana ? (
             <div className="p-4 rounded-2xl bg-surface-inset border border-border-subtle space-y-2">
               <span className="text-[11px] font-bold text-wine-accent uppercase tracking-wider font-mono">
-                発音 (Pelafalan Romaji & Suara)
+                Sound (IPA)
               </span>
               <div className="flex items-center gap-3 pt-1">
                 <div className="text-xl font-bold text-text-primary font-mono px-3 py-1 rounded-xl bg-surface-card border border-border-subtle">
@@ -217,7 +217,7 @@ export const KanjiDetailCard: React.FC<KanjiDetailCardProps> = ({
                   className="btn-physical-secondary px-3 py-1.5 rounded-xl text-wine-accent font-bold flex items-center gap-2 transition-colors text-xs font-mono"
                 >
                   <Volume2 className="w-3.5 h-3.5" />
-                  <span>Putar Suara</span>
+                  <span>Play sound</span>
                 </button>
                 <span className="text-xs text-text-secondary">
                   {isHiragana ? 'Aksara Fonetik Hiragana (Seion)' : 'Aksara Fonetik Katakana (Seion)'}
@@ -230,7 +230,7 @@ export const KanjiDetailCard: React.FC<KanjiDetailCardProps> = ({
                 {/* Onyomi */}
                 <div className="p-4 rounded-2xl bg-surface-inset border border-border-subtle space-y-1">
                   <span className="text-[11px] font-bold text-wine-accent uppercase tracking-wider font-mono">
-                    音読み (Onyomi - Bacaan Cina)
+                    Sound (letter name)
                   </span>
                   <div className="text-base font-bold text-text-primary font-mono flex flex-wrap gap-2 pt-1">
                     {(item.onyomi || []).length > 0 ? (
@@ -239,7 +239,7 @@ export const KanjiDetailCard: React.FC<KanjiDetailCardProps> = ({
                           key={i}
                           onClick={() => speakJapanese(on.split(' ')[0])}
                           className="px-2.5 py-1 rounded-lg bg-surface-card text-wine-accent border border-border-subtle font-bold hover:border-border-primary flex items-center gap-1.5 transition-colors text-xs font-jp"
-                          title="Klik untuk mendengar"
+                          title="Tap to hear"
                         >
                           <span>{on}</span>
                           <Volume2 className="w-3 h-3 text-wine-accent/60" />
@@ -254,7 +254,7 @@ export const KanjiDetailCard: React.FC<KanjiDetailCardProps> = ({
                 {/* Kunyomi */}
                 <div className="p-4 rounded-2xl bg-surface-inset border border-border-subtle space-y-1">
                   <span className="text-[11px] font-bold text-state-success uppercase tracking-wider font-mono">
-                    訓読み (Kunyomi - Bacaan Jepang)
+                    Example words
                   </span>
                   <div className="text-base font-bold text-text-primary font-mono flex flex-wrap gap-2 pt-1">
                     {(item.kunyomi || []).length > 0 ? (
@@ -263,7 +263,7 @@ export const KanjiDetailCard: React.FC<KanjiDetailCardProps> = ({
                           key={i}
                           onClick={() => speakJapanese(kun.split(' ')[0].replace(/[.-]/g, ''))}
                           className="px-2.5 py-1 rounded-lg bg-surface-card text-state-success border border-border-subtle font-bold hover:border-border-primary flex items-center gap-1.5 transition-colors text-xs font-jp"
-                          title="Klik untuk mendengar"
+                          title="Tap to hear"
                         >
                           <span>{kun}</span>
                           <Volume2 className="w-3 h-3 text-state-success/60" />
@@ -281,23 +281,23 @@ export const KanjiDetailCard: React.FC<KanjiDetailCardProps> = ({
                 <div className="p-3.5 rounded-2xl bg-surface-inset border border-border-subtle space-y-1.5 text-xs text-left shadow-inner">
                   <div className="flex items-center gap-1.5 font-bold text-red-700 dark:text-amber-400 font-heading text-[11.5px]">
                     <HelpCircle className="w-3.5 h-3.5 text-red-700 dark:text-amber-400 shrink-0" />
-                    <span>TIPS CARA BACA KANJI ({totalKanjiReadings} BACAAN):</span>
+                    <span>SOUND TIPS ({totalKanjiReadings} READINGS):</span>
                   </div>
                   <p className="text-[11.5px] text-text-secondary leading-relaxed">
-                    Kanji ini memiliki <strong>{totalKanjiReadings} variasi cara baca</strong> ({onyomiList.length} Onyomi &amp; {kunyomiList.length} Kunyomi). <em>Jangan dihafal sekaligus sebagai satu kesatuan kata!</em> Hafalkan secara terpisah sesuai konteksnya:
+                    This letter has <strong>{totalKanjiReadings} readings</strong> ({onyomiList.length} sound &amp; {kunyomiList.length} example words). <em>Learn each example word on its own, in context!</em>
                   </p>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-0.5 text-[11px]">
                     <div className="p-2.5 rounded-xl bg-surface-card border border-border-subtle text-text-secondary space-y-0.5">
                       <span className="font-bold text-wine-accent flex items-center gap-1 font-mono">
-                        <span>音</span> 音読み (Onyomi):
+                        <span>♪</span> Letter name:
                       </span>
-                      <p className="text-[10.5px]">Dipakai saat kanji bergabung dengan kanji lain membentuk kata majemuk (jukugo).</p>
+                      <p className="text-[10.5px]">Used when the letter appears inside a word, as in most English spelling.</p>
                     </div>
                     <div className="p-2.5 rounded-xl bg-surface-card border border-border-subtle text-text-secondary space-y-0.5">
                       <span className="font-bold text-state-success flex items-center gap-1 font-mono">
-                        <span>訓</span> 訓読み (Kunyomi):
+                        <span>✎</span> Example words:
                       </span>
-                      <p className="text-[10.5px]">Dipakai saat kanji berdiri sendiri sebagai kata mandiri atau diikuti okurigana (hiragana).</p>
+                      <p className="text-[10.5px]">Used for example words where the letter stands out in the word.</p>
                     </div>
                   </div>
                 </div>
@@ -308,7 +308,7 @@ export const KanjiDetailCard: React.FC<KanjiDetailCardProps> = ({
           {/* Related Vocabulary Words */}
           <div className="space-y-3">
             <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-text-secondary font-mono">
-              <span>{isKana ? `Kosakata Mengandung Huruf 「${item.character}」` : `Kosakata Terkait Mengandung Kanji 「${item.character}」`}</span>
+              <span>{`Words containing the letter 「${item.character}」`}</span>
             </div>
             {enrichedRelatedWords && enrichedRelatedWords.length > 0 ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
@@ -326,7 +326,7 @@ export const KanjiDetailCard: React.FC<KanjiDetailCardProps> = ({
                         ? 'cursor-pointer hover:border-border-primary hover:bg-surface-elevated active:scale-[0.99] group/rw'
                         : 'hover:border-border-muted'
                     }`}
-                    title={onSelectKotoba ? `Lihat detail kosakata 「${rw.word}」 di library` : undefined}
+                    title={onSelectKotoba ? `View the word 「${rw.word}」 in the library` : undefined}
                   >
                     <div>
                       {furiganaEnabled ? (
@@ -352,7 +352,7 @@ export const KanjiDetailCard: React.FC<KanjiDetailCardProps> = ({
                         speakJapanese(rw.reading || rw.word);
                       }}
                       className="btn-physical-secondary p-2 rounded-xl text-wine-accent transition-colors shrink-0"
-                      title="Dengar pengucapan"
+                      title="Hear the pronunciation"
                     >
                       <Volume2 className="w-3.5 h-3.5" />
                     </button>
@@ -361,7 +361,7 @@ export const KanjiDetailCard: React.FC<KanjiDetailCardProps> = ({
               </div>
             ) : (
               <div className="p-4 rounded-2xl bg-surface-inset border border-border-subtle text-xs text-text-secondary text-center">
-                Aksara ini berfokus pada penguasaan bentuk, goresan stroke, dan bacaan dasar.
+                This letter focuses on its shape, stroke order and basic sound.
               </div>
             )}
           </div>
@@ -371,7 +371,7 @@ export const KanjiDetailCard: React.FC<KanjiDetailCardProps> = ({
             <div className="space-y-3 pt-2">
               <div className="flex items-center gap-2 text-xs font-bold text-text-secondary uppercase font-mono">
                 <HelpCircle className="w-3.5 h-3.5 text-text-muted" />
-                <span>{isKana ? `Contoh Soal Pengujian Huruf 「${item.character}」` : `Contoh Soal Pengujian Kanji 「${item.character}」`} ({item.questions.length} Soal)</span>
+                <span>{`Example question for 「${item.character}」`} ({item.questions.length} Soal)</span>
               </div>
               <div className="space-y-2">
                 {item.questions.slice(0, 3).map((q, idx) => (
@@ -409,7 +409,7 @@ export const KanjiDetailCard: React.FC<KanjiDetailCardProps> = ({
             className="w-full py-3.5 rounded-2xl btn-cta font-bold text-sm transition-all flex items-center justify-center gap-2"
           >
             <Edit3 className="w-4 h-4" />
-            <span>Buka Kanvas Latihan Menulis</span>
+            <span>Open the writing canvas</span>
           </button>
         </div>
       ) : (
@@ -426,7 +426,7 @@ export const KanjiDetailCard: React.FC<KanjiDetailCardProps> = ({
               relatedWords={enrichedRelatedWords}
               soundEnabled={soundEnabled}
               level={item.jlpt}
-              nextButtonLabel="Kembali ke Detail Kanji"
+              nextButtonLabel="Back to letter details"
               onCancel={() => setDetailSubTab('detail')}
               onCompleteSheet={onCompleteSheet}
               onFinish={(reward) => {

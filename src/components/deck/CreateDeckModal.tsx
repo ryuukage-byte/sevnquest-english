@@ -13,12 +13,12 @@ import { useBackButton } from '../../hooks/useBackButton';
 const AVAILABLE_ICONS = ['📖', '🔖', '✍️', '⚡', '🎯', '🌸', '🗡️', '📜', '🌟', '🔥', '🏯', '🍵', '🏹', '💎', '🍁', '🍙'];
 
 const DECK_TYPES: { type: DeckType; label: string; desc: string }[] = [
-  { type: 'mixed', label: 'Campuran', desc: 'Kosakata, Kanji, dan Tata Bahasa sekaligus' },
+  { type: 'mixed', label: 'Mixed', desc: 'Vocabulary, letters and grammar together' },
   { type: 'flashcard', label: 'Flashcard Drill', desc: 'Fokus hafalan bolak-balik arti & bacaan' },
-  { type: 'writing', label: 'Latihan Menulis', desc: 'Fokus goresan kanvas Kanji & Kosakata' },
-  { type: 'kotoba', label: 'Fokus Kosakata', desc: 'Kumpulan kata dan frasa penting' },
-  { type: 'kanji', label: 'Fokus Aksara & Kanji', desc: 'Koleksi kanji dan onyomi/kunyomi' },
-  { type: 'bunpou', label: 'Fokus Tata Bahasa', desc: 'Pola kalimat, rumus, dan contoh praktis' },
+  { type: 'writing', label: 'Writing practice', desc: 'Focus on letter and word writing' },
+  { type: 'kotoba', label: 'Focus: vocabulary', desc: 'Key words and phrases' },
+  { type: 'kanji', label: 'Focus: letters', desc: 'Letters and their sounds' },
+  { type: 'bunpou', label: 'Focus: grammar', desc: 'Patterns, formulas and practical examples' },
 ];
 
 type ContentSourceMode = 'preset' | 'bookmark' | 'manual' | 'empty';
@@ -60,7 +60,7 @@ export const CreateDeckModal: React.FC<CreateDeckModalProps> = ({
 
   // Content Customization States
   const [contentMode, setContentMode] = useState<ContentSourceMode>('empty');
-  const [presetLevel, setPresetLevel] = useState<'all' | 'N5' | 'N4' | 'N3' | 'N2' | 'N1' | 'Kaigo'>('N5');
+  const [presetLevel, setPresetLevel] = useState<'all' | 'A1' | 'A2' | 'B1' | 'B2' | 'C1' | 'Kaigo'>('A1');
   const [presetCount, setPresetCount] = useState<number>(10);
 
   // Manual picker states
@@ -89,7 +89,7 @@ export const CreateDeckModal: React.FC<CreateDeckModalProps> = ({
       setType('mixed');
       setCoverIcon('📖');
       setContentMode('empty');
-      setPresetLevel('N5');
+      setPresetLevel('A1');
       setPresetCount(10);
       setSelectedManualKeys(new Set());
       setManualSearch('');
@@ -109,7 +109,7 @@ export const CreateDeckModal: React.FC<CreateDeckModalProps> = ({
         title: item.word,
         reading: item.reading,
         meaning: item.meaningId || item.meaningEn || '',
-        level: item.jlpt || 'N5',
+        level: item.jlpt || 'A1',
       });
     }
 
@@ -123,7 +123,7 @@ export const CreateDeckModal: React.FC<CreateDeckModalProps> = ({
           title: item.character,
           reading: (item.onyomi || []).join('、'),
           meaning: item.meaningId || item.meaningEn || '',
-          level: item.jlpt || 'N5',
+          level: item.jlpt || 'A1',
         });
       }
     }
@@ -135,7 +135,7 @@ export const CreateDeckModal: React.FC<CreateDeckModalProps> = ({
         title: item.title,
         reading: item.formula,
         meaning: item.meaningId || '',
-        level: item.level || 'N3',
+        level: item.level || 'B1',
       });
     }
 
@@ -249,7 +249,7 @@ export const CreateDeckModal: React.FC<CreateDeckModalProps> = ({
                 <span className="text-2xl p-1 rounded-xl bg-surface-card border border-border-subtle">{coverIcon}</span>
                 <div>
                   <h3 className="font-heading font-bold text-base sm:text-lg text-text-primary flex items-center gap-2">
-                    <span>{editingDeck ? 'Edit Buku Saku' : 'Buat Buku Saku Baru'}</span>
+                    <span>{editingDeck ? 'Edit deck' : 'Create a new deck'}</span>
                     {!editingDeck && estimatedCount > 0 && (
                       <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-gold/15 text-gold border border-border-subtle">
                         +{estimatedCount} materi siap
@@ -257,7 +257,7 @@ export const CreateDeckModal: React.FC<CreateDeckModalProps> = ({
                     )}
                   </h3>
                   <p className="text-xs text-text-secondary">
-                    Sesuaikan nama, tipe latihan, dan kustomisasi materi awal
+                    Set the name, practice type and starting items
                   </p>
                 </div>
               </div>
@@ -269,7 +269,7 @@ export const CreateDeckModal: React.FC<CreateDeckModalProps> = ({
                   onClose();
                 }}
                 className="p-1.5 rounded-xl text-text-secondary hover:text-text-primary hover:bg-surface-card transition-colors"
-                title="Tutup"
+                title="Close"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -291,7 +291,7 @@ export const CreateDeckModal: React.FC<CreateDeckModalProps> = ({
                   setTitle(e.target.value);
                   if (error) setError('');
                 }}
-                placeholder="Contoh: Kosakata N3 Bab 1 / Kanji Sulit"
+                placeholder="For example: B1 vocabulary, chapter 1"
                 maxLength={40}
                 className="w-full px-3.5 py-2.5 rounded-xl bg-surface-inset border border-border-subtle focus:border-border-primary focus:outline-none text-sm text-text-primary font-medium"
               />
@@ -306,7 +306,7 @@ export const CreateDeckModal: React.FC<CreateDeckModalProps> = ({
               <textarea
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
-                placeholder="Catatan target hafalan, minggu belajar, atau materi khusus..."
+                placeholder="Notes on your memorisation goal, study week or special material..."
                 rows={2}
                 maxLength={120}
                 className="w-full px-3.5 py-2 rounded-xl bg-surface-inset border border-border-subtle focus:border-border-primary focus:outline-none text-xs text-text-primary resize-none"
@@ -316,7 +316,7 @@ export const CreateDeckModal: React.FC<CreateDeckModalProps> = ({
             {/* Choose Cover Icon */}
             <div>
               <label className="block text-xs font-bold font-heading uppercase tracking-wider text-text-secondary mb-1.5">
-                Pilih Ikon Sampul
+                Choose a cover icon
               </label>
               <div className="flex flex-wrap gap-1.5 sm:gap-2">
                 {AVAILABLE_ICONS.map((icon) => (
@@ -387,7 +387,7 @@ export const CreateDeckModal: React.FC<CreateDeckModalProps> = ({
                           Buat deck otomatis dari topik?
                         </p>
                         <p className="text-[11px] text-text-secondary">
-                          Ketik topik atau pilih tema, deck langsung tersusun dari materi SevnQuest.
+                          Type a topic or pick a theme and the deck is built from SevnQuest items.
                         </p>
                       </div>
                     </div>
@@ -399,7 +399,7 @@ export const CreateDeckModal: React.FC<CreateDeckModalProps> = ({
                       }}
                       className="btn-physical-primary py-1.5 px-3 rounded-xl text-xs font-bold font-heading shrink-0 cursor-pointer"
                     >
-                      Buka Studio AI
+                      Open AI studio
                     </button>
                   </div>
                 )}
@@ -410,7 +410,7 @@ export const CreateDeckModal: React.FC<CreateDeckModalProps> = ({
                       Kustomisasi Isi Awal Deck
                     </label>
                     <p className="text-[11px] text-text-secondary">
-                      Tentukan bagaimana deck ini akan diisi materi
+                      Choose how this deck gets its items
                     </p>
                   </div>
                 </div>
@@ -418,10 +418,10 @@ export const CreateDeckModal: React.FC<CreateDeckModalProps> = ({
                 {/* Mode Selector Tabs */}
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5 p-1 rounded-2xl bg-surface-inset border border-border-subtle">
                   {[
-                    { id: 'empty', label: '📝 Kosong', sub: 'Mulai Kosong' },
+                    { id: 'empty', label: '📝 Empty', sub: 'Start empty' },
                     { id: 'preset', label: '⚡ Otomatis', sub: 'Preset Level' },
-                    { id: 'bookmark', label: '🔖 Bookmark', sub: `${bookmarkItems.length} Materi` },
-                    { id: 'manual', label: '🔍 Pilih Sendiri', sub: 'Pilih Manual' },
+                    { id: 'bookmark', label: '🔖 Bookmarks', sub: `${bookmarkItems.length} items` },
+                    { id: 'manual', label: '🔍 Pick myself', sub: 'Choose manually' },
                   ].map((m) => {
                     const isSelected = contentMode === m.id;
                     return (
@@ -450,10 +450,10 @@ export const CreateDeckModal: React.FC<CreateDeckModalProps> = ({
                   <div className="p-3.5 rounded-2xl bg-surface-inset border border-border-subtle space-y-3">
                     <div className="flex items-center justify-between flex-wrap gap-2">
                       <span className="text-xs font-heading font-bold text-text-primary">
-                        Pilih Target Level JLPT:
+                        Choose a CEFR target level:
                       </span>
                       <div className="flex items-center gap-1 flex-wrap">
-                        {(['all', 'N5', 'N4', 'N3', 'N2', 'N1', 'Kaigo'] as const).map((lvl) => (
+                        {(['all', 'A1', 'A2', 'B1', 'B2', 'C1', 'Kaigo'] as const).map((lvl) => (
                           <button
                             key={lvl}
                             type="button"
@@ -475,7 +475,7 @@ export const CreateDeckModal: React.FC<CreateDeckModalProps> = ({
 
                     <div className="flex items-center justify-between flex-wrap gap-2 pt-1 border-t border-border-subtle/60">
                       <span className="text-xs font-heading font-bold text-text-primary">
-                        Jumlah Materi Awal:
+                        Starting items:
                       </span>
                       <div className="flex items-center gap-1.5">
                         {[10, 20, 30, 50].map((count) => (
@@ -500,9 +500,9 @@ export const CreateDeckModal: React.FC<CreateDeckModalProps> = ({
 
                     <div className="p-2.5 rounded-xl bg-surface-card border border-border-subtle text-[11px] text-text-secondary">
                       <span>
-                        Sistem akan otomatis mengacak dan mengisi <strong>{presetCount} materi</strong> sesuai tipe{' '}
+                        The system will shuffle and fill in <strong>{presetCount} items</strong> that match the type{' '}
                         <strong className="text-text-primary">{DECK_TYPES.find(d => d.type === type)?.label}</strong> pada level{' '}
-                        <strong className="text-gold">{presetLevel === 'all' ? 'Semua Level' : presetLevel}</strong>.
+                        <strong className="text-gold">{presetLevel === 'all' ? 'All levels' : presetLevel}</strong>.
                       </span>
                     </div>
                   </div>
@@ -515,17 +515,17 @@ export const CreateDeckModal: React.FC<CreateDeckModalProps> = ({
                       <div className="flex items-center gap-2">
                         <Bookmark className="w-4 h-4 text-gold fill-gold" />
                         <span className="text-xs font-heading font-bold text-text-primary">
-                          Impor Buku Saku Bookmark
+                          Import bookmarks
                         </span>
                       </div>
                       <span className="text-xs font-mono font-bold text-gold">
-                        {bookmarkItems.length} Materi Tersedia
+                        {bookmarkItems.length} items available
                       </span>
                     </div>
                     <p className="text-xs text-text-secondary">
                       {bookmarkItems.length > 0
-                        ? `Semua ${bookmarkItems.length} materi yang saat ini kamu tandai sebagai favorit di perpustakaan akan langsung disalin ke dalam deck ini.`
-                        : 'Buku Saku Bookmark kamu masih kosong. Kamu bisa menandai materi terlebih dahulu di perpustakaan.'}
+                        ? `All ${bookmarkItems.length} items you bookmarked in the library will be copied into this deck.`
+                        : 'Your bookmarks are empty. Bookmark items in the library first.'}
                     </p>
                   </div>
                 )}
@@ -535,7 +535,7 @@ export const CreateDeckModal: React.FC<CreateDeckModalProps> = ({
                   <div className="p-3.5 rounded-2xl bg-surface-inset border border-border-subtle space-y-2.5">
                     <div className="flex items-center justify-between">
                       <span className="text-xs font-heading font-bold text-text-primary">
-                        Pilih Materi dari Perpustakaan:
+                        Pick items from the library:
                       </span>
                       <span className="text-xs font-mono font-bold text-gold">
                         {selectedManualKeys.size} Dipilih
@@ -550,7 +550,7 @@ export const CreateDeckModal: React.FC<CreateDeckModalProps> = ({
                           type="text"
                           value={manualSearch}
                           onChange={(e) => setManualSearch(e.target.value)}
-                          placeholder="Cari kata, kanji, arti..."
+                          placeholder="Search words, letters, meanings..."
                           className="w-full pl-8 pr-3 py-1.5 rounded-lg bg-surface-card border border-border-subtle text-xs text-text-primary"
                         />
                       </div>
@@ -558,9 +558,9 @@ export const CreateDeckModal: React.FC<CreateDeckModalProps> = ({
                       <div className="flex flex-wrap items-center gap-1 pb-1">
                         {[
                           { id: 'all', label: 'Semua' },
-                          { id: 'kotoba', label: 'Kosakata' },
-                          { id: 'kanji', label: 'Kanji' },
-                          { id: 'bunpou', label: 'Tata Bahasa' },
+                          { id: 'kotoba', label: 'Vocabulary' },
+                          { id: 'kanji', label: 'Letters' },
+                          { id: 'bunpou', label: 'Grammar' },
                         ].map((c) => (
                           <button
                             key={c.id}
@@ -623,8 +623,8 @@ export const CreateDeckModal: React.FC<CreateDeckModalProps> = ({
                   <div className="p-3.5 rounded-2xl bg-surface-inset border border-border-subtle text-xs text-text-secondary flex items-start gap-2.5">
                     <span className="text-base">📝</span>
                     <div>
-                      <p className="font-bold text-text-primary mb-0.5">Deck Kosong (0 Materi Bawaan)</p>
-                      <p>Deck akan dibuat dalam keadaan bersih. Kamu bebas menambahkan materi kapan saja lewat tombol <strong>+ Tambah Materi</strong> di dalam deck.</p>
+                      <p className="font-bold text-text-primary mb-0.5">Empty deck (0 items)</p>
+                      <p>The deck will start empty. Add items any time with the <strong>+ Add items</strong> button inside the deck.</p>
                     </div>
                   </div>
                 )}
@@ -651,9 +651,9 @@ export const CreateDeckModal: React.FC<CreateDeckModalProps> = ({
               <Check className="w-3.5 h-3.5 text-gold" />
               <span>
                 {editingDeck
-                  ? 'Simpan Perubahan'
+                  ? 'Save changes'
                   : estimatedCount > 0
-                  ? `Buat Deck (${estimatedCount} Materi)`
+                  ? `Create deck (${estimatedCount} items)`
                   : 'Buat Deck Kosong'}
               </span>
             </button>

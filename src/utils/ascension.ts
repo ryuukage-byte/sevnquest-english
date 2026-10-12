@@ -4,7 +4,7 @@ import { KOTOBA_DATABASE } from '../data/kotoba';
 import { BUNPOU_DATABASE } from '../data/bunpou';
 import { RPG_TIERS } from '../data/rpg/tiers';
 
-export type JlptLevel = 'N5' | 'N4' | 'N3' | 'N2' | 'N1';
+export type JlptLevel = 'A1' | 'A2' | 'B1' | 'B2' | 'C1';
 
 const ASCENSION_THRESHOLD = 75; // 75% mastery required to ascend
 
@@ -20,8 +20,8 @@ export interface AscensionPillarProgress {
 export interface AscensionTierProgress {
   currentJlpt: JlptLevel;
   targetJlpt: JlptLevel | null; // Next level to ascend to
-  gateTierIndex: number; // The tier index capped at (1 for N5, 3 for N4, 5 for N3, 7 for N2)
-  nextTierIndex: number; // The tier index unlocked upon ascension (2 for N4, 4 for N3, 6 for N2, 8 for N1)
+  gateTierIndex: number; // The tier index capped at (1 for A1, 3 for A2, 5 for B1, 7 for B2)
+  nextTierIndex: number; // The tier index unlocked upon ascension (2 for A2, 4 for B1, 6 for B2, 8 for C1)
   
   kanji: AscensionPillarProgress;
   kotoba: AscensionPillarProgress;
@@ -42,11 +42,11 @@ export interface AscensionTierProgress {
  * Maps a tier index (0 to 9) to its corresponding JLPT level
  */
 export function getJlptLevelForTierIndex(tierIndex: number): JlptLevel {
-  if (tierIndex <= 1) return 'N5';
-  if (tierIndex <= 3) return 'N4';
-  if (tierIndex <= 5) return 'N3';
-  if (tierIndex <= 7) return 'N2';
-  return 'N1';
+  if (tierIndex <= 1) return 'A1';
+  if (tierIndex <= 3) return 'A2';
+  if (tierIndex <= 5) return 'B1';
+  if (tierIndex <= 7) return 'B2';
+  return 'C1';
 }
 
 /**
@@ -58,11 +58,11 @@ const JLPT_ASCENSION_GATES: Record<JlptLevel, {
   nextTierIndex: number;
   requiredExpForNextTier: number;
 }> = {
-  N5: { targetJlpt: 'N4', gateTierIndex: 1, nextTierIndex: 2, requiredExpForNextTier: 4000 },
-  N4: { targetJlpt: 'N3', gateTierIndex: 3, nextTierIndex: 4, requiredExpForNextTier: 22000 },
-  N3: { targetJlpt: 'N2', gateTierIndex: 5, nextTierIndex: 6, requiredExpForNextTier: 80000 },
-  N2: { targetJlpt: 'N1', gateTierIndex: 7, nextTierIndex: 8, requiredExpForNextTier: 210000 },
-  N1: { targetJlpt: null, gateTierIndex: 9, nextTierIndex: 9, requiredExpForNextTier: 320000 },
+  A1: { targetJlpt: 'A2', gateTierIndex: 1, nextTierIndex: 2, requiredExpForNextTier: 4000 },
+  A2: { targetJlpt: 'B1', gateTierIndex: 3, nextTierIndex: 4, requiredExpForNextTier: 22000 },
+  B1: { targetJlpt: 'B2', gateTierIndex: 5, nextTierIndex: 6, requiredExpForNextTier: 80000 },
+  B2: { targetJlpt: 'C1', gateTierIndex: 7, nextTierIndex: 8, requiredExpForNextTier: 210000 },
+  C1: { targetJlpt: null, gateTierIndex: 9, nextTierIndex: 9, requiredExpForNextTier: 320000 },
 };
 
 /**
@@ -250,10 +250,10 @@ export function getEffectiveTier(stats: PlayerStats): {
 
   // 2. Check each JLPT ascension gate sequentially
   const GATES: { gateJlpt: JlptLevel; unlockTier: number; capTier: number }[] = [
-    { gateJlpt: 'N5', unlockTier: 2, capTier: 1 }, // Novice N5 cap, Apprentice N4 unlock
-    { gateJlpt: 'N4', unlockTier: 4, capTier: 3 }, // Squire N4 cap, Knight N3 unlock
-    { gateJlpt: 'N3', unlockTier: 6, capTier: 5 }, // Elite Knight N3 cap, Paladin N2 unlock
-    { gateJlpt: 'N2', unlockTier: 8, capTier: 7 }, // Hero N2 cap, Champion N1 unlock
+    { gateJlpt: 'A1', unlockTier: 2, capTier: 1 }, // Novice A1 cap, Apprentice A2 unlock
+    { gateJlpt: 'A2', unlockTier: 4, capTier: 3 }, // Squire A2 cap, Knight B1 unlock
+    { gateJlpt: 'B1', unlockTier: 6, capTier: 5 }, // Elite Knight B1 cap, Paladin B2 unlock
+    { gateJlpt: 'B2', unlockTier: 8, capTier: 7 }, // Hero B2 cap, Champion C1 unlock
   ];
 
   for (const gate of GATES) {

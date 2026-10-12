@@ -120,8 +120,8 @@ export const DeckBookmarkPicker: React.FC<DeckBookmarkPickerProps> = ({
                 : 'bg-surface-card border-border-subtle text-text-muted hover:text-gold'
             }`
         )}
-        title={isInAnyDeck ? 'Tersimpan di Buku Saku (Klik untuk atur)' : 'Simpan ke Buku Saku'}
-        aria-label="Atur Buku Saku"
+        title={isInAnyDeck ? 'Saved in your Notebook (tap to manage)' : 'Save to your Notebook'}
+        aria-label="Manage Notebook"
       >
         <Bookmark className={`${compact ? 'w-3.5 h-3.5' : 'w-4 h-4'} ${isInAnyDeck ? 'fill-gold text-gold' : ''}`} />
       </button>
@@ -151,7 +151,7 @@ export const DeckBookmarkPicker: React.FC<DeckBookmarkPickerProps> = ({
                 </div>
                 <div className="min-w-0">
                   <h3 className="text-base font-heading font-bold text-text-primary flex items-center gap-2 truncate">
-                    <span>Simpan ke Buku Saku</span>
+                    <span>Save to your Notebook</span>
                   </h3>
                   <p className="text-xs text-text-muted truncate">
                     {itemTitle ? (
@@ -159,7 +159,7 @@ export const DeckBookmarkPicker: React.FC<DeckBookmarkPickerProps> = ({
                         {itemTitle} {itemSubtitle ? `• ${itemSubtitle}` : ''}
                       </span>
                     ) : (
-                      'Pilih deck untuk menambahkan materi ini'
+                      'Choose a deck to add this item'
                     )}
                   </p>
                 </div>
@@ -173,7 +173,7 @@ export const DeckBookmarkPicker: React.FC<DeckBookmarkPickerProps> = ({
                   playSound('click', soundEnabled);
                 }}
                 className="p-1.5 rounded-xl text-text-muted hover:text-text-primary hover:bg-surface-inset transition-colors shrink-0 cursor-pointer"
-                title="Tutup"
+                title="Close"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -182,7 +182,7 @@ export const DeckBookmarkPicker: React.FC<DeckBookmarkPickerProps> = ({
             {/* Deck List Scroll Area */}
             <div className="flex-1 overflow-y-auto pr-1 space-y-2.5 scrollbar-thin">
               <p className="text-[11px] font-bold text-text-muted tracking-wider uppercase">
-                Daftar Buku Saku Kamu ({allDecks.length})
+                Your decks ({allDecks.length})
               </p>
 
               {allDecks.map((deck) => {
@@ -250,16 +250,16 @@ export const DeckBookmarkPicker: React.FC<DeckBookmarkPickerProps> = ({
                     className="w-full py-2.5 px-3 rounded-xl border border-dashed border-border-muted hover:border-border-primary text-text-secondary hover:text-gold text-xs font-bold flex items-center justify-center gap-2 transition-all cursor-pointer bg-surface-inset/50"
                   >
                     <Plus className="w-4 h-4" />
-                    <span>+ Buat Buku Saku Baru</span>
+                    <span>+ Create a new deck</span>
                   </button>
                 ) : (
                   <form onSubmit={handleCreateAndAddDeck} className="space-y-2">
-                    <p className="text-xs font-bold text-text-primary">Judul Buku Saku Baru:</p>
+                    <p className="text-xs font-bold text-text-primary">New deck title:</p>
                     <div className="flex items-center gap-2">
                       <input
                         type="text"
                         autoFocus
-                        placeholder="Contoh: Kanji Sulit N5..."
+                        placeholder="For example: Tricky letters A1..."
                         value={newDeckTitle}
                         onChange={(e) => setNewDeckTitle(e.target.value)}
                         className="flex-1 px-3 py-2 text-xs rounded-xl bg-surface-inset border border-border-subtle focus:border-border-primary focus:outline-hidden text-text-primary"
@@ -270,7 +270,7 @@ export const DeckBookmarkPicker: React.FC<DeckBookmarkPickerProps> = ({
                         disabled={!newDeckTitle.trim()}
                         className="btn-physical-primary px-3.5 py-2 text-xs font-bold rounded-xl disabled:opacity-40 transition-all cursor-pointer shrink-0"
                       >
-                        Buat & Simpan
+                        Create &amp; save
                       </button>
                       <button
                         type="button"
@@ -298,7 +298,7 @@ export const DeckBookmarkPicker: React.FC<DeckBookmarkPickerProps> = ({
               }}
               className="btn-physical-secondary w-full py-3 rounded-2xl font-heading font-bold text-xs tracking-wider transition-colors cursor-pointer"
             >
-              Selesai
+              Done
             </button>
           </div>
         </div>,

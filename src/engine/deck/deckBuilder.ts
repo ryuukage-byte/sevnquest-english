@@ -13,7 +13,7 @@ export interface DeckBuildRequest {
   topic?: string;
   themeId?: string;
   focus: DeckType;
-  /** ['ALL'] atau subset N5..N1. */
+  /** ['ALL'] atau subset A1..C1. */
   levels: string[];
   count: number;
   /** Kata kunci tambahan (mis. dari perluasan LLM). */
@@ -129,7 +129,7 @@ export function buildDeckFromTopic(req: DeckBuildRequest): DeckBuildResult {
   }
 
   // 3. Filter level (materi bertag tema selalu lolos), urutkan: skor ↓, level mudah dulu, kata pendek dulu.
-  const jlptRank = (l: string) => ({ N5: 0, N4: 1, N3: 2, N2: 3, N1: 4 } as Record<string, number>)[l] ?? 5;
+  const jlptRank = (l: string) => ({ A1: 0, A2: 1, B1: 2, B2: 3, C1: 4 } as Record<string, number>)[l] ?? 5;
   const sorted = [...cands.entries()]
     .filter(([key, c]) => tagged.has(key) || levelOk(levelOf(c.r)))
     .map(([, c]) => c)

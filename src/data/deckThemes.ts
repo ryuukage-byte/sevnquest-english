@@ -18,42 +18,42 @@ export interface DeckTheme {
 export const DECK_THEMES: DeckTheme[] = [
   {
     id: 'kuliner', label: 'Kuliner', title: 'Kuliner & Restoran', coverIcon: '🍱',
-    description: 'Kosakata makan, minum, memasak, dan memesan di restoran.',
+    description: 'Vocabulary for eating, drinking, cooking and ordering at a restaurant.',
     keywords: ['makan', 'minum', 'masak', 'restoran', 'makanan', 'minuman', 'dapur', 'menu', 'pesan', 'food', 'drink', 'cook', 'restaurant', 'meal'],
   },
   {
     id: 'konbini', label: 'Konbini', title: 'Konbini & Belanja', coverIcon: '🛒',
-    description: 'Kosakata belanja, harga, dan transaksi di toko.',
+    description: 'Vocabulary for shopping, prices and paying in shops.',
     keywords: ['toko', 'belanja', 'membeli', 'harga', 'uang', 'kasir', 'barang', 'jual', 'shop', 'buy', 'price', 'money', 'store'],
   },
   {
     id: 'kerja', label: 'Kerja', title: 'Kerja & Kantor', coverIcon: '💼',
-    description: 'Istilah kantor, rapat, dan percakapan antar rekan kerja.',
+    description: 'Office terms, meetings and conversations with colleagues.',
     keywords: ['kerja', 'kantor', 'perusahaan', 'rapat', 'gaji', 'bos', 'pekerjaan', 'karyawan', 'bisnis', 'work', 'company', 'office', 'meeting'],
   },
   {
     id: 'medis', label: 'Medis', title: 'Rumah Sakit & Medis', coverIcon: '🏥',
-    description: 'Bagian tubuh, gejala penyakit, dan konsultasi ke dokter.',
+    description: 'Parts of the body, symptoms and talking to a doctor.',
     keywords: ['sakit', 'dokter', 'rumah sakit', 'obat', 'tubuh', 'demam', 'kepala', 'luka', 'penyakit', 'hospital', 'medicine', 'fever', 'pain'],
   },
   {
     id: 'musim', label: 'Musim', title: 'Musim & Cuaca', coverIcon: '🌸',
-    description: 'Empat musim, fenomena alam, dan prakiraan cuaca.',
+    description: 'The four seasons, nature and the weather forecast.',
     keywords: ['musim', 'cuaca', 'hujan', 'salju', 'panas', 'dingin', 'angin', 'bunga', 'season', 'weather', 'rain', 'snow'],
   },
   {
     id: 'wisata', label: 'Wisata', title: 'Bandara & Wisata', coverIcon: '✈️',
-    description: 'Liburan, hotel, stasiun, dan transportasi.',
+    description: 'Holidays, hotels, stations and transport.',
     keywords: ['hotel', 'bandara', 'stasiun', 'kereta', 'tiket', 'peta', 'liburan', 'wisata', 'pesawat', 'travel', 'airport', 'station', 'train', 'ticket'],
   },
   {
     id: 'rpg', label: 'Game RPG', title: 'Petualangan RPG', coverIcon: '⚔️',
-    description: 'Istilah petualangan, kekuatan, dan pertempuran.',
+    description: 'Adventure, strength and battle vocabulary.',
     keywords: ['pedang', 'pahlawan', 'pertempuran', 'monster', 'raja', 'kekuatan', 'perang', 'sword', 'magic', 'battle', 'hero'],
   },
   {
     id: 'kaigo', label: 'Kaigo', title: 'Perawat (Kaigo)', coverIcon: '🩺',
-    description: 'Komunikasi dengan lansia dan pelayanan panti jompo.',
+    description: 'Talking with older people and in care settings.',
     keywords: ['lansia', 'perawat', 'pasien', 'bantu', 'kaigo'],
     tag: 'Kaigo',
   },

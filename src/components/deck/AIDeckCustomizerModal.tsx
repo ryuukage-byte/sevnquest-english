@@ -24,17 +24,17 @@ const THEME_ICONS: Record<string, Icon> = {
   musim: CloudSun, wisata: Compass, rpg: Gamepad2, kaigo: Stethoscope,
 };
 
-const JLPT_LEVELS = ['ALL', 'N5', 'N4', 'N3', 'N2', 'N1'];
+const JLPT_LEVELS = ['ALL', 'A1', 'A2', 'B1', 'B2', 'C1'];
 const ITEM_COUNTS = [10, 15, 20, 30, 40];
 
 const FOCUS_OPTIONS: { type: DeckType; label: string; icon: Icon; desc: string }[] = [
-  { type: 'kotoba', label: 'Kosakata', icon: BookOpen, desc: 'Kata benda, kerja, sifat' },
-  { type: 'kanji', label: 'Kanji', icon: Languages, desc: 'Aksara & cara baca' },
-  { type: 'bunpou', label: 'Tata Bahasa', icon: Scroll, desc: 'Pola kalimat & rumus' },
+  { type: 'kotoba', label: 'Vocabulary', icon: BookOpen, desc: 'Nouns, verbs, adjectives' },
+  { type: 'kanji', label: 'Letters', icon: Languages, desc: 'Letters & sounds' },
+  { type: 'bunpou', label: 'Grammar', icon: Scroll, desc: 'Grammar patterns & formulas' },
   { type: 'mixed', label: 'Campuran', icon: Shuffle, desc: 'Semua jenis materi' },
 ];
 
-const CATEGORY_LABEL = { kotoba: 'Kotoba', kanji: 'Kanji', bunpou: 'Pola' } as const;
+const CATEGORY_LABEL = { kotoba: 'Vocabulary', kanji: 'Letters', bunpou: 'Grammar' } as const;
 const PREFS_KEY = 'nihongo_quest_ai_deck_prefs';
 
 interface Prefs { type: DeckType; levels: string[]; count: number }
@@ -141,7 +141,7 @@ export const AIDeckCustomizerModal: React.FC<AIDeckCustomizerModalProps> = ({
       shortfall: result.shortfall,
       aiUsed: Boolean(plan),
       title: theme?.title || plan?.title || text,
-      description: theme?.description || plan?.description || `Materi bertema "${text}" dari database SevnQuest.`,
+      description: theme?.description || plan?.description || `Items on the theme "${text}" from the SevnQuest library.`,
       icon: theme?.coverIcon || plan?.icon || '📖',
     });
     setTitle(theme?.title || plan?.title || text);
@@ -169,8 +169,8 @@ export const AIDeckCustomizerModal: React.FC<AIDeckCustomizerModalProps> = ({
   const handleCopyPrompt = async () => {
     try {
       await navigator.clipboard.writeText(buildGeminiDeckPrompt({
-        topic: topic.trim() || 'Kosakata bahasa Jepang sehari-hari',
-        level: levels.includes('ALL') ? 'Semua Level' : levels.join(', '),
+        topic: topic.trim() || 'Everyday English vocabulary',
+        level: levels.includes('ALL') ? 'All levels' : levels.join(', '),
         type: focus,
         count,
       }));
@@ -211,7 +211,7 @@ export const AIDeckCustomizerModal: React.FC<AIDeckCustomizerModalProps> = ({
               <h3 className="text-base sm:text-lg font-bold font-heading text-text-primary truncate">Studio Deck Otomatis</h3>
             </div>
           </div>
-          <button type="button" onClick={onClose} className="btn-physical-secondary p-2 rounded-xl" aria-label="Tutup">
+          <button type="button" onClick={onClose} className="btn-physical-secondary p-2 rounded-xl" aria-label="Close">
             <X className="w-4 h-4" />
           </button>
         </div>
@@ -346,7 +346,7 @@ export const AIDeckCustomizerModal: React.FC<AIDeckCustomizerModalProps> = ({
           ) : (
             <>
               <section className="space-y-2">
-                <label className="text-xs font-bold font-heading text-text-primary" htmlFor="deck-title">Nama deck</label>
+                <label className="text-xs font-bold font-heading text-text-primary" htmlFor="deck-title">Deck name</label>
                 <div className="flex items-center gap-2">
                   <span className="w-11 h-11 ui-icon-box rounded-xl text-xl shrink-0">{built.icon}</span>
                   <input
@@ -366,14 +366,14 @@ export const AIDeckCustomizerModal: React.FC<AIDeckCustomizerModalProps> = ({
 
               {built.items.length === 0 ? (
                 <div className="p-4 rounded-2xl bg-surface-inset border border-border-subtle text-center space-y-1">
-                  <p className="text-sm font-bold font-heading text-text-primary">Belum ada materi yang cocok</p>
-                  <p className="text-xs text-text-secondary">Coba kata yang lebih umum, level &quot;Semua&quot;, atau fokus lain.</p>
+                  <p className="text-sm font-bold font-heading text-text-primary">No matching items yet</p>
+                  <p className="text-xs text-text-secondary">Try a more general word, the level &quot;All&quot;, or another focus.</p>
                 </div>
               ) : (
                 <>
                   {built.shortfall && (
                     <p className="text-[11px] text-text-secondary p-3 rounded-2xl bg-surface-inset border border-border-subtle">
-                      Hanya ditemukan {built.items.length} dari {count} materi yang cocok dengan topik ini.
+                      Only {built.items.length} of {count} items match this topic.
                     </p>
                   )}
                   <ul className="rounded-2xl border border-border-subtle divide-y divide-border-subtle bg-surface-inset max-h-72 overflow-y-auto">
@@ -391,7 +391,7 @@ export const AIDeckCustomizerModal: React.FC<AIDeckCustomizerModalProps> = ({
                           type="button"
                           onClick={() => removeItem(item.entityId, item.category)}
                           className="p-1.5 rounded-lg text-text-muted hover:text-state-danger transition-colors shrink-0"
-                          aria-label={`Hapus ${item.primaryText}`}
+                          aria-label={`Remove ${item.primaryText}`}
                         >
                           <Trash2 className="w-3.5 h-3.5" />
                         </button>
@@ -430,7 +430,7 @@ export const AIDeckCustomizerModal: React.FC<AIDeckCustomizerModalProps> = ({
                 disabled={built.items.length === 0}
                 className="btn-physical-primary px-5 py-2.5 text-xs font-bold font-heading disabled:opacity-50"
               >
-                Simpan Deck ({built.items.length})
+                Save deck ({built.items.length})
               </button>
             </>
           )}

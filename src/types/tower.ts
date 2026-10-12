@@ -7,21 +7,21 @@
  */
 export enum TowerArc {
   FOUNDATION = 'foundation',      // Lantai 1-100: Hiragana, Katakana, basic kanji, basic sentence
-  ELEMENTARY = 'elementary',      // Lantai 101-300: N5 consolidation & N4
-  INTERMEDIATE = 'intermediate',  // Lantai 301-600: N3 core fluency
-  ADVANCED = 'advanced',          // Lantai 601-800: N2 nuanced expressions
-  MASTER = 'master'               // Lantai 801-1000: N1 mastery & native synthesis
+  ELEMENTARY = 'elementary',      // Lantai 101-300: A1 consolidation & A2
+  INTERMEDIATE = 'intermediate',  // Lantai 301-600: B1 core fluency
+  ADVANCED = 'advanced',          // Lantai 601-800: B2 nuanced expressions
+  MASTER = 'master'               // Lantai 801-1000: C1 mastery & native synthesis
 }
 
 /**
  * JLPT Levels
  */
 export enum JLPTLevel {
-  N5 = 'N5',
-  N4 = 'N4',
-  N3 = 'N3',
-  N2 = 'N2',
-  N1 = 'N1'
+  A1 = 'A1',
+  A2 = 'A2',
+  B1 = 'B1',
+  B2 = 'B2',
+  C1 = 'C1'
 }
 
 /**

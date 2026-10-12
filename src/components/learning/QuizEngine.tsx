@@ -5,7 +5,6 @@ import confetti from 'canvas-confetti';
 import { Question } from '../../types/content';
 import { playSound, speakJapanese } from '../../utils/audio';
 import { RubyText } from './RubyText';
-import { StarSentenceQuiz } from './StarSentenceQuiz';
 import { calculateQuizReward } from '../../utils/rewards';
 import { normalizeQuestion } from '../../utils/questionUtils';
 import { sendScoreEvent } from '../../lib/supabase';
@@ -83,7 +82,7 @@ export const QuizEngine: React.FC<QuizEngineProps> = ({
 
   const isReadingQuestion = React.useMemo(() => {
     const inst = ((currentQ?.instruction || '') + ' ' + (currentQ?.instructionId || '')).toLowerCase();
-    return inst.includes('読み方') || inst.includes('cara baca') || inst.includes('ひらがな');
+    return inst.includes('pronunciation');
   }, [currentQ]);
 
   const handleSelectOption = (idx: number) => {
@@ -128,7 +127,7 @@ export const QuizEngine: React.FC<QuizEngineProps> = ({
       setHiddenOptions([]);
     } else {
       setIsFinished(true);
-      const sampleLevel = level || (currentQ as any)?.level || (questions[0] as any)?.level || 'N3';
+      const sampleLevel = level || (currentQ as any)?.level || (questions[0] as any)?.level || 'B1';
       const quizReward = calculateQuizReward(sampleLevel, correctCount, totalQ, playerInt);
       const expGained = quizReward.totalExpGained;
       const goldGained = quizReward.goldGained;
@@ -152,7 +151,7 @@ export const QuizEngine: React.FC<QuizEngineProps> = ({
     if (hiddenOptions.length > 0 || isAnswered) return;
     const mpCost = 15;
     if (onUseMp && !onUseMp(mpCost)) {
-      alert('MP tidak cukup untuk menggunakan skill 50/50 Hint!');
+      alert('Not enough MP for the 50/50 hint!');
       return;
     }
 
@@ -170,7 +169,7 @@ export const QuizEngine: React.FC<QuizEngineProps> = ({
 
   if (isFinished) {
     const isSuccess = correctCount >= Math.ceil(totalQ * 0.6);
-    const sampleLevel = level || (currentQ as any)?.level || (questions[0] as any)?.level || 'N3';
+    const sampleLevel = level || (currentQ as any)?.level || (questions[0] as any)?.level || 'B1';
     const quizReward = calculateQuizReward(sampleLevel, correctCount, totalQ, playerInt);
     const expGained = quizReward.totalExpGained;
 
@@ -181,11 +180,11 @@ export const QuizEngine: React.FC<QuizEngineProps> = ({
         </div>
 
         <h3 className="text-xl sm:text-2xl font-bold text-text-primary font-heading">
-          {isSuccess ? 'Ujian Selesai! Luar Biasa!' : 'Tetap Berjuang! Coba Lagi!'}
+          {isSuccess ? 'Quiz complete! Well done!' : 'Keep going! Try again!'}
         </h3>
 
         <div className="text-xs sm:text-sm text-text-secondary">
-          Skor Akhir: <strong className="text-gold font-mono text-xl">{correctCount}</strong> / {totalQ} Benar
+          Final score: <strong className="text-gold font-mono text-xl">{correctCount}</strong> / {totalQ} correct
         </div>
 
         {/* Rewards Earned Box */}
@@ -223,7 +222,7 @@ export const QuizEngine: React.FC<QuizEngineProps> = ({
             }}
             className="btn-cta py-2.5 px-5 rounded-xl text-xs font-bold transition-all"
           >
-            Kembali ke Modul
+            Back to module
           </button>
         </div>
       </div>
@@ -254,7 +253,7 @@ export const QuizEngine: React.FC<QuizEngineProps> = ({
               ? 'text-indigo border-border-subtle hover:bg-indigo/10'
               : 'opacity-40 cursor-not-allowed'
           }`}
-          title="Gunakan 15 MP untuk membuang 2 pilihan salah"
+          title="Use 15 MP to remove 2 wrong choices"
         >
           <HelpCircle className="w-3.5 h-3.5" />
           <span>50/50 Hint (15 MP)</span>
@@ -270,14 +269,7 @@ export const QuizEngine: React.FC<QuizEngineProps> = ({
       </div>
 
       {/* Question Body: Star Sentence Quiz or Standard Multiple Choice */}
-      {((currentQ.scrambleWords && currentQ.scrambleWords.length === 4) || currentQ.prompt.includes('★') || currentQ.prompt.includes('＿★＿')) ? (
-        <StarSentenceQuiz
-          question={currentQ}
-          isAnswered={isAnswered}
-          onAnswer={handleStarAnswer}
-          soundEnabled={soundEnabled}
-        />
-      ) : (
+      {(
         <>
           {/* Layer 1: Separate Instruction Bar (Kalimat Perintah) */}
           <div className="p-3 sm:p-3.5 rounded-xl bg-surface-card border border-border-subtle flex items-start gap-2.5 shadow-sm">
@@ -318,7 +310,7 @@ export const QuizEngine: React.FC<QuizEngineProps> = ({
                   }`}
                   title={isReadingQuestion ? 'Furigana dikunci (OFF) pada soal tebak cara baca agar jawaban tidak bocor' : 'Aktifkan / Nonaktifkan Furigana Hiragana'}
                 >
-                  {isReadingQuestion ? 'ふりがな LOCK' : `ふりがな ${localFurigana ? 'ON' : 'OFF'}`}
+                  {isReadingQuestion ? 'IPA LOCK' : `IPA ${localFurigana ? 'ON' : 'OFF'}`}
                 </button>
                 <button
                   type="button"
@@ -355,7 +347,7 @@ export const QuizEngine: React.FC<QuizEngineProps> = ({
                   ) : (
                     <Eye className="w-3.5 h-3.5 text-indigo" />
                   )}
-                  <span>{showTranslation ? 'Sembunyikan Terjemahan' : 'Bantuan: Tampilkan Arti Kalimat'}</span>
+                  <span>{showTranslation ? 'Hide translation' : 'Hint: show the sentence meaning'}</span>
                 </button>
                 <AnimatePresence>
                   {showTranslation && (
@@ -448,7 +440,7 @@ export const QuizEngine: React.FC<QuizEngineProps> = ({
                   {selectedOption === currentQ.correctIndex ? (
                     <>
                       <CheckCircle2 className="w-4 h-4 text-state-success" />
-                      <span className="text-state-success">Jawaban Benar! (+{baseExpPerQuestion} EXP)</span>
+                      <span className="text-state-success">Correct! (+{baseExpPerQuestion} EXP)</span>
                     </>
                   ) : (
                     <>
@@ -462,7 +454,7 @@ export const QuizEngine: React.FC<QuizEngineProps> = ({
                 {currentQ.translation && (
                   <div className="p-2.5 rounded-lg bg-surface-card/80 border border-border-subtle space-y-0.5">
                     <span className="text-[10px] font-bold uppercase tracking-wider text-indigo font-heading block">
-                      Arti Kalimat:
+                      Sentence meaning:
                     </span>
                     <p className="text-xs sm:text-sm text-text-primary font-medium">
                       &ldquo;{currentQ.translation}&rdquo;
@@ -492,7 +484,7 @@ export const QuizEngine: React.FC<QuizEngineProps> = ({
           onClick={handleNext}
           className="w-full py-3.5 rounded-xl btn-cta font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all font-heading"
         >
-          <span>{currentIndex < totalQ - 1 ? 'Lanjut ke Soal Berikutnya' : 'Lihat Hasil Akhir'}</span>
+          <span>{currentIndex < totalQ - 1 ? 'Next question' : 'See final result'}</span>
           <ArrowRight className="w-4 h-4" />
         </motion.button>
       )}

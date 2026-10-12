@@ -130,7 +130,7 @@ export function asWritable(item: any): WritableTrait | null {
       onyomi: onyomiStr,
       kunyomi: kunyomiStr,
       meaning,
-      level: k.jlpt || raw.level || 'N5',
+      level: k.jlpt || raw.level || 'A1',
       sourceItem: k,
     };
   }
@@ -151,7 +151,7 @@ export function asWritable(item: any): WritableTrait | null {
       isSingleKanji: chars.length === 1,
       strokeCount: (kotoba as any).strokeCount || chars.length * 5,
       meaning,
-      level: kotoba.jlpt || raw.level || 'N5',
+      level: kotoba.jlpt || raw.level || 'A1',
       sourceItem: kotoba,
     };
   }
@@ -205,7 +205,7 @@ export function asFlashcard(item: any): FlashcardTrait | null {
   let displayTitle = raw.displayTitle || '';
   let displayReading = raw.displayReading || '';
   let displayMeaning = raw.displayMeaning || '';
-  let level = raw.level || 'N5';
+  let level = raw.level || 'A1';
   let subInfo = '';
 
   if (category === 'kanji' && kanji) {
@@ -214,19 +214,19 @@ export function asFlashcard(item: any): FlashcardTrait | null {
     const onStr = (kanji.onyomi || []).join('、');
     displayReading = displayReading || [kunStr, onStr].filter(Boolean).join(' | ');
     displayMeaning = displayMeaning || kanji.meaningId || kanji.meaningEn || '';
-    level = level || kanji.jlpt || 'N5';
+    level = level || kanji.jlpt || 'A1';
     subInfo = kanji.radical ? `Radikal: ${kanji.radical}` : '';
   } else if (category === 'bunpou' && bunpou) {
     displayTitle = displayTitle || bunpou.title || '';
     displayReading = displayReading || bunpou.formula || '';
     displayMeaning = displayMeaning || bunpou.meaningId || '';
-    level = level || bunpou.level || 'N3';
+    level = level || bunpou.level || 'B1';
     subInfo = bunpou.nuance || '';
   } else if (kotoba) {
     displayTitle = displayTitle || kotoba.word || '';
     displayReading = displayReading || kotoba.reading || '';
     displayMeaning = displayMeaning || kotoba.meaningId || kotoba.meaningEn || '';
-    level = level || kotoba.jlpt || 'N5';
+    level = level || kotoba.jlpt || 'A1';
     subInfo = getWordTypeLabel(kotoba.wordType);
   }
 

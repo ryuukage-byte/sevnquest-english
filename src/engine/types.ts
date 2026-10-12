@@ -70,7 +70,7 @@ export interface GrammarPatternSchema {
   id: string;
   pattern: string;             // e.g. "〜てはいけない"
   title: string;               // e.g. "Larangan Formal: 〜てはいけない"
-  jlpt: 'N5' | 'N4' | 'N3' | 'N2' | 'N1';
+  jlpt: 'A1' | 'A2' | 'B1' | 'B2' | 'C1';
   predicateType: 'verb' | 'adjective-i' | 'adjective-na';
   requiredConjugation: ConjugationForm | AdjectiveForm;
   fixedSuffix: string;         // e.g. "はいけない", "もいい", "ほうがいい"

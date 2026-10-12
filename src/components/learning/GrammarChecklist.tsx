@@ -113,7 +113,7 @@ export const GrammarChecklist: React.FC<GrammarChecklistProps> = ({ item, classN
       <div className="flex items-center gap-2 pb-1.5 border-b border-border-subtle">
         <CheckCircle2 className="w-4 h-4 text-emerald-800 dark:text-emerald-400 shrink-0" />
         <span className="text-[11px] font-extrabold uppercase tracking-wider text-emerald-950 dark:text-emerald-300 font-heading">
-          Fungsi & Situasi Penggunaan (使い分け)
+          Functions & situations of use
         </span>
       </div>
 

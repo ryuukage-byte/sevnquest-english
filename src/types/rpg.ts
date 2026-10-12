@@ -65,7 +65,7 @@ export interface PlayerStats {
   inventory: string[]; // item IDs
 
   // Stage & World Progression
-  currentWorldId?: string; // 'world_n5' | 'world_n4' | 'world_n3' | 'world_n2' | 'world_n1'
+  currentWorldId?: string; // 'world_a1' | 'world_a2' | 'world_b1' | 'world_b2' | 'world_c1'
   currentMapId: string;
   currentStageId: string;
   stageProgress?: Record<string, StageClearData>;
@@ -74,7 +74,7 @@ export interface PlayerStats {
   tierPromotionGated?: boolean;
   gatedReason?: string;
   targetTierIndex?: number;
-  ascendedLevels?: ('N5' | 'N4' | 'N3' | 'N2' | 'N1')[];
+  ascendedLevels?: ('A1' | 'A2' | 'B1' | 'B2' | 'C1')[];
 
   // Mastery Tracking & SRS
   itemMastery?: Record<string, import('./content').ItemMasteryRecord>;
@@ -97,7 +97,7 @@ export interface PlayerStats {
   theme?: 'dark' | 'light';
   speechRate?: number; // 0.8 to 1.2
   furiganaEnabled?: boolean;
-  targetJlpt?: 'N5' | 'N4' | 'N3' | 'N2' | 'N1';
+  targetJlpt?: 'A1' | 'A2' | 'B1' | 'B2' | 'C1';
 
   // User Pocket Decks (Buku Saku)
   userDecks?: UserDeck[];

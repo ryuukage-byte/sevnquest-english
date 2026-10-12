@@ -68,7 +68,7 @@ export const ChoukaiModule: React.FC<ChoukaiModuleProps> = ({
               {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 fill-current ml-0.5" />}
             </button>
             <span className="text-xs text-text-primary font-bold">
-              {isPlaying ? 'Memutar Audio Percakapan...' : 'Putar Ulang Audio Listening'}
+              {isPlaying ? 'Playing the dialogue...' : 'Play the listening again'}
             </span>
           </div>
 
@@ -76,7 +76,7 @@ export const ChoukaiModule: React.FC<ChoukaiModuleProps> = ({
             onClick={() => setShowTranscript(!showTranscript)}
             className="text-[11px] px-2.5 py-1 rounded-lg bg-surface-inset text-text-secondary hover:text-text-primary border border-border-subtle"
           >
-            {showTranscript ? 'Sembunyikan Naskah' : 'Lihat Naskah'}
+            {showTranscript ? 'Hide transcript' : 'Show transcript'}
           </button>
         </div>
 
@@ -95,7 +95,7 @@ export const ChoukaiModule: React.FC<ChoukaiModuleProps> = ({
         )}
 
         <QuizEngine
-          title={`🎧 Soal Choukai: ${currentChoukai.title}`}
+          title={`🎧 Listening: ${currentChoukai.title}`}
           questions={currentChoukai.questions}
           playerMp={playerMp}
           playerInt={playerInt}
@@ -208,7 +208,7 @@ export const ChoukaiModule: React.FC<ChoukaiModuleProps> = ({
             className="text-xs text-text-secondary hover:text-text-primary flex items-center justify-center gap-1.5 mx-auto transition-colors"
           >
             <FileText className="w-3.5 h-3.5" />
-            <span>{showTranscript ? 'Tutup Transkrip Audio' : 'Buka Transkrip Audio (Teks)'}</span>
+            <span>{showTranscript ? 'Close transcript' : 'Open transcript (text)'}</span>
           </button>
 
           {showTranscript && (
@@ -234,7 +234,7 @@ export const ChoukaiModule: React.FC<ChoukaiModuleProps> = ({
           }}
           className="w-full py-3.5 rounded-2xl btn-cta font-bold text-sm transition-all flex items-center justify-center gap-2 font-heading"
         >
-          <span>Mulai Jawab 3 Soal Choukai</span>
+          <span>Start the 3 listening questions</span>
         </button>
       </div>
     </div>
